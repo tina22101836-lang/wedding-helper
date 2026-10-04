@@ -185,6 +185,18 @@ body.readonly .editOnly{display:none!important}body.readonly #gift>.cards{displa
  #giftPriceCalc .giftSubtotal small[id$="CalcUnit"]{font-weight:600;color:var(--text)}
  #giftPriceCalc .giftSubtotal small[id$="RuleState"]{flex-basis:100%;color:var(--muted)}
 }
+@media(max-width:800px){
+ #giftPriceCalc .giftPriceRow{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(120px,.8fr)!important;grid-template-areas:"type total" "unit total"!important;column-gap:14px!important;row-gap:8px!important;align-items:center!important}
+ #giftPriceCalc .giftPriceType{grid-area:type!important;grid-column:auto!important}
+ #giftPriceCalc .giftPriceRow>label{grid-area:unit!important;grid-column:auto!important;width:100%!important}
+ #giftPriceCalc .giftSubtotal{grid-area:total!important;grid-column:auto!important;display:flex!important;flex-direction:column!important;flex-wrap:nowrap!important;align-items:flex-end!important;justify-content:center!important;gap:3px!important;text-align:right!important;padding:0!important;background:transparent!important}
+ #giftPriceCalc .giftSubtotal span{font-size:11px!important}
+ #giftPriceCalc .giftSubtotal b{font-size:20px!important}
+ #giftPriceCalc .giftSubtotal small{width:100%!important;font-size:11px!important;line-height:1.35!important;text-align:right!important}
+ #giftPriceCalc .giftSubtotal small[id$="RuleState"]{flex-basis:auto!important}
+ #giftPriceCalc .giftTierSettings .giftPriceRow{display:grid!important;grid-template-columns:1fr 1fr!important;grid-template-areas:"type type" "unit unit"!important}
+ #giftPriceCalc .giftTierSettings .giftPriceRow>label+label{grid-area:auto!important}
+}
 </style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style id="responsive-v3">
 .mobileNav{display:none}
