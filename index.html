@@ -250,8 +250,8 @@ body.readonly .editOnly{display:none!important}body.readonly #gift>.cards{displa
  body.qrPrintMode #qrPrintScreen{display:block!important}
  body.qrPrintMode .qrPrintToolbar,body.qrPrintMode .qrPrintHelp{display:none!important}
  body.qrPrintMode #qrPrintArea{display:block!important;width:210mm!important;padding:0!important;margin:0!important;background:#fff!important} body.qrPrintMode .qrPage{margin:0!important;width:210mm!important;height:296mm!important}
- .qrPage{position:relative;box-sizing:border-box;width:210mm;height:296mm;margin:0;break-after:page;page-break-after:always;break-inside:avoid;page-break-inside:avoid;overflow:hidden;background:#fff}
- .qrPage:last-child{break-after:auto;page-break-after:auto}
+ .qrPage{position:relative;box-sizing:border-box;width:210mm;height:296mm;margin:0;break-inside:avoid;page-break-inside:avoid;overflow:hidden;background:#fff}
+ .qrPage+.qrPage{break-before:page;page-break-before:always}
  .qrLabel{position:absolute;box-sizing:border-box;width:80mm;height:50mm;border:1px dashed #999;border-radius:0;padding:4mm;display:grid;grid-template-columns:29mm 1fr;gap:4mm;align-items:center;overflow:hidden;background:#fff;color:#111}
  .qrCode{width:28mm;height:28mm;display:flex;align-items:center;justify-content:center}.qrCode img,.qrCode canvas{width:28mm!important;height:28mm!important}
  .qrInfo{min-width:0}.qrSide{font-size:10pt}.qrName{font-size:17pt;font-weight:800;margin:2mm 0;word-break:break-all}.qrGift{font-size:11pt}.qrHint{font-size:8.5pt;margin-top:3mm;color:#555}
