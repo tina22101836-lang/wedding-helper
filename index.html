@@ -510,25 +510,7 @@ body.readonly #prep .prepActualTime b{font-size:12px;color:var(--muted)}
  body:not(.readonly) #schedule .scheduleMobileDate .dateSingle{overflow:visible!important;text-overflow:clip!important;letter-spacing:-.15px}
  body:not(.readonly) #schedule tbody td:nth-child(3){padding-left:7px!important}
 }
-
-.giftPriceCalc{margin:14px 0 0;padding:16px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:#fffaf9}
-.giftPriceHead{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:12px}
-.giftPriceHead>b{font-size:16px}
-.giftGrandTotal{text-align:right;white-space:nowrap}.giftGrandTotal span{display:block;font-size:12px;color:var(--muted)}.giftGrandTotal strong{font-size:22px}
-.giftPriceGrid{display:grid;gap:9px}.giftPriceRow{display:grid;grid-template-columns:minmax(120px,1.4fr) minmax(90px,1fr) minmax(90px,1fr) minmax(90px,.8fr);gap:9px;align-items:end;padding:11px 0;border-top:1px solid var(--line)}
-.giftPriceType{display:grid;gap:3px}.giftPriceType small{color:var(--muted)}
-.giftPriceRow label{display:grid;gap:4px;font-size:12px;color:var(--muted)}.giftPriceRow input{width:100%;box-sizing:border-box}
-.giftSubtotal{text-align:right}.giftSubtotal span{display:block;font-size:12px;color:var(--muted)}.giftSubtotal b{font-size:17px}
-.giftPriceNote{font-size:12px;margin-top:8px}
-body.readonly #giftPriceCalc{display:none!important}
-@media(max-width:800px){
- .giftPriceCalc{margin-top:10px;padding:14px 12px}
- .giftPriceRow{grid-template-columns:1fr 1fr;gap:8px 10px}
- .giftPriceType{grid-column:1/3}
- .giftSubtotal{grid-column:1/3;display:flex;justify-content:space-between;align-items:center;padding-top:3px}
- .giftPriceRow input{font-size:16px;min-width:0}
-}
-</style></head><body>
+.giftPriceCalc{margin:14px 0 0;padding:16px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:#fffaf9}.giftPriceHead{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:12px}.giftGrandTotal{text-align:right;white-space:nowrap}.giftGrandTotal span,.giftSubtotal span{display:block;font-size:12px;color:var(--muted)}.giftGrandTotal strong{font-size:22px}.giftPriceGrid{display:grid;gap:9px}.giftPriceRow{display:grid;grid-template-columns:minmax(120px,1.4fr) minmax(90px,1fr) minmax(90px,1fr) minmax(90px,.8fr);gap:9px;align-items:end;padding:11px 0;border-top:1px solid var(--line)}.giftPriceType{display:grid;gap:3px}.giftPriceType small{color:var(--muted)}.giftPriceRow label{display:grid;gap:4px;font-size:12px;color:var(--muted)}.giftPriceRow input{width:100%;box-sizing:border-box}.giftSubtotal{text-align:right}.giftSubtotal b{font-size:17px}.giftPriceNote{font-size:12px;margin-top:8px}body.readonly #giftPriceCalc{display:none!important}@media(max-width:800px){.giftPriceCalc{margin-top:10px;padding:14px 12px}.giftPriceRow{grid-template-columns:1fr 1fr;gap:8px 10px}.giftPriceType{grid-column:1/3}.giftSubtotal{grid-column:1/3;display:flex;justify-content:space-between;align-items:center;padding-top:3px}.giftPriceRow input{font-size:16px;min-width:0}}</style></head><body>
 <div id="claimPanel" class="claimPanel">
  <div class="claimCard"><div class="claimIcon">🎁</div><h1>禮盒領取確認</h1><div id="claimContent" class="claimContent">正在確認資料…</div></div>
 </div>
@@ -568,14 +550,7 @@ body.readonly #giftPriceCalc{display:none!important}
 <span class="muted">留白時仍顯示原本分類名稱。</span>
 <label class="giftNameRow qrHintSetting" style="flex-basis:100%"><span>QR 標籤提示文字</span><input id="qrHintText" style="min-width:240px" placeholder="領取後請掃 QR Code" onchange="setQrHintText(this.value)"></label>
 </div>
-<div id="giftPriceCalc" class="giftPriceCalc editOnly">
-<div class="giftPriceHead"><div><b>💰 喜餅金額試算</b><div class="muted">依目前禮盒名單數量自動計算</div></div><div class="giftGrandTotal"><span>總計</span><strong id="giftGrandTotal">$0</strong></div></div>
-<div class="giftPriceGrid">
-<div class="giftPriceRow"><div class="giftPriceType"><b id="giftBigPriceName">大小餅禮盒</b><small id="giftBigQty">0 盒</small></div><label>單價<input id="giftBigUnit" type="number" min="0" step="1" inputmode="numeric" placeholder="0" onchange="setGiftPrice('big','unit',this.value)"></label><label>折扣後<input id="giftBigDiscount" type="number" min="0" step="1" inputmode="numeric" placeholder="0" onchange="setGiftPrice('big','discount',this.value)"></label><div class="giftSubtotal"><span>小計</span><b id="giftBigSubtotal">$0</b></div></div>
-<div class="giftPriceRow"><div class="giftPriceType"><b id="giftSmallPriceName">小禮盒</b><small id="giftSmallQty">0 盒</small></div><label>單價<input id="giftSmallUnit" type="number" min="0" step="1" inputmode="numeric" placeholder="0" onchange="setGiftPrice('small','unit',this.value)"></label><label>折扣後<input id="giftSmallDiscount" type="number" min="0" step="1" inputmode="numeric" placeholder="0" onchange="setGiftPrice('small','discount',this.value)"></label><div class="giftSubtotal"><span>小計</span><b id="giftSmallSubtotal">$0</b></div></div>
-</div><div class="giftPriceNote muted">小計優先使用「折扣後」價格；未填折扣後價格時使用原單價。</div>
-</div>
-<div class="giftListTitle"><span>🎁 送禮名單</span><button id="giftOrderToggle" class="btn editOnly" onclick="toggleGiftOrderMode()">↕ 調整順序</button></div>
+<div id="giftPriceCalc" class="giftPriceCalc editOnly"><div class="giftPriceHead"><div><b>💰 喜餅金額試算</b><div class="muted">依目前禮盒名單數量自動計算</div></div><div class="giftGrandTotal"><span>總計</span><strong id="giftGrandTotal">$0</strong></div></div><div class="giftPriceGrid"><div class="giftPriceRow"><div class="giftPriceType"><b id="giftBigPriceName">大小餅禮盒</b><small id="giftBigQty">0 盒</small></div><label>單價<input id="giftBigUnit" type="number" min="0" step="1" inputmode="numeric" placeholder="0" onchange="setGiftPrice('big','unit',this.value)"></label><label>折扣後<input id="giftBigDiscount" type="number" min="0" step="1" inputmode="numeric" placeholder="0" onchange="setGiftPrice('big','discount',this.value)"></label><div class="giftSubtotal"><span>小計</span><b id="giftBigSubtotal">$0</b></div></div><div class="giftPriceRow"><div class="giftPriceType"><b id="giftSmallPriceName">小禮盒</b><small id="giftSmallQty">0 盒</small></div><label>單價<input id="giftSmallUnit" type="number" min="0" step="1" inputmode="numeric" placeholder="0" onchange="setGiftPrice('small','unit',this.value)"></label><label>折扣後<input id="giftSmallDiscount" type="number" min="0" step="1" inputmode="numeric" placeholder="0" onchange="setGiftPrice('small','discount',this.value)"></label><div class="giftSubtotal"><span>小計</span><b id="giftSmallSubtotal">$0</b></div></div></div><div class="giftPriceNote muted">小計優先使用「折扣後」價格；未填時使用原單價。</div></div><div class="giftListTitle"><span>🎁 送禮名單</span><button id="giftOrderToggle" class="btn editOnly" onclick="toggleGiftOrderMode()">↕ 調整順序</button></div>
 <div class="tableWrap"><table id="giftTable"><thead><tr id="giftHead"><th>對象</th><th>送誰</th><th>關係</th><th>禮盒</th><th>預計送禮日</th><th>配送方式</th><th>收件人</th><th>狀態</th><th>地址／備註</th><th></th></tr></thead><tbody id="giftBody"></tbody></table></div></div></section>
 <section id="prep" class="page">
 <div class="cards"><div class="card"><span class="label">👰 女方</span><b id="pBride">0/0</b><div class="muted">已完成／全部</div></div><div class="card"><span class="label">🤵 男方</span><b id="pGroom">0/0</b><div class="muted">已完成／全部</div></div><div class="card"><span class="label">💍 共同</span><b id="pTogether">0/0</b><div class="muted">已完成／全部</div></div><div class="card"><span class="label">全部完成率</span><b id="pPct">0%</b></div></div>
@@ -733,8 +708,8 @@ function moveGiftWithinSide(index,dir){
  let p=indices.indexOf(index),np=p+dir;if(p<0||np<0||np>=indices.length)return;
  let other=indices[np],tmp=data.gifts[index];data.gifts[index]=data.gifts[other];data.gifts[other]=tmp;save()
 }
-function giftPrices(){if(!data.giftPrices)data.giftPrices={big:{unit:'',discount:''},small:{unit:'',discount:''}};for(const k of ['big','small']){if(!data.giftPrices[k])data.giftPrices[k]={unit:'',discount:''}}return data.giftPrices}
-function setGiftPrice(kind,key,value){if(READ_ONLY)return;let p=giftPrices();let n=value===''?'':Math.max(0,Number(value)||0);p[kind][key]=n;save()}
+function giftPrices(){if(!data.giftPrices)data.giftPrices={big:{unit:'',discount:''},small:{unit:'',discount:''}};for(const k of ['big','small'])if(!data.giftPrices[k])data.giftPrices[k]={unit:'',discount:''};return data.giftPrices}
+function setGiftPrice(kind,key,value){if(READ_ONLY)return;let p=giftPrices();p[kind][key]=value===''?'':Math.max(0,Number(value)||0);save()}
 function money(v){return 'let qh=document.getElementById('qrHintText');if(qh)qh.value=qrHintText();if(READ_ONLY){
  if(!data.giftNames)data.giftNames={big:'',small:''};
  let mb=data.gifts.filter(r=>r.side!=='如'&&r.gift==='大小餅禮盒').length,ms=data.gifts.filter(r=>r.side!=='如'&&r.gift==='小禮盒').length,fb=data.gifts.filter(r=>r.side==='如'&&r.gift==='大小餅禮盒').length,fs=data.gifts.filter(r=>r.side==='如'&&r.gift==='小禮盒').length;
@@ -962,14 +937,7 @@ document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>goPage(b.dataset.page
 window.addEventListener('resize',()=>{if(document.getElementById('gift').classList.contains('active'))renderGift();if(document.getElementById('schedule').classList.contains('active'))renderSchedule();if(document.getElementById('after').classList.contains('active'))renderAfter()});
 applyViewMode();renderSchedule();renderGift();renderPrep();renderAfter();renderOverview();lastSavedSnapshot=JSON.stringify(data);renderUndoMenu();loadCloud().then(()=>{lastSavedSnapshot=JSON.stringify(data);renderUndoMenu();if(CLAIM_TOKEN)handleClaimMode()});
 </script></body></html>+Math.round(Number(v)||0).toLocaleString('zh-TW')}
-function renderGiftPriceCalc(){
- if(READ_ONLY)return;let p=giftPrices(),big=data.gifts.filter(r=>r.gift==='大小餅禮盒').length,small=data.gifts.filter(r=>r.gift==='小禮盒').length;
- let set=(id,v)=>{let e=document.getElementById(id);if(e)e.textContent=v},val=(id,v)=>{let e=document.getElementById(id);if(e&&document.activeElement!==e)e.value=v??''};
- val('giftBigUnit',p.big.unit);val('giftBigDiscount',p.big.discount);val('giftSmallUnit',p.small.unit);val('giftSmallDiscount',p.small.discount);
- set('giftBigPriceName',giftLabel('大小餅禮盒'));set('giftSmallPriceName',giftLabel('小禮盒'));set('giftBigQty',big+' 盒');set('giftSmallQty',small+' 盒');
- let bp=p.big.discount!==''?Number(p.big.discount):Number(p.big.unit)||0,sp=p.small.discount!==''?Number(p.small.discount):Number(p.small.unit)||0,bs=big*bp,ss=small*sp;
- set('giftBigSubtotal',money(bs));set('giftSmallSubtotal',money(ss));set('giftGrandTotal',money(bs+ss))
-}
+function renderGiftPriceCalc(){if(READ_ONLY)return;let p=giftPrices(),big=data.gifts.filter(r=>r.gift==='大小餅禮盒').length,small=data.gifts.filter(r=>r.gift==='小禮盒').length;let set=(id,v)=>{let e=document.getElementById(id);if(e)e.textContent=v},val=(id,v)=>{let e=document.getElementById(id);if(e&&document.activeElement!==e)e.value=v??''};val('giftBigUnit',p.big.unit);val('giftBigDiscount',p.big.discount);val('giftSmallUnit',p.small.unit);val('giftSmallDiscount',p.small.discount);set('giftBigPriceName',giftLabel('大小餅禮盒'));set('giftSmallPriceName',giftLabel('小禮盒'));set('giftBigQty',big+' 盒');set('giftSmallQty',small+' 盒');let bp=p.big.discount!==''?Number(p.big.discount):Number(p.big.unit)||0,sp=p.small.discount!==''?Number(p.small.discount):Number(p.small.unit)||0,bs=big*bp,ss=small*sp;set('giftBigSubtotal',money(bs));set('giftSmallSubtotal',money(ss));set('giftGrandTotal',money(bs+ss))}
 function renderGift(){let qh=document.getElementById('qrHintText');if(qh)qh.value=qrHintText();if(READ_ONLY){
  if(!data.giftNames)data.giftNames={big:'',small:''};
  let mb=data.gifts.filter(r=>r.side!=='如'&&r.gift==='大小餅禮盒').length,ms=data.gifts.filter(r=>r.side!=='如'&&r.gift==='小禮盒').length,fb=data.gifts.filter(r=>r.side==='如'&&r.gift==='大小餅禮盒').length,fs=data.gifts.filter(r=>r.side==='如'&&r.gift==='小禮盒').length;
