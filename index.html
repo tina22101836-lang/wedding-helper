@@ -162,7 +162,7 @@ body.readonly .editOnly{display:none!important}body.readonly #gift>.cards{displa
 
 @media(max-width:800px){.recordForm{grid-template-columns:1fr}.recordGrid{grid-template-columns:1fr}}
 @media(max-width:800px){#scheduleBody td:nth-child(8):before{content:"參考／成果紀錄"}header{align-items:flex-start;flex-direction:column}.cards{grid-template-columns:repeat(2,1fr)}main{padding:0 3vw 40px}nav{padding-left:3vw;overflow:auto}.tab{white-space:nowrap}}
-</style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+.giftPriceCalc{margin:14px 0;padding:16px;background:#fffaf9;border:1px solid var(--line);border-radius:14px}.giftPriceHead{display:flex;justify-content:space-between;align-items:center;gap:12px}.giftGrandTotal{text-align:right}.giftGrandTotal span,.giftSubtotal span{display:block;font-size:12px;color:var(--muted)}.giftGrandTotal strong{font-size:22px}.giftPriceRow{display:grid;grid-template-columns:1.3fr 1fr 1fr .8fr;gap:9px;align-items:end;padding:11px 0;border-top:1px solid var(--line)}.giftPriceRow label{display:grid;gap:4px;font-size:12px;color:var(--muted)}.giftPriceRow input{width:100%;box-sizing:border-box}.giftSubtotal{text-align:right}.giftPriceType small{display:block;color:var(--muted)}.giftPriceNote{font-size:12px}body.readonly #giftPriceCalc{display:none!important}@media(max-width:800px){.giftPriceRow{grid-template-columns:1fr 1fr}.giftPriceType,.giftSubtotal{grid-column:1/3}.giftSubtotal{display:flex;justify-content:space-between}.giftPriceRow input{font-size:16px}}</style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style id="responsive-v3">
 .mobileNav{display:none}
 @media(max-width:800px){
@@ -510,7 +510,7 @@ body.readonly #prep .prepActualTime b{font-size:12px;color:var(--muted)}
  body:not(.readonly) #schedule .scheduleMobileDate .dateSingle{overflow:visible!important;text-overflow:clip!important;letter-spacing:-.15px}
  body:not(.readonly) #schedule tbody td:nth-child(3){padding-left:7px!important}
 }
-.giftPriceCalc{margin:14px 0 0;padding:16px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:#fffaf9}.giftPriceHead{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:12px}.giftGrandTotal{text-align:right;white-space:nowrap}.giftGrandTotal span,.giftSubtotal span{display:block;font-size:12px;color:var(--muted)}.giftGrandTotal strong{font-size:22px}.giftPriceGrid{display:grid;gap:9px}.giftPriceRow{display:grid;grid-template-columns:minmax(120px,1.4fr) minmax(90px,1fr) minmax(90px,1fr) minmax(90px,.8fr);gap:9px;align-items:end;padding:11px 0;border-top:1px solid var(--line)}.giftPriceType{display:grid;gap:3px}.giftPriceType small{color:var(--muted)}.giftPriceRow label{display:grid;gap:4px;font-size:12px;color:var(--muted)}.giftPriceRow input{width:100%;box-sizing:border-box}.giftSubtotal{text-align:right}.giftSubtotal b{font-size:17px}.giftPriceNote{font-size:12px;margin-top:8px}body.readonly #giftPriceCalc{display:none!important}@media(max-width:800px){.giftPriceCalc{margin-top:10px;padding:14px 12px}.giftPriceRow{grid-template-columns:1fr 1fr;gap:8px 10px}.giftPriceType{grid-column:1/3}.giftSubtotal{grid-column:1/3;display:flex;justify-content:space-between;align-items:center;padding-top:3px}.giftPriceRow input{font-size:16px;min-width:0}}</style></head><body>
+</style></head><body>
 <div id="claimPanel" class="claimPanel">
  <div class="claimCard"><div class="claimIcon">🎁</div><h1>禮盒領取確認</h1><div id="claimContent" class="claimContent">正在確認資料…</div></div>
 </div>
@@ -550,7 +550,7 @@ body.readonly #prep .prepActualTime b{font-size:12px;color:var(--muted)}
 <span class="muted">留白時仍顯示原本分類名稱。</span>
 <label class="giftNameRow qrHintSetting" style="flex-basis:100%"><span>QR 標籤提示文字</span><input id="qrHintText" style="min-width:240px" placeholder="領取後請掃 QR Code" onchange="setQrHintText(this.value)"></label>
 </div>
-<div id="giftPriceCalc" class="giftPriceCalc editOnly"><div class="giftPriceHead"><div><b>💰 喜餅金額試算</b><div class="muted">依目前禮盒名單數量自動計算</div></div><div class="giftGrandTotal"><span>總計</span><strong id="giftGrandTotal">$0</strong></div></div><div class="giftPriceGrid"><div class="giftPriceRow"><div class="giftPriceType"><b id="giftBigPriceName">大小餅禮盒</b><small id="giftBigQty">0 盒</small></div><label>單價<input id="giftBigUnit" type="number" min="0" step="1" inputmode="numeric" placeholder="0" onchange="setGiftPrice('big','unit',this.value)"></label><label>折扣後<input id="giftBigDiscount" type="number" min="0" step="1" inputmode="numeric" placeholder="0" onchange="setGiftPrice('big','discount',this.value)"></label><div class="giftSubtotal"><span>小計</span><b id="giftBigSubtotal">$0</b></div></div><div class="giftPriceRow"><div class="giftPriceType"><b id="giftSmallPriceName">小禮盒</b><small id="giftSmallQty">0 盒</small></div><label>單價<input id="giftSmallUnit" type="number" min="0" step="1" inputmode="numeric" placeholder="0" onchange="setGiftPrice('small','unit',this.value)"></label><label>折扣後<input id="giftSmallDiscount" type="number" min="0" step="1" inputmode="numeric" placeholder="0" onchange="setGiftPrice('small','discount',this.value)"></label><div class="giftSubtotal"><span>小計</span><b id="giftSmallSubtotal">$0</b></div></div></div><div class="giftPriceNote muted">小計優先使用「折扣後」價格；未填時使用原單價。</div></div><div class="giftListTitle"><span>🎁 送禮名單</span><button id="giftOrderToggle" class="btn editOnly" onclick="toggleGiftOrderMode()">↕ 調整順序</button></div>
+<div id="giftPriceCalc" class="giftPriceCalc editOnly"><div class="giftPriceHead"><div><b>💰 喜餅金額試算</b><div class="muted">依目前禮盒名單數量自動計算</div></div><div class="giftGrandTotal"><span>總計</span><strong id="giftGrandTotal">$0</strong></div></div><div class="giftPriceGrid"><div class="giftPriceRow"><div class="giftPriceType"><b>大小餅禮盒</b><small id="giftBigQty">0 盒</small></div><label>單價<input id="giftBigUnit" type="number" min="0" inputmode="numeric" onchange="setGiftPrice('big','unit',this.value)"></label><label>折扣後<input id="giftBigDiscount" type="number" min="0" inputmode="numeric" onchange="setGiftPrice('big','discount',this.value)"></label><div class="giftSubtotal"><span>小計</span><b id="giftBigSubtotal">$0</b></div></div><div class="giftPriceRow"><div class="giftPriceType"><b>小禮盒</b><small id="giftSmallQty">0 盒</small></div><label>單價<input id="giftSmallUnit" type="number" min="0" inputmode="numeric" onchange="setGiftPrice('small','unit',this.value)"></label><label>折扣後<input id="giftSmallDiscount" type="number" min="0" inputmode="numeric" onchange="setGiftPrice('small','discount',this.value)"></label><div class="giftSubtotal"><span>小計</span><b id="giftSmallSubtotal">$0</b></div></div></div><div class="giftPriceNote muted">小計優先使用折扣後價格；未填時使用原單價。</div></div><div class="giftListTitle"><span>🎁 送禮名單</span><button id="giftOrderToggle" class="btn editOnly" onclick="toggleGiftOrderMode()">↕ 調整順序</button></div>
 <div class="tableWrap"><table id="giftTable"><thead><tr id="giftHead"><th>對象</th><th>送誰</th><th>關係</th><th>禮盒</th><th>預計送禮日</th><th>配送方式</th><th>收件人</th><th>狀態</th><th>地址／備註</th><th></th></tr></thead><tbody id="giftBody"></tbody></table></div></div></section>
 <section id="prep" class="page">
 <div class="cards"><div class="card"><span class="label">👰 女方</span><b id="pBride">0/0</b><div class="muted">已完成／全部</div></div><div class="card"><span class="label">🤵 男方</span><b id="pGroom">0/0</b><div class="muted">已完成／全部</div></div><div class="card"><span class="label">💍 共同</span><b id="pTogether">0/0</b><div class="muted">已完成／全部</div></div><div class="card"><span class="label">全部完成率</span><b id="pPct">0%</b></div></div>
@@ -630,7 +630,7 @@ function inferAction(before,after){
   if(b.length<a.length)return '刪除'+label;
   if(JSON.stringify(a)!==JSON.stringify(b)){let idx=a.findIndex((x,i)=>JSON.stringify(x)!==JSON.stringify(b[i]));let x=b[idx]||a[idx]||{};return '修改'+label+(x.item||x.name?'－'+(x.item||x.name):'')}
  }
- if(JSON.stringify(before.giftNames)!==JSON.stringify(after.giftNames))return '修改禮盒名稱';if(JSON.stringify(before.giftPrices)!==JSON.stringify(after.giftPrices))return '修改喜餅價格';
+ if(JSON.stringify(before.giftNames)!==JSON.stringify(after.giftNames))return '修改禮盒名稱';
  return '修改資料'
 }
 function pushHistory(before,after){if(!before||JSON.stringify(before)===JSON.stringify(after))return;let h=loadHistory(HISTORY_KEY);h.push({label:inferAction(before,after),state:before,at:new Date().toISOString()});if(h.length>HISTORY_MAX)h=h.slice(-HISTORY_MAX);localStorage.setItem(HISTORY_KEY,JSON.stringify(h));localStorage.setItem(REDO_KEY,'[]');renderUndoMenu()}
@@ -708,236 +708,10 @@ function moveGiftWithinSide(index,dir){
  let p=indices.indexOf(index),np=p+dir;if(p<0||np<0||np>=indices.length)return;
  let other=indices[np],tmp=data.gifts[index];data.gifts[index]=data.gifts[other];data.gifts[other]=tmp;save()
 }
-function giftPrices(){if(!data.giftPrices)data.giftPrices={big:{unit:'',discount:''},small:{unit:'',discount:''}};for(const k of ['big','small'])if(!data.giftPrices[k])data.giftPrices[k]={unit:'',discount:''};return data.giftPrices}
+function giftPrices(){if(!data.giftPrices)data.giftPrices={big:{unit:'',discount:''},small:{unit:'',discount:''}};return data.giftPrices}
 function setGiftPrice(kind,key,value){if(READ_ONLY)return;let p=giftPrices();p[kind][key]=value===''?'':Math.max(0,Number(value)||0);save()}
-function money(v){return 'let qh=document.getElementById('qrHintText');if(qh)qh.value=qrHintText();if(READ_ONLY){
- if(!data.giftNames)data.giftNames={big:'',small:''};
- let mb=data.gifts.filter(r=>r.side!=='如'&&r.gift==='大小餅禮盒').length,ms=data.gifts.filter(r=>r.side!=='如'&&r.gift==='小禮盒').length,fb=data.gifts.filter(r=>r.side==='如'&&r.gift==='大小餅禮盒').length,fs=data.gifts.filter(r=>r.side==='如'&&r.gift==='小禮盒').length;
- let head=document.getElementById('giftHead');if(head)head.innerHTML='<th colspan="2" class="maleHead"><div class="sideSummary"><b>🐟 男方</b><small class="giftCountLines"><span><i>'+esc(giftLabel('大小餅禮盒'))+'</i><em>：</em><strong>'+mb+'盒</strong></span><span><i>'+esc(giftLabel('小禮盒'))+'</i><em>：</em><strong>'+ms+'盒</strong></span></small></div></th><th colspan="2" class="femaleHead"><div class="sideSummary"><b>如 女方</b><small class="giftCountLines"><span><i>'+esc(giftLabel('大小餅禮盒'))+'</i><em>：</em><strong>'+fb+'盒</strong></span><span><i>'+esc(giftLabel('小禮盒'))+'</i><em>：</em><strong>'+fs+'盒</strong></span></small></div></th>';
- document.getElementById('giftTable')?.classList.add('giftSimpleTable');document.getElementById('gift')?.classList.add('giftSimpleMode');
- let rows=data.gifts.map((r,i)=>({...r,i}));document.getElementById('giftBody').innerHTML=rows.length?giftSimpleRows(rows):'<tr><td colspan="4" class="empty">目前沒有名單</td></tr>';
- document.getElementById('giftFilterSummary').textContent='共 '+data.gifts.length+' 盒｜'+giftLabel('大小餅禮盒')+' '+(mb+fb)+' 盒｜'+giftLabel('小禮盒')+' '+(ms+fs)+' 盒';
- document.getElementById('gTotal').textContent=data.gifts.length;document.getElementById('gBig').textContent=mb+fb;document.getElementById('gSmall').textContent=ms+fs;document.getElementById('gDone').textContent=data.gifts.filter(x=>x.status==='已送達').length;document.querySelector('#gift .cards .card:nth-child(2) .label').textContent='全部 '+giftLabel('大小餅禮盒');document.querySelector('#gift .cards .card:nth-child(3) .label').textContent='全部 '+giftLabel('小禮盒');return}
-if(!data.giftNames)data.giftNames={big:'',small:''};renderGiftPriceCalc();let simple=giftViewMode==='simple';document.getElementById('giftSimpleBtn')?.classList.toggle('primary',simple);document.getElementById('giftDetailBtn')?.classList.toggle('primary',!simple);document.getElementById('giftPendingBtn')?.classList.toggle('primary',giftPendingOnly);let head=document.getElementById('giftHead');if(head){if(simple){let mb=data.gifts.filter(r=>r.side!=='如'&&r.gift==='大小餅禮盒').length,ms=data.gifts.filter(r=>r.side!=='如'&&r.gift==='小禮盒').length,fb=data.gifts.filter(r=>r.side==='如'&&r.gift==='大小餅禮盒').length,fs=data.gifts.filter(r=>r.side==='如'&&r.gift==='小禮盒').length;head.innerHTML='<th colspan="2" class="maleHead"><div class="sideSummary"><b>🐟 男方</b><small class="giftCountLines"><span><i>'+esc(giftLabel('大小餅禮盒'))+'</i><em>：</em><strong>'+mb+'盒</strong></span><span><i>'+esc(giftLabel('小禮盒'))+'</i><em>：</em><strong>'+ms+'盒</strong></span></small></div></th><th colspan="2" class="femaleHead"><div class="sideSummary"><b>如 女方</b><small class="giftCountLines"><span><i>'+esc(giftLabel('大小餅禮盒'))+'</i><em>：</em><strong>'+fb+'盒</strong></span><span><i>'+esc(giftLabel('小禮盒'))+'</i><em>：</em><strong>'+fs+'盒</strong></span></small></div></th>'}else head.innerHTML='<th>對象</th><th>送誰</th><th>關係</th><th>禮盒</th><th>預計送禮日</th><th>配送方式</th><th>收件人</th><th>狀態</th><th>地址／備註</th><th></th>'}document.getElementById('giftTable')?.classList.toggle('giftSimpleTable',simple);document.getElementById('gift')?.classList.toggle('giftSimpleMode',simple);document.getElementById('gift')?.classList.toggle('giftOrderMode',simple&&giftOrderMode);let gob=document.getElementById('giftOrderToggle');if(gob){gob.style.display=simple?'':'none';gob.textContent=giftOrderMode?'✓ 完成排序':'↕ 調整順序'}let side=document.getElementById('gSide').value,status=document.getElementById('gStatus').value,q=(document.getElementById('gSearch').value||'').toLowerCase();let rows=data.gifts.map((r,i)=>({...r,i})).filter(r=>(simple||!side||r.side===side)&&(simple||!status||r.status===status)&&(simple||!giftPendingOnly||r.status!=='已送達')&&[r.name,r.relation,r.gift,r.address,r.note].join(' ').toLowerCase().includes(q));
-let sideRows=data.gifts.filter(r=>!side||r.side===side),bigCount=sideRows.filter(x=>x.gift==='大小餅禮盒').length,smallCount=sideRows.filter(x=>x.gift==='小禮盒').length;
-let who=side==='如'?'女方':side==='🐟'?'男方':'全部';
-document.getElementById('giftFilterSummary').textContent='目前顯示 '+who+'：共 '+sideRows.length+' 盒\n'+giftLabel('大小餅禮盒')+' '+bigCount+' 盒｜'+giftLabel('小禮盒')+' '+smallCount+' 盒';
-document.getElementById('bigGiftName').value=data.giftNames.big||'';document.getElementById('smallGiftName').value=data.giftNames.small||'';
-document.getElementById('giftBody').innerHTML=rows.length?(simple?giftSimpleRows(rows):rows.map(r=>isMobileEdit()?`<tr class="${r.status==='已送達'?'done':''}" onclick="openGiftEdit(${r.i})"><td><span class="badge">${r.side==='如'?'女方':'男方'}</span></td><td><b>${esc(r.name||'—')}</b></td><td></td><td>${esc(giftLabel(r.gift)||'未選擇')}</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>`:`<tr class="${r.status==='已送達'?'done':''}"><td><span class="badge">${esc(r.side)}</span></td><td><input value="${esc(r.name)}" onchange="data.gifts[${r.i}].name=this.value;save()"></td><td><select onchange="data.gifts[${r.i}].relation=this.value;save()"><option ${r.relation==='親戚/團體'?'selected':''}>親戚/團體</option><option ${r.relation==='朋友'?'selected':''}>朋友</option><option ${r.relation==='同事'?'selected':''}>同事</option><option ${r.relation==='其他'?'selected':''}>其他</option></select></td><td><select onchange="data.gifts[${r.i}].gift=this.value;save()"><option value="">未選擇</option><option value="大小餅禮盒" ${r.gift==='大小餅禮盒'?'selected':''}>${esc(giftLabel('大小餅禮盒'))}</option><option value="小禮盒" ${r.gift==='小禮盒'?'selected':''}>${esc(giftLabel('小禮盒'))}</option></select></td><td><input type="date" value="${esc(r.date)}" onchange="data.gifts[${r.i}].date=this.value;save()"></td><td><select onchange="data.gifts[${r.i}].shipping=this.value;if(this.value==='全家'||this.value==='7-11'){let s=prompt('請輸入取貨門市',data.gifts[${r.i}].store||'');if(s!==null)data.gifts[${r.i}].store=s.trim()}else{data.gifts[${r.i}].store=''}save()"><option ${r.shipping==='待安排'?'selected':''}>待安排</option><option ${r.shipping==='宅配'?'selected':''}>宅配</option><option ${r.shipping==='自取'?'selected':''}>自取</option><option ${r.shipping==='親送'?'selected':''}>親送</option><option ${r.shipping==='店家配送'?'selected':''}>店家配送</option><option ${r.shipping==='全家'?'selected':''}>全家</option><option ${r.shipping==='7-11'?'selected':''}>7-11</option><option ${r.shipping==='其他'?'selected':''}>其他</option></select></td><td><input value="${esc(r.receiver)}" placeholder="收件人" onchange="data.gifts[${r.i}].receiver=this.value;save()"></td><td><select onchange="data.gifts[${r.i}].status=this.value;data.gifts[${r.i}].sent=this.value==='已送達';save()"><option ${r.status==='待配送'?'selected':''}>待配送</option><option ${r.status==='配送中'?'selected':''}>配送中</option><option ${r.status==='已送達'?'selected':''}>已送達</option></select></td><td><input value="${esc([r.address,r.note].filter(Boolean).join(' / '))}" placeholder="地址／備註" onchange="data.gifts[${r.i}].note=this.value;save()"></td><td><button class="btn danger editOnly" onclick="data.gifts.splice(${r.i},1);save()">刪除</button></td></tr>`).join('')):`<tr><td colspan="${simple?4:10}" class="empty">沒有符合的禮盒資料</td></tr>`;
-let allBig=data.gifts.filter(x=>x.gift==='大小餅禮盒').length,allSmall=data.gifts.filter(x=>x.gift==='小禮盒').length;document.getElementById('gTotal').textContent=data.gifts.length;document.getElementById('gBig').textContent=allBig;document.getElementById('gSmall').textContent=allSmall;document.getElementById('gDone').textContent=data.gifts.filter(x=>x.status==='已送達').length;
-document.querySelector('#gift .cards .card:nth-child(2) .label').textContent=giftLabel('大小餅禮盒');document.querySelector('#gift .cards .card:nth-child(3) .label').textContent=giftLabel('小禮盒')}
-
-function inferDocOwner(text){
- const t=String(text||'');
- if(t.includes('雙方'))return '雙方';
- if(t.includes('女方'))return '女方';
- if(t.includes('男方'))return '男方';
- return '共同'
-}
-function prepDocs(r){
- if(Array.isArray(r.docItems)){
-  r.docItems.forEach(d=>{if(!d.owner)d.owner=inferDocOwner(d.text)});
-  return r.docItems
- }
- r.docItems=[];
- (r.docs||'').split('｜').map(x=>x.trim()).filter(Boolean).forEach(text=>{
-  if(text.includes('雙方')){
-   const clean=text.replace(/^雙方/,'');
-   r.docItems.push({text:clean,owner:'女方',done:false},{text:clean,owner:'男方',done:false})
-  }else r.docItems.push({text,owner:inferDocOwner(text),done:false})
- });
- return r.docItems
-}
-function normalizeDualDocs(r){
- const a=prepDocs(r),out=[],used=new Set();
- a.forEach((d,i)=>{
-  if(used.has(i))return;
-  const text=String(d.text||'').replace(/^雙方/,'').trim();
-  if(d.owner==='雙方'||d.owner==='男女雙方'){
-   out.push({text,owner:'雙方',brideDone:d.brideDone!==undefined?!!d.brideDone:!!d.done,groomDone:d.groomDone!==undefined?!!d.groomDone:!!d.done});
-   used.add(i);return
-  }
-  if(d.owner==='女方'||d.owner==='男方'){
-   const other=d.owner==='女方'?'男方':'女方';
-   const j=a.findIndex((x,k)=>k!==i&&!used.has(k)&&x.owner===other&&String(x.text||'').replace(/^雙方/,'').trim()===text);
-   if(j>=0){
-    const bride=d.owner==='女方'?d:a[j],groom=d.owner==='男方'?d:a[j];
-    out.push({text,owner:'雙方',brideDone:!!bride.done,groomDone:!!groom.done});used.add(i);used.add(j);return
-   }
-  }
-  out.push({text,owner:d.owner||'共同',done:!!d.done});used.add(i)
- });
- r.docItems=out;return out
-}
-function prepDocDisplay(d){
- let text=String(d.text||'').trim(),title=text,detail='';
- let par=text.match(/^(.*?)[（(]([^）)]+)[）)]\s*$/);
- if(par){title=par[1].trim();detail='（'+par[2].trim()+'）'}
- if(/相片|照片/.test(text)){
-  title='相片';
-  detail='（雙方各1張｜最近2年內拍攝｜正面彩色｜4.5 × 3.5 cm｜白色背景｜符合國民身分證相片規格；亦可使用符合規定的數位相片）';
- }
- return {title:title||text,detail,infoOnly:false}
-}
-function prepDocDone(d){return d.owner==='雙方'?!!d.brideDone&&!!d.groomDone:!!d.done}
-function prepDone(r){let a=normalizeDualDocs(r);return a.length>0&&a.every(prepDocDone)}
-function togglePrepDoc(i,j,v,side){
- const d=normalizeDualDocs(data.prep[i])[j];
- if(d.owner==='雙方'&&side==='女方')d.brideDone=v;
- else if(d.owner==='雙方'&&side==='男方')d.groomDone=v;
- else d.done=v;
- data.prep[i].done=prepDone(data.prep[i]);save()
-}
-function addPrepDoc(i){
- let t=prompt('新增要準備的資料：');if(!t||!t.trim())return;
- let o=prompt('這份資料是誰準備？請輸入：女方、男方、雙方、共同','共同');
- if(o==='男女雙方')o='雙方';if(!['女方','男方','雙方','共同'].includes(o))o='共同';
- let d=o==='雙方'?{text:t.trim(),owner:o,brideDone:false,groomDone:false}:{text:t.trim(),owner:o,done:false};
- normalizeDualDocs(data.prep[i]).push(d);data.prep[i].done=false;save()
-}
-function deletePrepDoc(i,j){normalizeDualDocs(data.prep[i]).splice(j,1);data.prep[i].done=prepDone(data.prep[i]);save()}
-function prepDocReadHtml(d){
- let v=prepDocDisplay(d);
- if(d.owner==='雙方')return '<div class="familyPrepDoc dualPrepDoc"><span class="dualDocName">'+esc(v.title)+'</span>'+(v.detail?'<span class="prepDocDetail">'+esc(v.detail)+'</span>':'')+'<span class="dualChecks"><span class="dualCheck">'+(d.groomDone?'☑':'☐')+' 男方</span><span class="dualCheck">'+(d.brideDone?'☑':'☐')+' 女方</span></span></div>';
- return '<div class="familyPrepDoc singlePrepDoc"><span class="dualDocName">'+esc(v.title)+'</span>'+(v.detail?'<span class="prepDocDetail">'+esc(v.detail)+'</span>':'')+'<span class="singlePrepCheck">'+(d.done?'☑':'☐')+' <span class="badge">'+esc(d.owner)+'</span></span></div>'
-}
-function prepDocEditHtml(d,i,j){
- let v=prepDocDisplay(d);
- if(d.owner==='雙方')return `<div class="prepDocEditRow dualPrepEdit hasPrepDetail"><span class="dualDocName">${esc(v.title)}</span>${v.detail?`<span class="prepDocDetail">${esc(v.detail)}</span>`:''}<span class="dualChecks"><label><input class="check" type="checkbox" ${d.groomDone?'checked':''} onchange="togglePrepDoc(${i},${j},this.checked,'男方')">男方</label><label><input class="check" type="checkbox" ${d.brideDone?'checked':''} onchange="togglePrepDoc(${i},${j},this.checked,'女方')">女方</label></span><button class="btn danger editOnly dualDelete" style="padding:3px 7px" onclick="deletePrepDoc(${i},${j})">×</button></div>`;
- return `<div class="prepDocEditRow singlePrepEdit hasPrepDetail"><span class="dualDocName" style="${d.done?'text-decoration:line-through;opacity:.55':''}">${esc(v.title)}</span>${v.detail?`<span class="prepDocDetail">${esc(v.detail)}</span>`:''}<label class="singlePrepCheck"><input class="check" type="checkbox" ${d.done?'checked':''} onchange="togglePrepDoc(${i},${j},this.checked)"><span class="badge">${esc(d.owner)}</span></label><button class="btn danger editOnly singleDelete" style="padding:3px 7px" onclick="deletePrepDoc(${i},${j})">×</button></div>`
-}
-function prepStats(all,o){
- let total=0,done=0;
- all.forEach(d=>{if(prepDocDisplay(d).infoOnly)return;if(d.owner===o){total++;if(d.done)done++}else if(d.owner==='雙方'&&(o==='女方'||o==='男方')){total++;if(o==='女方'?d.brideDone:d.groomDone)done++}});
- return done+'/'+total
-}
-function renderPrep(){if(READ_ONLY){
- if(!Array.isArray(data.prep))data.prep=structuredClone(DEFAULT_PREP);const body=document.getElementById('prepBody');data.prep.forEach(x=>normalizeDualDocs(x));
- body.innerHTML=data.prep.map(r=>{let docs=normalizeDualDocs(r);let list=docs.map(prepDocReadHtml).join('')||'<div class="muted">尚無資料</div>';let note=r.note?'<div class="prepInlineNote"><b>備註：</b>'+esc(r.note)+'</div>':'';return '<tr class="familyPrepRow"><td data-label="狀態"><b>'+(prepDone(r)?'✅ 已完成':'⏳ 準備中')+'</b></td><td data-label="項目"><b>'+esc(r.item||'—')+'</b></td><td data-label="地點">'+esc(r.place||'—')+'</td><td data-label="日期"><span>'+esc(dateWithWeekday(r.date))+'</span>'+(r.time?'<div class="prepActualTime"><b>時間：</b>'+esc(r.time)+'</div>':'')+'</td><td class="prepDataCell"><div class="prepDataTitle">準備資料</div>'+list+note+'</td><td class="prepLegacyNote"></td><td></td></tr>'}).join('');
- const all=data.prep.flatMap(r=>normalizeDualDocs(r));document.getElementById('pBride').textContent=prepStats(all,'女方');document.getElementById('pGroom').textContent=prepStats(all,'男方');document.getElementById('pTogether').textContent=prepStats(all,'共同');
- let active=all,units=active.reduce((n,d)=>n+(d.owner==='雙方'?2:1),0),done=active.reduce((n,d)=>n+(d.owner==='雙方'?(d.brideDone?1:0)+(d.groomDone?1:0):(d.done?1:0)),0);document.getElementById('pPct').textContent=(units?Math.round(done/units*100):0)+'%';return
- }
- if(!Array.isArray(data.prep))data.prep=structuredClone(DEFAULT_PREP);
- data.prep.forEach(x=>{if(!x.owner)x.owner='共同';normalizeDualDocs(x);x.done=prepDone(x)});
- const body=document.getElementById('prepBody');if(!body)return;
- body.innerHTML=data.prep.length?data.prep.map((r,i)=>{
-  const docs=normalizeDualDocs(r),checklist=docs.length?docs.map((d,j)=>prepDocEditHtml(d,i,j)).join(''):'<div class="muted">尚無資料</div>';
-  return `<tr class="${r.done?'done':''}"><td><b>${r.done?'✅ 已完成':'⏳ 準備中'}</b></td><td><input value="${esc(r.item)}" onchange="data.prep[${i}].item=this.value;save()"></td><td><input value="${esc(r.place)}" onchange="data.prep[${i}].place=this.value;save()"></td><td><div class="prepDateFields"><input type="date" value="${esc(r.date)}" onchange="data.prep[${i}].date=this.value;save()"><label class="prepTimeField"><span>實際到達時間</span><input class="prepTimeInput" type="time" value="${esc(r.time||'')}" aria-label="實際到戶政事務所時間" onchange="data.prep[${i}].time=this.value;save()"></label></div></td><td class="prepDataCell"><div class="prepDataTitle">準備資料</div><div>${checklist}</div>${r.note?`<div class="prepInlineNote"><b>備註：</b>${esc(r.note)}</div>`:''}<button class="btn" style="margin-top:7px" onclick="addPrepDoc(${i})">＋ 新增資料</button></td><td class="prepLegacyNote"></td><td><button class="btn danger editOnly" onclick="data.prep.splice(${i},1);save()">刪除</button></td></tr>`
- }).join(''):'<tr><td colspan="7" class="empty">尚未建立準備項目</td></tr>';
- const all=data.prep.flatMap(r=>normalizeDualDocs(r));document.getElementById('pBride').textContent=prepStats(all,'女方');document.getElementById('pGroom').textContent=prepStats(all,'男方');document.getElementById('pTogether').textContent=prepStats(all,'共同');
- let active=all,units=active.reduce((n,d)=>n+(d.owner==='雙方'?2:1),0),done=active.reduce((n,d)=>n+(d.owner==='雙方'?(d.brideDone?1:0)+(d.groomDone?1:0):(d.done?1:0)),0);document.getElementById('pPct').textContent=(units?Math.round(done/units*100):0)+'%';
-}
-let activePrepEditIndex=-1,prepCreating=false;
-function openPrepEdit(i){if(READ_ONLY)return;prepCreating=false;document.getElementById('peDeleteBtn').style.display='';document.getElementById('peSaveBtn').textContent='儲存修改';activePrepEditIndex=i;let r=data.prep[i];document.getElementById('peDone').value=r.done?'1':'0';document.getElementById('peDate').value=r.date||'';document.getElementById('peTime').value=r.time||'';document.getElementById('peItem').value=r.item||'';document.getElementById('pePlace').value=r.place||'';let docs=Array.isArray(r.docItems)&&r.docItems.length?r.docItems.map(x=>x.text).filter(Boolean).join('、'):(r.docs||'');document.getElementById('peDocs').value=docs;document.getElementById('peNote').value=r.note||'';document.getElementById('prepEditModal').classList.add('show')}
-function closePrepEdit(){document.getElementById('prepEditModal').classList.remove('show');activePrepEditIndex=-1;prepCreating=false}
-function savePrepEdit(){let r;if(prepCreating){r={done:false,item:'',place:'',date:'',time:'',docs:'',docItems:[],note:''};data.prep.push(r)}else{if(activePrepEditIndex<0)return;r=data.prep[activePrepEditIndex];}r.done=document.getElementById('peDone').value==='1';r.date=document.getElementById('peDate').value;r.time=document.getElementById('peTime').value;r.item=document.getElementById('peItem').value.trim();r.place=document.getElementById('pePlace').value.trim();r.docs=document.getElementById('peDocs').value.trim();r.note=document.getElementById('peNote').value.trim();save();closePrepEdit()}
-function deletePrepEdit(){if(activePrepEditIndex<0||!confirm('確定刪除這筆準備項目嗎？'))return;data.prep.splice(activePrepEditIndex,1);save();closePrepEdit()}
-function addPrep(){prepCreating=true;activePrepEditIndex=-1;document.getElementById('peDone').value='0';document.getElementById('peDate').value='';document.getElementById('peTime').value='';document.getElementById('peItem').value='';document.getElementById('pePlace').value='';document.getElementById('peDocs').value='';document.getElementById('peNote').value='';document.getElementById('peDeleteBtn').style.display='none';document.getElementById('peSaveBtn').textContent='儲存新增';document.getElementById('prepEditModal').classList.add('show')}
-
-let activeAfterEditIndex=-1,afterCreating=false;
-function openAfterEdit(i){if(READ_ONLY)return;afterCreating=false;document.getElementById('aeDeleteBtn').style.display='';document.getElementById('aeSaveBtn').textContent='儲存修改';activeAfterEditIndex=i;let r=data.after[i];document.getElementById('aeDone').value=r.done?'1':'0';document.getElementById('aeCategory').value=r.category||'';document.getElementById('aeItem').value=r.item||'';document.getElementById('aeWho').value=r.who||'共同';document.getElementById('aeNeed').value=r.need||'視情況';document.getElementById('aeDate').value=r.date||'';document.getElementById('aeNote').value=r.note||'';document.getElementById('afterEditModal').classList.add('show')}
-function closeAfterEdit(){document.getElementById('afterEditModal').classList.remove('show');activeAfterEditIndex=-1;afterCreating=false}
-function saveAfterEdit(){let r;if(afterCreating){r={done:false,category:'其他',item:'',who:'共同',need:'視情況',date:'',note:''};data.after.push(r)}else{if(activeAfterEditIndex<0)return;r=data.after[activeAfterEditIndex];}r.done=document.getElementById('aeDone').value==='1';r.category=document.getElementById('aeCategory').value.trim();r.item=document.getElementById('aeItem').value.trim();r.who=document.getElementById('aeWho').value;r.need=document.getElementById('aeNeed').value;r.date=document.getElementById('aeDate').value;r.note=document.getElementById('aeNote').value.trim();if(r.done&&!r.date)r.date=new Date().toISOString().slice(0,10);save();closeAfterEdit()}
-function deleteAfterEdit(){if(activeAfterEditIndex<0||!confirm('確定刪除這筆婚後待辦嗎？'))return;data.after.splice(activeAfterEditIndex,1);save();closeAfterEdit()}
-function renderAfter(){if(READ_ONLY){if(!Array.isArray(data.after))data.after=structuredClone(DEFAULT_AFTER);let filter=document.getElementById('aFilter'),cats=[...new Set(data.after.map(x=>x.category).filter(Boolean))],old=filter.value;filter.innerHTML='<option value="">全部類別</option>'+cats.map(x=>'<option>'+esc(x)+'</option>').join('');filter.value=old;let rows=data.after.filter(x=>!old||x.category===old),body=document.getElementById('afterBody');body.innerHTML=rows.map(r=>'<tr><td>'+(r.done?'✅ 已完成':'⏳ 待辦')+'</td><td>'+esc(r.category||'—')+'</td><td><b>'+esc(r.item||'—')+'</b></td><td>'+esc(r.who||'—')+'</td><td>'+esc(r.need||'—')+'</td><td>'+esc(dateWithWeekday(r.date))+'</td><td>'+esc(r.note||'—')+'</td><td></td></tr>').join('');let done=data.after.filter(x=>x.done).length;document.getElementById('aTotal').textContent=data.after.length;document.getElementById('aDone').textContent=done;document.getElementById('aLeft').textContent=data.after.length-done;document.getElementById('aPct').textContent=(data.after.length?Math.round(done/data.after.length*100):0)+'%';return}
- if(!Array.isArray(data.after))data.after=structuredClone(DEFAULT_AFTER);
- const cats=[...new Set(data.after.map(x=>x.category).filter(Boolean))];
- const filter=document.getElementById('aFilter');if(!filter)return;
- const old=filter.value;filter.innerHTML='<option value="">全部類別</option>'+cats.map(x=>'<option>'+esc(x)+'</option>').join('');filter.value=old;
- const rows=data.after.filter(x=>!old||x.category===old),body=document.getElementById('afterBody');
- body.innerHTML=rows.length?rows.map(r=>{const i=data.after.indexOf(r);if(isMobileEdit())return `<tr class="${r.done?'done':''}" onclick="openAfterEdit(${i})"><td>${r.done?'✅':'⬜'}</td><td>${esc(r.category||'—')}</td><td><b>${esc(r.item||'—')}</b></td><td></td><td>${esc(r.need||'—')}</td><td></td><td></td><td></td></tr>`;return `<tr class="${r.done?'done':''}"><td><input class="check" type="checkbox" ${r.done?'checked':''} onchange="data.after[${i}].done=this.checked;if(this.checked&&!data.after[${i}].date)data.after[${i}].date=new Date().toISOString().slice(0,10);save()"></td><td><input value="${esc(r.category)}" onchange="data.after[${i}].category=this.value;save()"></td><td><input value="${esc(r.item)}" onchange="data.after[${i}].item=this.value;save()"></td><td><select onchange="data.after[${i}].who=this.value;save()"><option ${r.who==='女方'?'selected':''}>女方</option><option ${r.who==='男方'?'selected':''}>男方</option><option ${r.who==='雙方'?'selected':''}>雙方</option><option ${r.who==='共同'?'selected':''}>共同</option><option ${r.who==='各自'?'selected':''}>各自</option><option ${r.who==='視情況'?'selected':''}>視情況</option></select></td><td><select onchange="data.after[${i}].need=this.value;save()"><option ${r.need==='要留意'?'selected':''}>要留意</option><option ${r.need==='建議'?'selected':''}>建議</option><option ${r.need==='視情況'?'selected':''}>視情況</option><option ${r.need==='自選'?'selected':''}>自選</option></select></td><td><input type="date" value="${esc(r.date)}" onchange="data.after[${i}].date=this.value;save()"></td><td><input value="${esc(r.note)}" onchange="data.after[${i}].note=this.value;save()"></td><td><button class="btn danger editOnly" onclick="data.after.splice(${i},1);save()">刪除</button></td></tr>`}).join(''):'<tr><td colspan="8" class="empty">目前沒有待辦事項</td></tr>';
- const done=data.after.filter(x=>x.done).length;document.getElementById('aTotal').textContent=data.after.length;document.getElementById('aDone').textContent=done;document.getElementById('aLeft').textContent=data.after.length-done;document.getElementById('aPct').textContent=(data.after.length?Math.round(done/data.after.length*100):0)+'%';
-}
-function addAfter(){afterCreating=true;activeAfterEditIndex=-1;document.getElementById('aeDone').value='0';document.getElementById('aeCategory').value='其他';document.getElementById('aeItem').value='';document.getElementById('aeWho').value='共同';document.getElementById('aeNeed').value='視情況';document.getElementById('aeDate').value='';document.getElementById('aeNote').value='';document.getElementById('aeDeleteBtn').style.display='none';document.getElementById('aeSaveBtn').textContent='儲存新增';document.getElementById('afterEditModal').classList.add('show')}
-
-function addSchedule(){scheduleCreating=true;activeScheduleEditIndex=-1;document.getElementById('seDone').value='0';document.getElementById('seDate').value='';document.getElementById('seEndDate').value='';document.getElementById('seItem').value='';document.getElementById('sePlace').value='';document.getElementById('seTime').value='';document.getElementById('seBudget').value='';document.getElementById('seNote').value='';document.getElementById('seDeleteBtn').style.display='none';document.getElementById('seSaveBtn').textContent='儲存新增';document.getElementById('scheduleEditModal').classList.add('show')}
-function addGift(){giftCreating=true;activeGiftEditIndex=-1;document.getElementById('geSide').value='🐟';document.getElementById('geName').value='';document.getElementById('geRelation').value='朋友';let g=document.getElementById('geGift');g.innerHTML='<option value="">未選擇</option><option value="大小餅禮盒">'+esc(giftLabel('大小餅禮盒'))+'</option><option value="小禮盒">'+esc(giftLabel('小禮盒'))+'</option>';g.value='小禮盒';document.getElementById('geDate').value='';document.getElementById('geShipping').value='待安排';document.getElementById('geStore').value='';toggleGiftStoreField();document.getElementById('geReceiver').value='';document.getElementById('geStatus').value='待配送';document.getElementById('geNote').value='';document.getElementById('geDeleteBtn').style.display='none';document.getElementById('geSaveBtn').textContent='儲存新增';document.getElementById('giftEditModal').classList.add('show')}
-function icsEsc(v){return String(v||'').replace(/\\/g,'\\\\').replace(/\n/g,'\\n').replace(/,/g,'\\,').replace(/;/g,'\\;')}
-function exportICS(){
- const rows=data.schedule.filter(x=>x.date);
- if(!rows.length){alert('目前沒有可匯出的日期');return}
- const stamp=new Date().toISOString().replace(/[-:]/g,'').replace(/\.\d{3}/,'');
- let out=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Wedding Helper//ZH-TW','CALSCALE:GREGORIAN'];
- rows.forEach((x,i)=>{
-  let d=x.date.replace(/-/g,'');
-  let desc=[x.note,x.budget?('預算：'+x.budget):''].filter(Boolean).join(' / ');
-  out.push('BEGIN:VEVENT','UID:wedding-'+d+'-'+i+'@wedding-helper','DTSTAMP:'+stamp,'DTSTART;VALUE=DATE:'+d,'DTEND;VALUE=DATE:'+nextDateICS(x.date),'SUMMARY:'+icsEsc(x.item),'LOCATION:'+icsEsc(x.place),'DESCRIPTION:'+icsEsc(desc),'END:VEVENT');
- });
- out.push('END:VCALENDAR');
- let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([out.join('\r\n')],{type:'text/calendar;charset=utf-8'}));a.download='結婚小幫手-TimeTree.ics';a.click()
-}
-function nextDateICS(s){let d=new Date(s+'T00:00:00');d.setDate(d.getDate()+1);return d.toISOString().slice(0,10).replace(/-/g,'')}
-function makeQrToken(){return (crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+'-'+Math.random().toString(36).slice(2)+Math.random().toString(36).slice(2)).replace(/-/g,'')}
-function ensureGiftQrTokens(){let changed=false;data.gifts.forEach(r=>{if(!r.qrToken){r.qrToken=makeQrToken();changed=true}});return changed}
-function giftClaimUrl(r){let u=new URL(location.href);u.search='';u.searchParams.set('claim',r.qrToken);return u.toString()}
-async function printGiftQRCodes(){
- if(!data.gifts.length){alert('目前沒有禮盒名單');return}
- if(ensureGiftQrTokens()){save();await syncCloud()}
- else if(cloudReady)await syncCloud();
- let area=document.getElementById('qrPrintArea');area.innerHTML='';
- area.style.height='auto';let qrGifts=data.gifts.filter(r=>r.side!=='如').concat(data.gifts.filter(r=>r.side==='如'));qrGifts.forEach((r,i)=>{if(i%10===0){let p=document.createElement('div'),pn=Math.floor(i/10);p.className='qrPage';p.id='qrPage'+pn;area.appendChild(p)}let page=document.getElementById('qrPage'+Math.floor(i/10)),el=document.createElement('div'),slot=i%10,row=Math.floor(slot/2),col=slot%2;el.className='qrLabel';el.style.left=(25+col*80)+'mm';el.style.top=(23.5+row*50)+'mm';el.innerHTML='<div class="qrCode" id="giftQr'+i+'"></div><div class="qrInfo"><div class="qrSide">'+(r.side==='如'?'女方':'男方')+'</div><div class="qrName">'+esc(r.name||'未命名')+'</div><div class="qrGift">'+esc(giftLabel(r.gift)||'禮盒')+'</div><div class="qrHint">'+esc(qrHintText())+'</div></div>';page.appendChild(el);new QRCode(document.getElementById('giftQr'+i),{text:giftClaimUrl(r),width:180,height:180,correctLevel:QRCode.CorrectLevel.M})});
- document.body.classList.add('qrPrintMode');window.scrollTo(0,0)
-}
-function dataUrlBytes(url){let b=atob(url.split(',')[1]),a=new Uint8Array(b.length);for(let i=0;i<b.length;i++)a[i]=b.charCodeAt(i);return a}
-function buildImagePdf(images,w,h){
- const enc=new TextEncoder(),parts=[],offs=[0],push=x=>{let a=typeof x==='string'?enc.encode(x):x;parts.push(a);return a.length};
- let len=0,add=x=>{let n=push(x);len+=n},obj=(n,body)=>{offs[n]=len;add(n+' 0 obj\n'+body+'\nendobj\n')};
- add('%PDF-1.4\n%1234\n');let count=2+images.length*3,kids=[];
- obj(1,'<< /Type /Catalog /Pages 2 0 R >>');
- // reserve pages object after building ids; offsets can be out of numeric order
- let pageIds=images.map((_,i)=>3+i*3);kids=pageIds.map(n=>n+' 0 R');
- obj(2,'<< /Type /Pages /Kids ['+kids.join(' ')+'] /Count '+images.length+' >>');
- images.forEach((im,i)=>{let p=3+i*3,img=p+1,cont=p+2,name='Im'+(i+1),jpeg=dataUrlBytes(im);
-  obj(p,'<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Resources << /XObject << /'+name+' '+img+' 0 R >> >> /Contents '+cont+' 0 R >>');
-  offs[img]=len;add(img+' 0 obj\n<< /Type /XObject /Subtype /Image /Width '+w+' /Height '+h+' /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length '+jpeg.length+' >>\nstream\n');add(jpeg);add('\nendstream\nendobj\n');
-  let stream='q\n595.28 0 0 841.89 0 0 cm\n/'+name+' Do\nQ\n',sb=enc.encode(stream);offs[cont]=len;add(cont+' 0 obj\n<< /Length '+sb.length+' >>\nstream\n');add(sb);add('endstream\nendobj\n');
- });
- let xref=len;add('xref\n0 '+(count+1)+'\n0000000000 65535 f \n');for(let i=1;i<=count;i++)add(String(offs[i]||0).padStart(10,'0')+' 00000 n \n');
- add('trailer\n<< /Size '+(count+1)+' /Root 1 0 R >>\nstartxref\n'+xref+'\n%%EOF');
- return new Blob(parts,{type:'application/pdf'})
-}
-function fitCanvasText(ctx,text,maxWidth,fontSize,weight){
- let s=fontSize;do{ctx.font=(weight||'400')+' '+s+'px -apple-system,BlinkMacSystemFont,"Noto Sans TC","Microsoft JhengHei",sans-serif';if(ctx.measureText(text).width<=maxWidth||s<=16)break;s-=1}while(s>16);return s
-}
-function generateQrImagePdf(btn){
- let old=btn?btn.textContent:'';if(btn){btn.disabled=true;btn.textContent='PDF 產生中…'}
- try{
-  const W=1240,H=1754,labelW=472,labelH=295,startX=Math.round((W-labelW*2)/2),startY=Math.round((H-labelH*5)/2),pages=[];
-  let qrGifts=data.gifts.filter(r=>r.side!=='如').concat(data.gifts.filter(r=>r.side==='如'));for(let pg=0;pg<Math.ceil(qrGifts.length/10);pg++){
-   let cv=document.createElement('canvas');cv.width=W;cv.height=H;let ctx=cv.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);
-   for(let j=0;j<10;j++){let i=pg*10+j;if(i>=data.gifts.length)break;let r=data.gifts[i],row=Math.floor(j/2),col=j%2,x=startX+col*labelW,y=startY+row*labelH;
-    ctx.strokeStyle='#999';ctx.lineWidth=1;ctx.setLineDash([4,4]);ctx.strokeRect(x+.5,y+.5,labelW-1,labelH-1);ctx.setLineDash([]);
-    let qr=document.querySelector('#giftQr'+i+' canvas'),qi=document.querySelector('#giftQr'+i+' img');if(qr)ctx.drawImage(qr,x+24,y+62,171,171);else if(qi)ctx.drawImage(qi,x+24,y+62,171,171);
-    let tx=x+218,tw=labelW-238;ctx.fillStyle='#333';ctx.font='400 17px -apple-system,BlinkMacSystemFont,"Noto Sans TC","Microsoft JhengHei",sans-serif';ctx.fillText(r.side==='如'?'女方':'男方',tx,y+55);
-    let name=String(r.name||'未命名');fitCanvasText(ctx,name,tw,31,'700');ctx.fillText(name,tx,y+93);
-    let gift=String(giftLabel(r.gift)||'禮盒');fitCanvasText(ctx,gift,tw,20,'400');ctx.fillText(gift,tx,y+132);
-    let hint=qrHintText();fitCanvasText(ctx,hint,tw,16,'400');ctx.fillStyle='#555';ctx.fillText(hint,tx,y+174);
-   }
-   pages.push(cv.toDataURL('image/jpeg',0.92));
-  }
-  let blob=buildImagePdf(pages,W,H),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.target='_blank';a.rel='noopener';a.download='禮盒QR標籤_A4.pdf';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),120000);
- }catch(e){console.error(e);alert('PDF 產生失敗，請重新整理後再試一次')}
- finally{if(btn){btn.disabled=false;btn.textContent=old}}
-}
-function closeQrPrint(){document.body.classList.remove('qrPrintMode');document.getElementById('qrPrintArea').innerHTML='';goPage('gift')}
-async function handleClaimMode(){
- if(!CLAIM_TOKEN)return;
- document.body.classList.add('claimMode');let box=document.getElementById('claimContent');
- let r=data.gifts.find(x=>x.qrToken===CLAIM_TOKEN);
- if(!r){box.innerHTML='<div class="claimError">找不到這份禮盒資料，可能 QR Code 已失效或資料尚未同步。</div>';return}
- let wasDone=r.status==='已送達';
- if(!wasDone){r.status='已送達';r.sent=true;r.claimedAt=new Date().toISOString();save();await syncCloud()}
- let t=r.claimedAt?new Date(r.claimedAt).toLocaleString('zh-TW'):'';
- box.innerHTML='<div class="claimName">'+esc(r.name||'未命名')+'</div><div class="claimGift">'+esc((r.side==='如'?'女方':'男方')+'｜'+(giftLabel(r.gift)||'禮盒'))+'</div><div class="claimSuccess">'+(wasDone?'✓ 此禮盒已完成領取':'✓ 已完成領取')+'</div>'+(t?'<div class="claimTime">完成時間：'+esc(t)+'</div>':'');
-}
-function exportData(){let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));a.download='結婚小幫手備份.json';a.click()}
-function importData(el){let f=el.files[0];if(!f)return;let rd=new FileReader();rd.onload=()=>{try{data=JSON.parse(rd.result);save();alert('資料已還原')}catch(e){alert('檔案格式不正確')}};rd.readAsText(f)}
-function resetData(){if(confirm('確定要捨棄目前網站修改，回到 Excel 原始資料嗎？')){data=structuredClone(ORIGINAL);save()}}
-document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>goPage(b.dataset.page));
-window.addEventListener('resize',()=>{if(document.getElementById('gift').classList.contains('active'))renderGift();if(document.getElementById('schedule').classList.contains('active'))renderSchedule();if(document.getElementById('after').classList.contains('active'))renderAfter()});
-applyViewMode();renderSchedule();renderGift();renderPrep();renderAfter();renderOverview();lastSavedSnapshot=JSON.stringify(data);renderUndoMenu();loadCloud().then(()=>{lastSavedSnapshot=JSON.stringify(data);renderUndoMenu();if(CLAIM_TOKEN)handleClaimMode()});
-</script></body></html>+Math.round(Number(v)||0).toLocaleString('zh-TW')}
-function renderGiftPriceCalc(){if(READ_ONLY)return;let p=giftPrices(),big=data.gifts.filter(r=>r.gift==='大小餅禮盒').length,small=data.gifts.filter(r=>r.gift==='小禮盒').length;let set=(id,v)=>{let e=document.getElementById(id);if(e)e.textContent=v},val=(id,v)=>{let e=document.getElementById(id);if(e&&document.activeElement!==e)e.value=v??''};val('giftBigUnit',p.big.unit);val('giftBigDiscount',p.big.discount);val('giftSmallUnit',p.small.unit);val('giftSmallDiscount',p.small.discount);set('giftBigPriceName',giftLabel('大小餅禮盒'));set('giftSmallPriceName',giftLabel('小禮盒'));set('giftBigQty',big+' 盒');set('giftSmallQty',small+' 盒');let bp=p.big.discount!==''?Number(p.big.discount):Number(p.big.unit)||0,sp=p.small.discount!==''?Number(p.small.discount):Number(p.small.unit)||0,bs=big*bp,ss=small*sp;set('giftBigSubtotal',money(bs));set('giftSmallSubtotal',money(ss));set('giftGrandTotal',money(bs+ss))}
+function money(v){return '$'+Math.round(Number(v)||0).toLocaleString('zh-TW')}
+function renderGiftPriceCalc(){if(READ_ONLY)return;let p=giftPrices(),big=data.gifts.filter(r=>r.gift==='大小餅禮盒').length,small=data.gifts.filter(r=>r.gift==='小禮盒').length,bp=p.big.discount!==''?+p.big.discount:(+p.big.unit||0),sp=p.small.discount!==''?+p.small.discount:(+p.small.unit||0);[['giftBigUnit',p.big.unit],['giftBigDiscount',p.big.discount],['giftSmallUnit',p.small.unit],['giftSmallDiscount',p.small.discount]].forEach(([id,v])=>{let e=document.getElementById(id);if(e&&document.activeElement!==e)e.value=v});[['giftBigQty',big+' 盒'],['giftSmallQty',small+' 盒'],['giftBigSubtotal',money(big*bp)],['giftSmallSubtotal',money(small*sp)],['giftGrandTotal',money(big*bp+small*sp)]].forEach(([id,v])=>{let e=document.getElementById(id);if(e)e.textContent=v})}
 function renderGift(){let qh=document.getElementById('qrHintText');if(qh)qh.value=qrHintText();if(READ_ONLY){
  if(!data.giftNames)data.giftNames={big:'',small:''};
  let mb=data.gifts.filter(r=>r.side!=='如'&&r.gift==='大小餅禮盒').length,ms=data.gifts.filter(r=>r.side!=='如'&&r.gift==='小禮盒').length,fb=data.gifts.filter(r=>r.side==='如'&&r.gift==='大小餅禮盒').length,fs=data.gifts.filter(r=>r.side==='如'&&r.gift==='小禮盒').length;
@@ -946,7 +720,7 @@ function renderGift(){let qh=document.getElementById('qrHintText');if(qh)qh.valu
  let rows=data.gifts.map((r,i)=>({...r,i}));document.getElementById('giftBody').innerHTML=rows.length?giftSimpleRows(rows):'<tr><td colspan="4" class="empty">目前沒有名單</td></tr>';
  document.getElementById('giftFilterSummary').textContent='共 '+data.gifts.length+' 盒｜'+giftLabel('大小餅禮盒')+' '+(mb+fb)+' 盒｜'+giftLabel('小禮盒')+' '+(ms+fs)+' 盒';
  document.getElementById('gTotal').textContent=data.gifts.length;document.getElementById('gBig').textContent=mb+fb;document.getElementById('gSmall').textContent=ms+fs;document.getElementById('gDone').textContent=data.gifts.filter(x=>x.status==='已送達').length;document.querySelector('#gift .cards .card:nth-child(2) .label').textContent='全部 '+giftLabel('大小餅禮盒');document.querySelector('#gift .cards .card:nth-child(3) .label').textContent='全部 '+giftLabel('小禮盒');return}
-if(!data.giftNames)data.giftNames={big:'',small:''};let simple=giftViewMode==='simple';document.getElementById('giftSimpleBtn')?.classList.toggle('primary',simple);document.getElementById('giftDetailBtn')?.classList.toggle('primary',!simple);document.getElementById('giftPendingBtn')?.classList.toggle('primary',giftPendingOnly);let head=document.getElementById('giftHead');if(head){if(simple){let mb=data.gifts.filter(r=>r.side!=='如'&&r.gift==='大小餅禮盒').length,ms=data.gifts.filter(r=>r.side!=='如'&&r.gift==='小禮盒').length,fb=data.gifts.filter(r=>r.side==='如'&&r.gift==='大小餅禮盒').length,fs=data.gifts.filter(r=>r.side==='如'&&r.gift==='小禮盒').length;head.innerHTML='<th colspan="2" class="maleHead"><div class="sideSummary"><b>🐟 男方</b><small class="giftCountLines"><span><i>'+esc(giftLabel('大小餅禮盒'))+'</i><em>：</em><strong>'+mb+'盒</strong></span><span><i>'+esc(giftLabel('小禮盒'))+'</i><em>：</em><strong>'+ms+'盒</strong></span></small></div></th><th colspan="2" class="femaleHead"><div class="sideSummary"><b>如 女方</b><small class="giftCountLines"><span><i>'+esc(giftLabel('大小餅禮盒'))+'</i><em>：</em><strong>'+fb+'盒</strong></span><span><i>'+esc(giftLabel('小禮盒'))+'</i><em>：</em><strong>'+fs+'盒</strong></span></small></div></th>'}else head.innerHTML='<th>對象</th><th>送誰</th><th>關係</th><th>禮盒</th><th>預計送禮日</th><th>配送方式</th><th>收件人</th><th>狀態</th><th>地址／備註</th><th></th>'}document.getElementById('giftTable')?.classList.toggle('giftSimpleTable',simple);document.getElementById('gift')?.classList.toggle('giftSimpleMode',simple);document.getElementById('gift')?.classList.toggle('giftOrderMode',simple&&giftOrderMode);let gob=document.getElementById('giftOrderToggle');if(gob){gob.style.display=simple?'':'none';gob.textContent=giftOrderMode?'✓ 完成排序':'↕ 調整順序'}let side=document.getElementById('gSide').value,status=document.getElementById('gStatus').value,q=(document.getElementById('gSearch').value||'').toLowerCase();let rows=data.gifts.map((r,i)=>({...r,i})).filter(r=>(simple||!side||r.side===side)&&(simple||!status||r.status===status)&&(simple||!giftPendingOnly||r.status!=='已送達')&&[r.name,r.relation,r.gift,r.address,r.note].join(' ').toLowerCase().includes(q));
+if(!data.giftNames)data.giftNames={big:'',small:''};renderGiftPriceCalc();let simple=giftViewMode==='simple';document.getElementById('giftSimpleBtn')?.classList.toggle('primary',simple);document.getElementById('giftDetailBtn')?.classList.toggle('primary',!simple);document.getElementById('giftPendingBtn')?.classList.toggle('primary',giftPendingOnly);let head=document.getElementById('giftHead');if(head){if(simple){let mb=data.gifts.filter(r=>r.side!=='如'&&r.gift==='大小餅禮盒').length,ms=data.gifts.filter(r=>r.side!=='如'&&r.gift==='小禮盒').length,fb=data.gifts.filter(r=>r.side==='如'&&r.gift==='大小餅禮盒').length,fs=data.gifts.filter(r=>r.side==='如'&&r.gift==='小禮盒').length;head.innerHTML='<th colspan="2" class="maleHead"><div class="sideSummary"><b>🐟 男方</b><small class="giftCountLines"><span><i>'+esc(giftLabel('大小餅禮盒'))+'</i><em>：</em><strong>'+mb+'盒</strong></span><span><i>'+esc(giftLabel('小禮盒'))+'</i><em>：</em><strong>'+ms+'盒</strong></span></small></div></th><th colspan="2" class="femaleHead"><div class="sideSummary"><b>如 女方</b><small class="giftCountLines"><span><i>'+esc(giftLabel('大小餅禮盒'))+'</i><em>：</em><strong>'+fb+'盒</strong></span><span><i>'+esc(giftLabel('小禮盒'))+'</i><em>：</em><strong>'+fs+'盒</strong></span></small></div></th>'}else head.innerHTML='<th>對象</th><th>送誰</th><th>關係</th><th>禮盒</th><th>預計送禮日</th><th>配送方式</th><th>收件人</th><th>狀態</th><th>地址／備註</th><th></th>'}document.getElementById('giftTable')?.classList.toggle('giftSimpleTable',simple);document.getElementById('gift')?.classList.toggle('giftSimpleMode',simple);document.getElementById('gift')?.classList.toggle('giftOrderMode',simple&&giftOrderMode);let gob=document.getElementById('giftOrderToggle');if(gob){gob.style.display=simple?'':'none';gob.textContent=giftOrderMode?'✓ 完成排序':'↕ 調整順序'}let side=document.getElementById('gSide').value,status=document.getElementById('gStatus').value,q=(document.getElementById('gSearch').value||'').toLowerCase();let rows=data.gifts.map((r,i)=>({...r,i})).filter(r=>(simple||!side||r.side===side)&&(simple||!status||r.status===status)&&(simple||!giftPendingOnly||r.status!=='已送達')&&[r.name,r.relation,r.gift,r.address,r.note].join(' ').toLowerCase().includes(q));
 let sideRows=data.gifts.filter(r=>!side||r.side===side),bigCount=sideRows.filter(x=>x.gift==='大小餅禮盒').length,smallCount=sideRows.filter(x=>x.gift==='小禮盒').length;
 let who=side==='如'?'女方':side==='🐟'?'男方':'全部';
 document.getElementById('giftFilterSummary').textContent='目前顯示 '+who+'：共 '+sideRows.length+' 盒\n'+giftLabel('大小餅禮盒')+' '+bigCount+' 盒｜'+giftLabel('小禮盒')+' '+smallCount+' 盒';
