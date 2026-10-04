@@ -249,9 +249,8 @@ body.readonly .editOnly{display:none!important}body.readonly #gift>.cards{displa
  body.qrPrintMode>*{display:none!important}
  body.qrPrintMode #qrPrintScreen{display:block!important}
  body.qrPrintMode .qrPrintToolbar,body.qrPrintMode .qrPrintHelp{display:none!important}
- body.qrPrintMode #qrPrintArea{display:block!important;width:210mm!important;padding:0!important;margin:0!important;background:#fff!important} body.qrPrintMode .qrPage{margin:0!important;width:210mm!important;height:296mm!important}
- .qrPage{position:relative;box-sizing:border-box;width:210mm;height:296mm;margin:0;break-inside:avoid;page-break-inside:avoid;overflow:hidden;background:#fff}
- .qrPage+.qrPage{break-before:page;page-break-before:always}
+ body.qrPrintMode #qrPrintArea{display:block!important;position:relative!important;width:210mm!important;padding:0!important;margin:0!important;background:#fff!important} body.qrPrintMode .qrPage{margin:0!important;padding:0!important;width:210mm!important;height:297mm!important;break-before:auto!important;break-after:auto!important;page-break-before:auto!important;page-break-after:auto!important}
+ .qrPage{position:relative;box-sizing:border-box;width:210mm;height:297mm;margin:0!important;padding:0!important;overflow:hidden;background:#fff}
  .qrLabel{position:absolute;box-sizing:border-box;width:80mm;height:50mm;border:1px dashed #999;border-radius:0;padding:4mm;display:grid;grid-template-columns:29mm 1fr;gap:4mm;align-items:center;overflow:hidden;background:#fff;color:#111}
  .qrCode{width:28mm;height:28mm;display:flex;align-items:center;justify-content:center}.qrCode img,.qrCode canvas{width:28mm!important;height:28mm!important}
  .qrInfo{min-width:0}.qrSide{font-size:10pt}.qrName{font-size:17pt;font-weight:800;margin:2mm 0;word-break:break-all}.qrGift{font-size:11pt}.qrHint{font-size:8.5pt;margin-top:3mm;color:#555}
@@ -531,7 +530,7 @@ async function printGiftQRCodes(){
  if(ensureGiftQrTokens()){save();await syncCloud()}
  else if(cloudReady)await syncCloud();
  let area=document.getElementById('qrPrintArea');area.innerHTML='';
- data.gifts.forEach((r,i)=>{if(i%10===0){let p=document.createElement('div');p.className='qrPage';p.id='qrPage'+Math.floor(i/10);area.appendChild(p)}let page=document.getElementById('qrPage'+Math.floor(i/10)),el=document.createElement('div'),slot=i%10,row=Math.floor(slot/2),col=slot%2;el.className='qrLabel';el.style.left=(25+col*80)+'mm';el.style.top=(20+row*50)+'mm';el.innerHTML='<div class="qrCode" id="giftQr'+i+'"></div><div class="qrInfo"><div class="qrSide">'+(r.side==='如'?'女方':'男方')+'</div><div class="qrName">'+esc(r.name||'未命名')+'</div><div class="qrGift">'+esc(giftLabel(r.gift)||'禮盒')+'</div><div class="qrHint">領取／親送完成後掃描此 QR Code</div></div>';page.appendChild(el);new QRCode(document.getElementById('giftQr'+i),{text:giftClaimUrl(r),width:180,height:180,correctLevel:QRCode.CorrectLevel.M})});
+ let pageCount=Math.ceil(data.gifts.length/10);area.style.height=(pageCount*297)+'mm';data.gifts.forEach((r,i)=>{if(i%10===0){let p=document.createElement('div'),pn=Math.floor(i/10);p.className='qrPage';p.id='qrPage'+pn;p.style.position='absolute';p.style.left='0';p.style.top=(pn*297)+'mm';area.appendChild(p)}let page=document.getElementById('qrPage'+Math.floor(i/10)),el=document.createElement('div'),slot=i%10,row=Math.floor(slot/2),col=slot%2;el.className='qrLabel';el.style.left=(25+col*80)+'mm';el.style.top=(20+row*50)+'mm';el.innerHTML='<div class="qrCode" id="giftQr'+i+'"></div><div class="qrInfo"><div class="qrSide">'+(r.side==='如'?'女方':'男方')+'</div><div class="qrName">'+esc(r.name||'未命名')+'</div><div class="qrGift">'+esc(giftLabel(r.gift)||'禮盒')+'</div><div class="qrHint">領取／親送完成後掃描此 QR Code</div></div>';page.appendChild(el);new QRCode(document.getElementById('giftQr'+i),{text:giftClaimUrl(r),width:180,height:180,correctLevel:QRCode.CorrectLevel.M})});
  document.body.classList.add('qrPrintMode');window.scrollTo(0,0)
 }
 function closeQrPrint(){document.body.classList.remove('qrPrintMode');document.getElementById('qrPrintArea').innerHTML='';goPage('gift')}
