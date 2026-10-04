@@ -423,7 +423,7 @@ function renderAfter(){if(READ_ONLY){if(!Array.isArray(data.after))data.after=st
 }
 function addAfter(){data.after.push({done:false,category:'其他',item:'新待辦事項',who:'共同',need:'視情況',date:'',note:''});save()}
 
-function addSchedule(){data.schedule.push({done:false,item:'新排程',date:'',place:'',time:'',note:'',budget:'',records:[]});save();document.getElementById('sSearch').value=''}
+function addSchedule(){data.schedule.push({done:false,item:'新排程',date:'',endDate:'',place:'',time:'',note:'',budget:'',records:[]});let i=data.schedule.length-1;save();let s=document.getElementById('sSearch');if(s)s.value='';if(isMobileEdit())setTimeout(()=>openScheduleEdit(i),0)}
 function addGift(){data.gifts.push({side:'🐟',name:'新對象',relation:'朋友',gift:'小禮盒',date:'',sent:false,shipping:'待安排',receiver:'',status:'待配送',address:'',note:''});save()}
 function icsEsc(v){return String(v||'').replace(/\\/g,'\\\\').replace(/\n/g,'\\n').replace(/,/g,'\\,').replace(/;/g,'\\;')}
 function exportICS(){
