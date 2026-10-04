@@ -210,6 +210,17 @@ body.readonly .editOnly{display:none!important}body.readonly #gift>.cards{displa
  #giftPriceCalc .giftSubtotal b{line-height:1.15!important}
  #giftPriceCalc .giftTierSettings .giftPriceRow>label{width:100%!important}
 }
+@media(max-width:800px){
+ #giftPriceCalc .giftTierSettings .giftPriceRow{display:grid!important;grid-template-columns:150px 150px!important;grid-template-areas:"type type" "threshold rate"!important;justify-content:space-between!important;column-gap:12px!important;row-gap:10px!important;align-items:end!important}
+ #giftPriceCalc .giftTierSettings .giftPriceType{grid-area:type!important}
+ #giftPriceCalc .giftTierSettings .giftPriceRow>label{width:150px!important;max-width:100%!important;grid-area:threshold!important}
+ #giftPriceCalc .giftTierSettings .giftPriceRow>label+label{grid-area:rate!important}
+ #giftPriceCalc .giftTierSettings .giftPriceRow input{width:150px!important;max-width:100%!important;height:44px!important;box-sizing:border-box!important}
+}
+@media(max-width:380px){
+ #giftPriceCalc .giftTierSettings .giftPriceRow{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important}
+ #giftPriceCalc .giftTierSettings .giftPriceRow>label,#giftPriceCalc .giftTierSettings .giftPriceRow input{width:100%!important}
+}
 </style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style id="responsive-v3">
 .mobileNav{display:none}
