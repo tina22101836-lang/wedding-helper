@@ -229,6 +229,7 @@ body.readonly .editOnly{display:none!important}body.readonly #gift>.cards{displa
  body.readonly #gift .filters #gSide{width:100%;min-height:42px}
 }
 @media(min-width:801px){.mobileNav{display:none!important}}
+.headerShareBtn{margin-left:auto;flex:0 0 auto}
 .toolsWrap{position:relative}.toolsMenu{display:none;position:absolute;right:0;top:calc(100% + 7px);width:min(310px,88vw);background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 12px 30px #0002;z-index:1100;padding:8px}.toolsMenu.show{display:block}.toolRow{display:flex;gap:7px;padding:4px 4px 8px}.toolRow .undoWrap{flex:1}.toolRow .undoWrap>.btn:first-child{flex:1}.toolMenuBtn{display:block;width:100%;border:0;background:#fff;color:var(--ink);text-align:left;padding:11px 12px;border-radius:8px;font:inherit;cursor:pointer}.toolMenuBtn:hover,.toolMenuBtn:active{background:#f5f2ee}.dangerText{color:#a33}
 .undoWrap{position:relative;display:flex}.undoWrap>.btn:first-child{border-radius:9px 0 0 9px}.undoArrow{border-radius:0 9px 9px 0!important;padding-left:8px!important;padding-right:8px!important;margin-left:-1px}.undoMenu{display:none;position:absolute;top:calc(100% + 6px);left:0;width:min(340px,85vw);max-height:360px;overflow:auto;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 12px 30px #0002;z-index:1000;padding:6px}.undoMenu.show{display:block}.undoItem{display:block;width:100%;border:0;background:#fff;text-align:left;padding:10px 12px;border-radius:8px;color:var(--ink);cursor:pointer}.undoItem:hover,.undoItem:active{background:#f5f2ee}.undoItem small{display:block;color:var(--muted);margin-top:2px}.undoEmpty{padding:12px;color:var(--muted);font-size:13px}
 </style></head><body>
@@ -237,7 +238,7 @@ body.readonly .editOnly{display:none!important}body.readonly #gift>.cards{displa
 <button class="toolMenuBtn" onclick="exportData();closeToolsMenu()">💾 備份資料</button>
 <label class="toolMenuBtn">📂 從備份還原<input id="importFile" type="file" accept=".json" hidden onchange="importData(this);closeToolsMenu()"></label>
 <button class="toolMenuBtn dangerText" onclick="resetData();closeToolsMenu()">⚠️ 重設成 Excel 原始資料</button>
-</div></div></div><button class="btn" onclick="openShareModal()">🔗 分享</button></header>
+</div></div></div><button class="btn headerShareBtn" onclick="openShareModal()">🔗 分享</button></header>
 <nav><button class="tab active" data-page="overview">♡ 婚禮總覽</button><button class="tab" data-page="schedule">① 結婚排程</button><button class="tab" data-page="gift">② 禮盒統計</button><button class="tab" data-page="prep">③ 準備清單</button><button class="tab" data-page="after">④ 婚後待辦</button></nav>
 <main>
 <section id="overview" class="page active">
