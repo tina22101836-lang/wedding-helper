@@ -246,9 +246,11 @@ body.readonly .editOnly{display:none!important}body.readonly #gift>.cards{displa
  @page{size:A4;margin:8mm}
  body.printQr{background:#fff!important}
  body.printQr>*{display:none!important}
- body.printQr #qrPrintArea{display:grid!important;grid-template-columns:repeat(2,1fr);gap:5mm;width:100%}
- .qrLabel{height:62mm;border:1px dashed #999;border-radius:3mm;padding:5mm;display:grid;grid-template-columns:34mm 1fr;gap:5mm;align-items:center;break-inside:avoid;page-break-inside:avoid;background:#fff;color:#111}
- .qrCode{width:32mm;height:32mm;display:flex;align-items:center;justify-content:center}.qrCode img,.qrCode canvas{width:32mm!important;height:32mm!important}
+ body.printQr #qrPrintArea{display:block!important;width:100%}
+ .qrPage{width:100%;height:270mm;display:grid;grid-template-columns:80mm 80mm;grid-template-rows:repeat(5,50mm);gap:3mm 5mm;justify-content:center;align-content:start;break-after:page;page-break-after:always}
+ .qrPage:last-child{break-after:auto;page-break-after:auto}
+ .qrLabel{width:80mm;height:50mm;border:1px dashed #999;border-radius:3mm;padding:4mm;display:grid;grid-template-columns:29mm 1fr;gap:4mm;align-items:center;overflow:hidden;break-inside:avoid;page-break-inside:avoid;background:#fff;color:#111}
+ .qrCode{width:28mm;height:28mm;display:flex;align-items:center;justify-content:center}.qrCode img,.qrCode canvas{width:28mm!important;height:28mm!important}
  .qrInfo{min-width:0}.qrSide{font-size:10pt}.qrName{font-size:17pt;font-weight:800;margin:2mm 0;word-break:break-all}.qrGift{font-size:11pt}.qrHint{font-size:8.5pt;margin-top:3mm;color:#555}
 }
 </style></head><body>
@@ -522,7 +524,7 @@ async function printGiftQRCodes(){
  if(ensureGiftQrTokens()){save();await syncCloud()}
  else if(cloudReady)await syncCloud();
  let area=document.getElementById('qrPrintArea');area.innerHTML='';
- data.gifts.forEach((r,i)=>{let el=document.createElement('div');el.className='qrLabel';el.innerHTML='<div class="qrCode" id="giftQr'+i+'"></div><div class="qrInfo"><div class="qrSide">'+(r.side==='如'?'女方':'男方')+'</div><div class="qrName">'+esc(r.name||'未命名')+'</div><div class="qrGift">'+esc(giftLabel(r.gift)||'禮盒')+'</div><div class="qrHint">領取／親送完成後掃描此 QR Code</div></div>';area.appendChild(el);new QRCode(document.getElementById('giftQr'+i),{text:giftClaimUrl(r),width:180,height:180,correctLevel:QRCode.CorrectLevel.M})});
+ data.gifts.forEach((r,i)=>{if(i%10===0){let p=document.createElement('div');p.className='qrPage';p.id='qrPage'+Math.floor(i/10);area.appendChild(p)}let page=document.getElementById('qrPage'+Math.floor(i/10)),el=document.createElement('div');el.className='qrLabel';el.innerHTML='<div class="qrCode" id="giftQr'+i+'"></div><div class="qrInfo"><div class="qrSide">'+(r.side==='如'?'女方':'男方')+'</div><div class="qrName">'+esc(r.name||'未命名')+'</div><div class="qrGift">'+esc(giftLabel(r.gift)||'禮盒')+'</div><div class="qrHint">領取／親送完成後掃描此 QR Code</div></div>';page.appendChild(el);new QRCode(document.getElementById('giftQr'+i),{text:giftClaimUrl(r),width:180,height:180,correctLevel:QRCode.CorrectLevel.M})});
  document.body.classList.add('printQr');setTimeout(()=>{window.print();setTimeout(()=>document.body.classList.remove('printQr'),300)},250)
 }
 async function handleClaimMode(){
