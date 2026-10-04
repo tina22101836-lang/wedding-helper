@@ -451,6 +451,17 @@ body.readonly #prep .prepDataCell>.familyPrepDoc .singlePrepCheck{margin-top:5px
 #prep .prepActualTime{margin-top:5px;font-size:13px;color:var(--ink)}
 #prep .prepTimeInput{margin-top:6px}
 body.readonly #prep .prepActualTime b{font-size:12px;color:var(--muted)}
+
+#prep .prepDateFields{display:grid;gap:7px;width:100%;min-width:0}
+#prep .prepDateFields>input,#prep .prepTimeField input{width:100%;box-sizing:border-box}
+#prep .prepTimeField{display:grid;gap:4px;width:100%;font-size:12px;color:var(--muted)}
+#prep .prepTimeInput{margin-top:0!important}
+@media(max-width:800px){
+ body:not(.readonly) #prep tbody tr>td:nth-child(4){align-items:start!important}
+ body:not(.readonly) #prep tbody tr>td:nth-child(4)>.prepDateFields{min-width:0!important;width:100%!important}
+ body:not(.readonly) #prep .prepDateFields input{max-width:100%!important;min-width:0!important}
+ body:not(.readonly) #prep .prepTimeField{margin-top:2px}
+}
 </style></head><body>
 <div id="claimPanel" class="claimPanel">
  <div class="claimCard"><div class="claimIcon">🎁</div><h1>禮盒領取確認</h1><div id="claimContent" class="claimContent">正在確認資料…</div></div>
@@ -750,7 +761,7 @@ function renderPrep(){if(READ_ONLY){
  const body=document.getElementById('prepBody');if(!body)return;
  body.innerHTML=data.prep.length?data.prep.map((r,i)=>{
   const docs=normalizeDualDocs(r),checklist=docs.length?docs.map((d,j)=>prepDocEditHtml(d,i,j)).join(''):'<div class="muted">尚無資料</div>';
-  return `<tr class="${r.done?'done':''}"><td><b>${r.done?'✅ 已完成':'⏳ 準備中'}</b></td><td><input value="${esc(r.item)}" onchange="data.prep[${i}].item=this.value;save()"></td><td><input value="${esc(r.place)}" onchange="data.prep[${i}].place=this.value;save()"></td><td><input type="date" value="${esc(r.date)}" onchange="data.prep[${i}].date=this.value;save()"><input class="prepTimeInput" type="time" value="${esc(r.time||'')}" aria-label="實際到戶政事務所時間" onchange="data.prep[${i}].time=this.value;save()"></td><td class="prepDataCell"><div class="prepDataTitle">準備資料</div><div>${checklist}</div>${r.note?`<div class="prepInlineNote"><b>備註：</b>${esc(r.note)}</div>`:''}<button class="btn" style="margin-top:7px" onclick="addPrepDoc(${i})">＋ 新增資料</button></td><td class="prepLegacyNote"></td><td><button class="btn danger editOnly" onclick="data.prep.splice(${i},1);save()">刪除</button></td></tr>`
+  return `<tr class="${r.done?'done':''}"><td><b>${r.done?'✅ 已完成':'⏳ 準備中'}</b></td><td><input value="${esc(r.item)}" onchange="data.prep[${i}].item=this.value;save()"></td><td><input value="${esc(r.place)}" onchange="data.prep[${i}].place=this.value;save()"></td><td><div class="prepDateFields"><input type="date" value="${esc(r.date)}" onchange="data.prep[${i}].date=this.value;save()"><label class="prepTimeField"><span>實際到達時間</span><input class="prepTimeInput" type="time" value="${esc(r.time||'')}" aria-label="實際到戶政事務所時間" onchange="data.prep[${i}].time=this.value;save()"></label></div></td><td class="prepDataCell"><div class="prepDataTitle">準備資料</div><div>${checklist}</div>${r.note?`<div class="prepInlineNote"><b>備註：</b>${esc(r.note)}</div>`:''}<button class="btn" style="margin-top:7px" onclick="addPrepDoc(${i})">＋ 新增資料</button></td><td class="prepLegacyNote"></td><td><button class="btn danger editOnly" onclick="data.prep.splice(${i},1);save()">刪除</button></td></tr>`
  }).join(''):'<tr><td colspan="7" class="empty">尚未建立準備項目</td></tr>';
  const all=data.prep.flatMap(r=>normalizeDualDocs(r));document.getElementById('pBride').textContent=prepStats(all,'女方');document.getElementById('pGroom').textContent=prepStats(all,'男方');document.getElementById('pTogether').textContent=prepStats(all,'共同');
  let active=all,units=active.reduce((n,d)=>n+(d.owner==='雙方'?2:1),0),done=active.reduce((n,d)=>n+(d.owner==='雙方'?(d.brideDone?1:0)+(d.groomDone?1:0):(d.done?1:0)),0);document.getElementById('pPct').textContent=(units?Math.round(done/units*100):0)+'%';
