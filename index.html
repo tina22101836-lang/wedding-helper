@@ -380,6 +380,18 @@ body.readonly .editOnly{display:none!important}body.readonly #gift>.cards{displa
  body.readonly #prep tr.familyPrepRow td.prepLegacyNote{display:none!important}
  body:not(.readonly) #prep td.prepLegacyNote{display:none!important}
  #prep .prepInlineNote{margin-top:8px!important}
+}
+#prep .prepLegacyNote,#prep th:nth-child(6){display:none!important}
+#prep .prepDataTitle{font-weight:700;font-size:13px;color:var(--muted);margin:0 0 6px}
+#prep .prepDataCell{white-space:normal!important}
+#prep .familyPrepDoc{display:flex!important;align-items:center;gap:6px;padding:4px 0!important;white-space:normal!important}
+#prep .prepInlineNote{display:block;margin-top:7px!important;padding:7px 9px!important}
+@media(max-width:800px){
+ #prep .prepDataCell{display:block!important;width:100%!important;padding:8px 0!important}
+ #prep .prepDataCell:before{display:none!important;content:none!important}
+ #prep .prepDataTitle{display:block!important;margin-bottom:5px!important}
+ #prep .prepDocEditRow{grid-template-columns:22px auto minmax(0,1fr) auto!important;gap:6px!important}
+ body.readonly #prep tr.familyPrepRow td.prepDataCell{display:block!important}
 }</style></head><body>
 <div id="claimPanel" class="claimPanel">
  <div class="claimCard"><div class="claimIcon">🎁</div><h1>禮盒領取確認</h1><div id="claimContent" class="claimContent">正在確認資料…</div></div>
@@ -610,11 +622,11 @@ function normalizeDualDocs(r){
  a.forEach((d,i)=>{
   if(used.has(i))return;
   const text=String(d.text||'').replace(/^雙方/,'').trim();
-  if(d.owner==='雙方'||d.owner==='男女雙方'){out.push({text,owner:'男女雙方',done:!!d.done});used.add(i);return}
+  if(d.owner==='雙方'||d.owner==='男女雙方'){out.push({text,owner:'雙方',done:!!d.done});used.add(i);return}
   if(d.owner==='女方'||d.owner==='男方'){
    const other=d.owner==='女方'?'男方':'女方';
    const j=a.findIndex((x,k)=>k!==i&&!used.has(k)&&x.owner===other&&String(x.text||'').replace(/^雙方/,'').trim()===text);
-   if(j>=0){out.push({text,owner:'男女雙方',done:!!d.done&&!!a[j].done});used.add(i);used.add(j);return}
+   if(j>=0){out.push({text,owner:'雙方',done:!!d.done&&!!a[j].done});used.add(i);used.add(j);return}
   }
   out.push({text,owner:d.owner||'共同',done:!!d.done});used.add(i)
  });
@@ -629,17 +641,17 @@ function addPrepDoc(i){
  normalizeDualDocs(data.prep[i]).push({text:t.trim(),owner:o,done:false});data.prep[i].done=false;save()
 }
 function deletePrepDoc(i,j){normalizeDualDocs(data.prep[i]).splice(j,1);data.prep[i].done=prepDone(data.prep[i]);save()}
-function renderPrep(){if(READ_ONLY){if(!Array.isArray(data.prep))data.prep=structuredClone(DEFAULT_PREP);const body=document.getElementById('prepBody');data.prep.forEach(x=>normalizeDualDocs(x));body.innerHTML=data.prep.map(r=>{let docs=normalizeDualDocs(r);let list=docs.map(d=>'<div class="familyPrepDoc">'+(d.done?'✅':'⬜')+' <span class="badge">'+esc(d.owner)+'</span> '+esc(d.text)+'</div>').join('')||'—';let note=r.note?'<div class="prepInlineNote"><b>備註：</b>'+esc(r.note)+'</div>':'';return '<tr class="familyPrepRow"><td data-label="狀態"><b>'+(prepDone(r)?'✅ 已完成':'⏳ 準備中')+'</b></td><td data-label="項目"><b>'+esc(r.item||'—')+'</b></td><td data-label="地點">'+esc(r.place||'—')+'</td><td data-label="日期">'+esc(r.date||'—')+'</td><td data-label="準備資料">'+list+note+'</td><td class="prepLegacyNote">'+esc(r.note||'')+'</td><td></td></tr>'}).join('');const all=data.prep.flatMap(r=>normalizeDualDocs(r)),stat=o=>{let x=all.filter(d=>d.owner===o||(d.owner==='男女雙方'&&(o==='女方'||o==='男方')));return x.filter(d=>d.done).length+'/'+x.length};document.getElementById('pBride').textContent=stat('女方');document.getElementById('pGroom').textContent=stat('男方');document.getElementById('pTogether').textContent=stat('共同');document.getElementById('pPct').textContent=(all.length?Math.round(all.filter(x=>x.done).length/all.length*100):0)+'%';return}
+function renderPrep(){if(READ_ONLY){if(!Array.isArray(data.prep))data.prep=structuredClone(DEFAULT_PREP);const body=document.getElementById('prepBody');data.prep.forEach(x=>normalizeDualDocs(x));body.innerHTML=data.prep.map(r=>{let docs=normalizeDualDocs(r);let list=docs.map(d=>'<div class="familyPrepDoc">'+(d.done?'✅':'⬜')+' <span class="badge">'+esc(d.owner)+'</span> '+esc(d.text)+'</div>').join('')||'<div class="muted">尚無資料</div>';let note=r.note?'<div class="prepInlineNote"><b>備註：</b>'+esc(r.note)+'</div>':'';return '<tr class="familyPrepRow"><td data-label="狀態"><b>'+(prepDone(r)?'✅ 已完成':'⏳ 準備中')+'</b></td><td data-label="項目"><b>'+esc(r.item||'—')+'</b></td><td data-label="地點">'+esc(r.place||'—')+'</td><td data-label="日期">'+esc(r.date||'—')+'</td><td class="prepDataCell"><div class="prepDataTitle">準備資料</div>'+list+note+'</td><td class="prepLegacyNote"></td><td></td></tr>'}).join('');const all=data.prep.flatMap(r=>normalizeDualDocs(r)),stat=o=>{let x=all.filter(d=>d.owner===o||((d.owner==='男女雙方'||d.owner==='雙方')&&(o==='女方'||o==='男方')));return x.filter(d=>d.done).length+'/'+x.length};document.getElementById('pBride').textContent=stat('女方');document.getElementById('pGroom').textContent=stat('男方');document.getElementById('pTogether').textContent=stat('共同');document.getElementById('pPct').textContent=(all.length?Math.round(all.filter(x=>x.done).length/all.length*100):0)+'%';return}
  if(!Array.isArray(data.prep))data.prep=structuredClone(DEFAULT_PREP);
  data.prep.forEach(x=>{if(!x.owner)x.owner='共同';normalizeDualDocs(x);x.done=prepDone(x)});
  const body=document.getElementById('prepBody');if(!body)return;
  body.innerHTML=data.prep.length?data.prep.map((r,i)=>{
   const docs=normalizeDualDocs(r);
   const checklist=docs.length?docs.map((d,j)=>`<div class="prepDocEditRow"><input class="check" type="checkbox" ${d.done?'checked':''} onchange="togglePrepDoc(${i},${j},this.checked)"><span class="badge">${esc(d.owner)}</span><span style="${d.done?'text-decoration:line-through;opacity:.55':''}">${esc(d.text)}</span><button class="btn danger editOnly" style="padding:3px 7px" onclick="deletePrepDoc(${i},${j})">×</button></div>`).join(''):'<div class="muted">尚無資料</div>';
-  return `<tr class="${r.done?'done':''}"><td><b>${r.done?'✅ 已完成':'⏳ 準備中'}</b></td><td><input value="${esc(r.item)}" onchange="data.prep[${i}].item=this.value;save()"></td><td><input value="${esc(r.place)}" onchange="data.prep[${i}].place=this.value;save()"></td><td><input type="date" value="${esc(r.date)}" onchange="data.prep[${i}].date=this.value;save()"></td><td><div>${checklist}</div>${r.note?`<div class="prepInlineNote"><b>備註：</b>${esc(r.note)}</div>`:''}<button class="btn" style="margin-top:7px" onclick="addPrepDoc(${i})">＋ 新增資料</button></td><td class="prepLegacyNote"><input value="${esc(r.note)}" onchange="data.prep[${i}].note=this.value;save()"></td><td><button class="btn danger editOnly" onclick="data.prep.splice(${i},1);save()">刪除</button></td></tr>`
+  return `<tr class="${r.done?'done':''}"><td><b>${r.done?'✅ 已完成':'⏳ 準備中'}</b></td><td><input value="${esc(r.item)}" onchange="data.prep[${i}].item=this.value;save()"></td><td><input value="${esc(r.place)}" onchange="data.prep[${i}].place=this.value;save()"></td><td><input type="date" value="${esc(r.date)}" onchange="data.prep[${i}].date=this.value;save()"></td><td class="prepDataCell"><div class="prepDataTitle">準備資料</div><div>${checklist}</div>${r.note?`<div class="prepInlineNote"><b>備註：</b>${esc(r.note)}</div>`:''}<button class="btn" style="margin-top:7px" onclick="addPrepDoc(${i})">＋ 新增資料</button></td><td class="prepLegacyNote"></td><td><button class="btn danger editOnly" onclick="data.prep.splice(${i},1);save()">刪除</button></td></tr>`
  }).join(''):'<tr><td colspan="7" class="empty">尚未建立準備項目</td></tr>';
  const allDocs=data.prep.flatMap(r=>normalizeDualDocs(r));
- const stat=o=>{const a=allDocs.filter(x=>x.owner===o||(x.owner==='男女雙方'&&(o==='女方'||o==='男方')));return a.filter(x=>x.done).length+'/'+a.length};
+ const stat=o=>{const a=allDocs.filter(x=>x.owner===o||((x.owner==='男女雙方'||x.owner==='雙方')&&(o==='女方'||o==='男方')));return a.filter(x=>x.done).length+'/'+a.length};
  document.getElementById('pBride').textContent=stat('女方');document.getElementById('pGroom').textContent=stat('男方');document.getElementById('pTogether').textContent=stat('共同');document.getElementById('pPct').textContent=(allDocs.length?Math.round(allDocs.filter(x=>x.done).length/allDocs.length*100):0)+'%';
 }
 let activePrepEditIndex=-1,prepCreating=false;
