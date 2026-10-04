@@ -262,6 +262,18 @@ body.readonly .editOnly{display:none!important}body.readonly #gift>.cards{displa
  body.readonly #schedule th:nth-child(3),body.readonly #schedule td:nth-child(3){width:auto!important;min-width:0!important;max-width:none!important}
  body.readonly #schedule .familyScheduleMobile td{box-sizing:border-box!important}
 }
+@media(max-width:800px){
+ body.readonly #schedule .tableWrap{overflow-x:hidden!important;overflow-y:visible!important;width:100%!important;padding:0!important}
+ body.readonly #schedule table{display:table!important;width:100%!important;min-width:0!important;max-width:100%!important;table-layout:fixed!important}
+ body.readonly #schedule thead{display:table-header-group!important}
+ body.readonly #schedule tbody{display:table-row-group!important}
+ body.readonly #schedule th:nth-child(n+4),body.readonly #schedule td:nth-child(n+4){display:none!important}
+ body.readonly #schedule th:nth-child(1),body.readonly #schedule td:nth-child(1){width:34px!important;min-width:34px!important;max-width:34px!important}
+ body.readonly #schedule th:nth-child(2),body.readonly #schedule td:nth-child(2){width:112px!important;min-width:112px!important;max-width:112px!important}
+ body.readonly #schedule th:nth-child(3),body.readonly #schedule td:nth-child(3){width:auto!important;min-width:0!important;max-width:none!important}
+ body.readonly #schedule tr.familyScheduleMobile{display:table-row!important;width:100%!important}
+ body.readonly #schedule tr.familyScheduleMobile td{box-sizing:border-box!important;white-space:normal!important;overflow:hidden!important}
+}
 </style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style id="responsive-v3">
 .mobileNav{display:none}
