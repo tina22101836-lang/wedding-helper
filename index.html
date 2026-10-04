@@ -241,13 +241,16 @@ body.readonly .editOnly{display:none!important}body.readonly #gift>.cards{displa
 .headerShareBtn{margin-left:auto;flex:0 0 auto}
 .toolsWrap{position:relative}.toolsMenu{display:none;position:absolute;right:0;top:calc(100% + 7px);width:min(310px,88vw);background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 12px 30px #0002;z-index:1100;padding:8px}.toolsMenu.show{display:block}.toolRow{display:flex;gap:7px;padding:4px 4px 8px}.toolRow .undoWrap{flex:1}.toolRow .undoWrap>.btn:first-child{flex:1}.toolMenuBtn{display:block;width:100%;border:0;background:#fff;color:var(--ink);text-align:left;padding:11px 12px;border-radius:8px;font:inherit;cursor:pointer}.toolMenuBtn:hover,.toolMenuBtn:active{background:#f5f2ee}.dangerText{color:#a33}
 .undoWrap{position:relative;display:flex}.undoWrap>.btn:first-child{border-radius:9px 0 0 9px}.undoArrow{border-radius:0 9px 9px 0!important;padding-left:8px!important;padding-right:8px!important;margin-left:-1px}.undoMenu{display:none;position:absolute;top:calc(100% + 6px);left:0;width:min(340px,85vw);max-height:360px;overflow:auto;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 12px 30px #0002;z-index:1000;padding:6px}.undoMenu.show{display:block}.undoItem{display:block;width:100%;border:0;background:#fff;text-align:left;padding:10px 12px;border-radius:8px;color:var(--ink);cursor:pointer}.undoItem:hover,.undoItem:active{background:#f5f2ee}.undoItem small{display:block;color:var(--muted);margin-top:2px}.undoEmpty{padding:12px;color:var(--muted);font-size:13px}
-.claimPanel{display:none;min-height:100dvh;padding:24px;background:linear-gradient(135deg,#fff9f7,#fff2f5);align-items:center;justify-content:center}.claimCard{width:min(460px,100%);background:#fff;border:1px solid var(--line);border-radius:22px;padding:28px;text-align:center;box-shadow:var(--shadow)}.claimIcon{font-size:54px}.claimCard h1{font-size:24px;margin:8px 0 18px}.claimName{font-size:28px;font-weight:800;margin:8px 0}.claimGift{font-size:17px;color:var(--muted);margin-bottom:18px}.claimSuccess{background:#eef8f1;color:#356348;border-radius:14px;padding:16px;font-weight:700;font-size:18px}.claimError{background:#fff1f1;color:#9b3f49;border-radius:14px;padding:16px}.claimTime{font-size:13px;color:var(--muted);margin-top:12px}.claimMode>header,.claimMode>nav,.claimMode>main,.claimMode>.mobileNav,.claimMode>.recordModal{display:none!important}.claimMode #claimPanel{display:flex!important}.qrPrintArea{display:none}
+.claimPanel{display:none;min-height:100dvh;padding:24px;background:linear-gradient(135deg,#fff9f7,#fff2f5);align-items:center;justify-content:center}.claimCard{width:min(460px,100%);background:#fff;border:1px solid var(--line);border-radius:22px;padding:28px;text-align:center;box-shadow:var(--shadow)}.claimIcon{font-size:54px}.claimCard h1{font-size:24px;margin:8px 0 18px}.claimName{font-size:28px;font-weight:800;margin:8px 0}.claimGift{font-size:17px;color:var(--muted);margin-bottom:18px}.claimSuccess{background:#eef8f1;color:#356348;border-radius:14px;padding:16px;font-weight:700;font-size:18px}.claimError{background:#fff1f1;color:#9b3f49;border-radius:14px;padding:16px}.claimTime{font-size:13px;color:var(--muted);margin-top:12px}.claimMode>header,.claimMode>nav,.claimMode>main,.claimMode>.mobileNav,.claimMode>.recordModal{display:none!important}.claimMode #claimPanel{display:flex!important}.qrPrintScreen{display:none}.qrPrintArea{display:block}.qrPrintMode>header,.qrPrintMode>nav,.qrPrintMode>main,.qrPrintMode>.mobileNav,.qrPrintMode>.recordModal,.qrPrintMode>#claimPanel{display:none!important}.qrPrintMode #qrPrintScreen{display:block!important}.qrPrintToolbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 16px;background:#fff;border-bottom:1px solid var(--line)}.qrPrintHelp{text-align:center;padding:9px;color:var(--muted);background:#fff}.qrPrintMode #qrPrintArea{padding:10mm 0;background:#eee}.qrPrintMode .qrPage{background:#fff;box-shadow:0 3px 18px #0002;margin:0 auto 10mm}
+@media(max-width:800px){.qrPrintToolbar{padding:10px;flex-wrap:wrap}.qrPrintToolbar b{order:-1;width:100%;text-align:center}.qrPrintToolbar .btn{flex:1}.qrPrintMode #qrPrintArea{padding:5mm 0;overflow-x:auto}.qrPrintMode .qrPage{transform-origin:top center}}
 @media print{
- @page{size:A4;margin:0}
- body.printQr{background:#fff!important}
- body.printQr>*{display:none!important}
- body.printQr #qrPrintArea{display:block!important;width:100%}
- .qrPage{width:160mm;height:250mm;display:grid;grid-template-columns:80mm 80mm;grid-template-rows:repeat(5,50mm);column-gap:0;row-gap:0;margin:0 auto;align-content:start;break-after:page;page-break-after:always;break-inside:avoid;page-break-inside:avoid;overflow:hidden}
+ @page{size:A4 portrait;margin:0}
+ html,body{margin:0!important;padding:0!important;background:#fff!important}
+ body.qrPrintMode>*{display:none!important}
+ body.qrPrintMode #qrPrintScreen{display:block!important}
+ body.qrPrintMode .qrPrintToolbar,body.qrPrintMode .qrPrintHelp{display:none!important}
+ body.qrPrintMode #qrPrintArea{display:block!important;width:210mm!important;padding:0!important;margin:0!important;background:#fff!important}
+ .qrPage{box-sizing:border-box;width:210mm;height:297mm;padding:20mm 25mm 27mm;display:grid;grid-template-columns:80mm 80mm;grid-template-rows:repeat(5,50mm);column-gap:0;row-gap:0;margin:0;align-content:start;break-after:page;page-break-after:always;break-inside:avoid;page-break-inside:avoid;overflow:hidden}
  .qrPage:last-child{break-after:auto;page-break-after:auto}
  .qrLabel{box-sizing:border-box;width:80mm;height:50mm;border:1px dashed #999;border-radius:0;padding:4mm;display:grid;grid-template-columns:29mm 1fr;gap:4mm;align-items:center;overflow:hidden;break-inside:avoid;page-break-inside:avoid;background:#fff;color:#111}
  .qrCode{width:28mm;height:28mm;display:flex;align-items:center;justify-content:center}.qrCode img,.qrCode canvas{width:28mm!important;height:28mm!important}
@@ -257,7 +260,11 @@ body.readonly .editOnly{display:none!important}body.readonly #gift>.cards{displa
 <div id="claimPanel" class="claimPanel">
  <div class="claimCard"><div class="claimIcon">🎁</div><h1>禮盒領取確認</h1><div id="claimContent" class="claimContent">正在確認資料…</div></div>
 </div>
-<div id="qrPrintArea" class="qrPrintArea"></div>
+<div id="qrPrintScreen" class="qrPrintScreen">
+ <div class="qrPrintToolbar"><button class="btn" onclick="closeQrPrint()">← 返回禮盒名單</button><b>🎁 禮盒 QR 標籤</b><button class="btn primary" onclick="window.print()">🖨️ 列印／存成 PDF</button></div>
+ <div class="qrPrintHelp">A4 直式｜每格 8 × 5 cm｜每頁固定 10 格</div>
+ <div id="qrPrintArea" class="qrPrintArea"></div>
+</div>
 <header><div><h1>♡ 🐟&如 結婚小幫手</h1><p>把 Excel 變成可以每天一起更新的婚禮工作台　<span id="cloudState" class="badge">☁️ 連線中</span> <span id="viewModeBadge" class="badge"></span></p></div><div class="actions editOnly"><div class="toolsWrap"><button class="btn" onclick="toggleToolsMenu(event)">⚙️ 工具 ▾</button><div id="toolsMenu" class="toolsMenu" onclick="event.stopPropagation()">
 <div class="toolRow"><div class="undoWrap"><button class="btn" onclick="undoOne()">↶ 復原</button><button class="btn undoArrow" onclick="toggleUndoMenu(event)">▼</button><div id="undoMenu" class="undoMenu"></div></div><button class="btn" id="redoBtn" onclick="redoOne()">↷ 重做</button></div>
 <button class="toolMenuBtn" onclick="exportData();closeToolsMenu()">💾 備份資料</button>
@@ -525,8 +532,9 @@ async function printGiftQRCodes(){
  else if(cloudReady)await syncCloud();
  let area=document.getElementById('qrPrintArea');area.innerHTML='';
  data.gifts.forEach((r,i)=>{if(i%10===0){let p=document.createElement('div');p.className='qrPage';p.id='qrPage'+Math.floor(i/10);area.appendChild(p)}let page=document.getElementById('qrPage'+Math.floor(i/10)),el=document.createElement('div');el.className='qrLabel';el.innerHTML='<div class="qrCode" id="giftQr'+i+'"></div><div class="qrInfo"><div class="qrSide">'+(r.side==='如'?'女方':'男方')+'</div><div class="qrName">'+esc(r.name||'未命名')+'</div><div class="qrGift">'+esc(giftLabel(r.gift)||'禮盒')+'</div><div class="qrHint">領取／親送完成後掃描此 QR Code</div></div>';page.appendChild(el);new QRCode(document.getElementById('giftQr'+i),{text:giftClaimUrl(r),width:180,height:180,correctLevel:QRCode.CorrectLevel.M})});
- document.body.classList.add('printQr');setTimeout(()=>{window.print();setTimeout(()=>document.body.classList.remove('printQr'),300)},250)
+ document.body.classList.add('qrPrintMode');window.scrollTo(0,0)
 }
+function closeQrPrint(){document.body.classList.remove('qrPrintMode');document.getElementById('qrPrintArea').innerHTML='';goPage('gift')}
 async function handleClaimMode(){
  if(!CLAIM_TOKEN)return;
  document.body.classList.add('claimMode');let box=document.getElementById('claimContent');
