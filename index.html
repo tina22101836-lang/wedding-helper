@@ -485,6 +485,20 @@ body.readonly #prep .prepActualTime b{font-size:12px;color:var(--muted)}
 
 #oTodoList .overviewDate b{max-width:180px;text-align:right;white-space:normal!important}
 @media(max-width:800px){#oTodoList .overviewDate b{max-width:145px;font-size:15px;line-height:1.3}}
+
+/* mobile schedule: keep date range and item in separate fixed cells */
+@media(max-width:800px){
+ body:not(.readonly) #schedule table{table-layout:fixed!important}
+ body:not(.readonly) #schedule th:nth-child(1),body:not(.readonly) #schedule td:nth-child(1){width:50px!important}
+ body:not(.readonly) #schedule th:nth-child(2),body:not(.readonly) #schedule td:nth-child(2){width:118px!important;box-sizing:border-box!important}
+ body:not(.readonly) #schedule th:nth-child(8),body:not(.readonly) #schedule td:nth-child(8){width:62px!important}
+ body:not(.readonly) #schedule td.scheduleMobileDate{overflow:hidden!important;white-space:normal!important;text-overflow:clip!important;font-size:12px!important;line-height:1.35!important;padding-left:5px!important;padding-right:5px!important}
+ body:not(.readonly) #schedule .scheduleMobileDate .dateStart,
+ body:not(.readonly) #schedule .scheduleMobileDate .dateEnd,
+ body:not(.readonly) #schedule .scheduleMobileDate .dateSingle{display:block!important;max-width:100%!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:clip!important}
+ body:not(.readonly) #schedule tbody td:nth-child(3){min-width:0!important;overflow:hidden!important;padding-left:8px!important}
+ body:not(.readonly) #schedule tbody td:nth-child(3) b{display:block!important;max-width:100%!important;overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important}
+}
 </style></head><body>
 <div id="claimPanel" class="claimPanel">
  <div class="claimCard"><div class="claimIcon">🎁</div><h1>禮盒領取確認</h1><div id="claimContent" class="claimContent">正在確認資料…</div></div>
