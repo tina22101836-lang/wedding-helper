@@ -8,6 +8,25 @@
 </div><div class="shareLinkRow"><input id="shareLink" readonly><button class="btn primary" onclick="copyShareLink()">複製連結</button></div>
 <button class="btn" id="nativeShareBtn" style="width:100%;margin-top:10px" onclick="nativeShare()">📱 直接分享</button>
 <div id="shareMsg" class="muted" style="margin-top:9px"></div></div></div></div>
+<div id="featureGuideModal" class="recordModal" onclick="if(event.target===this)closeFeatureGuide()"><div class="recordBox featureGuideBox">
+<div class="panelHead"><div><h2>📖 結婚小幫手｜功能說明</h2><div class="muted">直接拿給朋友或同事看也可以</div></div><button class="btn" onclick="closeFeatureGuide()">✕ 關閉</button></div>
+<div class="featureGuide">
+<div class="featureIntro"><b>30 秒快速介紹</b><p>這是我們自己做的婚禮管理網站，把原本 Excel 的排程、喜餅名單和待辦全部整合在一起。兩個人可以同步更新，喜餅還能印專屬 QR Code，送到或領取後掃一下就會自動完成。</p></div>
+<div class="featureGrid">
+<div class="featureItem"><b>♡ 婚禮總覽</b><span>首頁</span><p>第一眼查看禮盒總數、已發出數量、配送進度與近期待辦。</p></div>
+<div class="featureItem"><b>📅 結婚排程</b><span>① 結婚排程</span><p>記錄登記、拜拜、家長吃飯、試吃喜餅、婚紗等日期；支援日期區間與相關紀錄。</p></div>
+<div class="featureItem"><b>🎁 禮盒統計</b><span>② 禮盒統計</span><p>管理男方／女方送禮名單、禮盒種類、配送方式、超商門市與送達狀態。</p></div>
+<div class="featureItem"><b>▦ QR 領取</b><span>② 禮盒統計 → QR 標籤</span><p>每位收禮人都有專屬 QR Code；領取或親送完成後掃描，就會同步標記已送達。</p></div>
+<div class="featureItem"><b>🖨️ A4 QR 標籤</b><span>② 禮盒統計 → QR 標籤</span><p>自動排成可列印 A4 標籤，每格 8×5 cm；提示文字也能自己修改。</p></div>
+<div class="featureItem"><b>📋 準備清單</b><span>③ 準備清單</span><p>整理結婚登記等事項需要準備的文件、地點、日期與完成狀態。</p></div>
+<div class="featureItem"><b>💑 婚後待辦</b><span>④ 婚後待辦</span><p>把婚後要處理的事項依類別、必要性與完成狀態集中管理。</p></div>
+<div class="featureItem"><b>☁️ 雙人同步</b><span>整個網站</span><p>手機、電腦都能使用；你們兩個更新後資料會同步到雲端。</p></div>
+<div class="featureItem"><b>🔗 分享查看版</b><span>右上角「分享」</span><p>可以產生僅查看版本給家人，讓長輩看到最新進度而不會誤改資料。</p></div>
+<div class="featureItem"><b>↶ 復原／重做</b><span>工具 → 復原／重做</span><p>操作錯誤可以復原，還能從近期操作紀錄選擇要退回到哪一步。</p></div>
+<div class="featureItem"><b>💾 備份／還原</b><span>工具</span><p>可以下載完整資料備份，也能從備份檔還原。</p></div>
+</div>
+<div class="featureIntro featureBottom"><b>一句話炫耀版 😎</b><p>「我們把婚禮 Excel 自己做成網站了，兩個人可以同步管理，連喜餅都一人一個 QR Code，送完掃一下系統就自己記完成。」</p></div>
+</div></div></div>
 <div id="prepEditModal" class="recordModal" onclick="if(event.target===this)closePrepEdit()"><div class="recordBox" style="max-width:620px">
 <div class="panelHead"><div><h2>📋 編輯準備項目</h2><div class="muted">新增後可直接填寫完整資料</div></div><button class="btn" onclick="closePrepEdit()">✕ 關閉</button></div>
 <div class="giftEditForm">
@@ -255,6 +274,7 @@ body.readonly .editOnly{display:none!important}body.readonly #gift>.cards{displa
  .qrCode{width:28mm;height:28mm;display:flex;align-items:center;justify-content:center}.qrCode img,.qrCode canvas{width:28mm!important;height:28mm!important}
  .qrInfo{min-width:0}.qrSide{font-size:10pt}.qrName{font-size:17pt;font-weight:800;margin:2mm 0;word-break:break-all}.qrGift{font-size:11pt}.qrHint{font-size:8.5pt;margin-top:3mm;color:#555}
 }
+.featureGuideBox{max-width:900px;max-height:88dvh;overflow-y:auto}.featureGuide{padding:18px}.featureIntro{background:var(--pink);border:1px solid var(--line);border-radius:14px;padding:16px 18px}.featureIntro b{font-size:17px}.featureIntro p{margin:7px 0 0;line-height:1.75}.featureGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:14px 0}.featureItem{border:1px solid var(--line);border-radius:12px;padding:14px;background:#fff}.featureItem>b{display:block;font-size:16px}.featureItem>span{display:inline-block;margin:5px 0 3px;padding:3px 7px;border-radius:999px;background:#f5f2ee;color:var(--muted);font-size:12px}.featureItem p{margin:5px 0 0;line-height:1.6;font-size:14px}.featureBottom{margin-top:10px}@media(max-width:800px){.featureGuideBox{max-height:calc(100dvh - 95px)!important}.featureGuide{padding:12px}.featureGrid{grid-template-columns:1fr}.featureIntro{padding:14px}.featureItem{padding:12px}}
 </style></head><body>
 <div id="claimPanel" class="claimPanel">
  <div class="claimCard"><div class="claimIcon">🎁</div><h1>禮盒領取確認</h1><div id="claimContent" class="claimContent">正在確認資料…</div></div>
@@ -266,7 +286,7 @@ body.readonly .editOnly{display:none!important}body.readonly #gift>.cards{displa
 </div>
 <header><div><h1>♡ 🐟&如 結婚小幫手</h1><p>把 Excel 變成可以每天一起更新的婚禮工作台　<span id="cloudState" class="badge">☁️ 連線中</span> <span id="viewModeBadge" class="badge"></span></p></div><div class="actions editOnly"><div class="toolsWrap"><button class="btn" onclick="toggleToolsMenu(event)">⚙️ 工具 ▾</button><div id="toolsMenu" class="toolsMenu" onclick="event.stopPropagation()">
 <div class="toolRow"><div class="undoWrap"><button class="btn" onclick="undoOne()">↶ 復原</button><button class="btn undoArrow" onclick="toggleUndoMenu(event)">▼</button><div id="undoMenu" class="undoMenu"></div></div><button class="btn" id="redoBtn" onclick="redoOne()">↷ 重做</button></div>
-<button class="toolMenuBtn" onclick="exportData();closeToolsMenu()">💾 備份資料</button>
+<button class="toolMenuBtn" onclick="openFeatureGuide();closeToolsMenu()">📖 功能說明</button><button class="toolMenuBtn" onclick="exportData();closeToolsMenu()">💾 備份資料</button>
 <label class="toolMenuBtn">📂 從備份還原<input id="importFile" type="file" accept=".json" hidden onchange="importData(this);closeToolsMenu()"></label>
 <button class="toolMenuBtn dangerText" onclick="resetData();closeToolsMenu()">⚠️ 重設成 Excel 原始資料</button>
 </div></div></div><button class="btn headerShareBtn" onclick="openShareModal()">🔗 分享</button></header>
@@ -380,6 +400,8 @@ function inferAction(before,after){
 function pushHistory(before,after){if(!before||JSON.stringify(before)===JSON.stringify(after))return;let h=loadHistory(HISTORY_KEY);h.push({label:inferAction(before,after),state:before,at:new Date().toISOString()});if(h.length>HISTORY_MAX)h=h.slice(-HISTORY_MAX);localStorage.setItem(HISTORY_KEY,JSON.stringify(h));localStorage.setItem(REDO_KEY,'[]');renderUndoMenu()}
 function persistCurrent(){localStorage.setItem(KEY,JSON.stringify(data));lastSavedSnapshot=JSON.stringify(data);renderSchedule();renderGift();renderPrep();renderAfter();renderOverview();clearTimeout(cloudTimer);cloudTimer=setTimeout(syncCloud,500);renderUndoMenu()}
 function save(){if(READ_ONLY)return;let before;try{before=lastSavedSnapshot?JSON.parse(lastSavedSnapshot):JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){before=null}if(before)pushHistory(before,data);persistCurrent()}
+function openFeatureGuide(){document.getElementById('featureGuideModal')?.classList.add('show')}
+function closeFeatureGuide(){document.getElementById('featureGuideModal')?.classList.remove('show')}
 function toggleToolsMenu(e){if(e)e.stopPropagation();document.getElementById('toolsMenu')?.classList.toggle('show')}
 function closeToolsMenu(){document.getElementById('toolsMenu')?.classList.remove('show')}
 function renderUndoMenu(){let m=document.getElementById('undoMenu');if(!m)return;let h=loadHistory(HISTORY_KEY);if(!h.length){m.innerHTML='<div class="undoEmpty">目前沒有可復原的操作</div>';return}m.innerHTML=h.slice().reverse().map((x,i)=>'<button class="undoItem" onclick="undoTo('+(i+1)+')">復原 '+(i+1)+' 個動作：'+esc(x.label||'修改資料')+'<small>'+new Date(x.at).toLocaleString('zh-TW',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'})+'</small></button>').join('')}
