@@ -201,6 +201,15 @@ body.readonly .editOnly{display:none!important}body.readonly #gift>.cards{displa
  #giftPriceCalc .giftSubtotal .giftUnitLine{display:block!important;width:100%!important;text-align:right!important;font-size:12px!important;color:var(--text)!important;white-space:nowrap}
  #giftPriceCalc .giftSubtotal .giftUnitLine em{font-style:normal;font-size:9px!important;font-weight:400;color:var(--muted)!important;margin-left:2px}
 }
+@media(max-width:800px){
+ #giftPriceCalc .giftPriceRow{grid-template-columns:minmax(0,1fr) minmax(135px,.78fr)!important;grid-template-areas:"type total" "unit total"!important;align-items:end!important}
+ #giftPriceCalc .giftPriceRow>label{width:150px!important;max-width:100%!important;align-self:end!important}
+ #giftPriceCalc .giftPriceRow>label input{height:44px!important;padding:8px 12px!important}
+ #giftPriceCalc .giftSubtotal{align-self:end!important;justify-content:flex-end!important;min-height:64px!important;padding-bottom:3px!important}
+ #giftPriceCalc .giftSubtotal span{line-height:1!important}
+ #giftPriceCalc .giftSubtotal b{line-height:1.15!important}
+ #giftPriceCalc .giftTierSettings .giftPriceRow>label{width:100%!important}
+}
 </style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style id="responsive-v3">
 .mobileNav{display:none}
