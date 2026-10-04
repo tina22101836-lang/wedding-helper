@@ -86,6 +86,11 @@ body.readonly .editOnly{display:none!important}body.readonly #gift>.cards{displa
 .recordModal{display:none;position:fixed;inset:0;background:#0007;z-index:50;padding:5vh 4vw;overflow:auto}.recordModal.show{display:block}.recordBox{max-width:900px;margin:auto;background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 20px 60px #0004}.recordForm{display:grid;grid-template-columns:1.2fr 1.2fr 1fr auto auto;gap:8px}.recordForm input{border:1px solid var(--line);border-radius:9px;padding:9px;min-width:0}.recordGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.recordCard{border:1px solid var(--line);border-radius:14px;padding:12px;background:#fffaf9}.recordCard img{width:100%;max-height:280px;object-fit:contain;background:#f7f3f3;border-radius:10px;margin-top:8px}.recordCard a{word-break:break-all}
 #giftFilterSummary{white-space:pre-line;line-height:1.65}
 .giftNameRow{display:grid;grid-template-columns:96px 150px;align-items:center;gap:6px}.giftNameRow input{width:150px;margin:0}
+@media(max-width:800px){
+ .toolsMenu{left:0!important;right:auto!important;width:min(310px,calc(100vw - 24px))!important;max-width:calc(100vw - 24px)}
+ .undoMenu{left:0!important;right:auto!important;width:min(300px,calc(100vw - 40px))!important;max-width:calc(100vw - 40px)}
+ .toolRow{min-width:0}.toolRow .undoWrap{min-width:0}
+}
 @media(max-width:800px){#gift .hint.editOnly{display:grid!important;grid-template-columns:1fr;gap:10px!important}#gift .hint.editOnly>span:first-child{margin-bottom:0}.giftNameRow{display:grid;grid-template-columns:96px minmax(0,1fr);align-items:center;gap:8px;width:100%}.giftNameRow span{white-space:nowrap}.giftNameRow input{width:100%!important;margin:0!important;min-width:0;height:42px}#gift .hint.editOnly>.muted{margin-top:0}}
 .giftEditForm{padding:16px 18px;display:grid;grid-template-columns:1fr 1fr;gap:12px}.giftEditForm label{font-size:13px;color:var(--muted);display:grid;gap:5px}.giftEditForm input,.giftEditForm select{width:100%;border:1px solid var(--line);border-radius:9px;padding:10px;background:#fff;color:var(--ink);font-size:16px}.giftEditForm .wide{grid-column:1/-1}.giftEditActions{display:flex!important;flex-direction:row!important;justify-content:space-between;margin-top:4px}
 @media(max-width:800px){
