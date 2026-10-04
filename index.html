@@ -145,9 +145,13 @@ body.readonly .editOnly{display:none!important}body.readonly #gift>.cards{displa
  header{padding:18px 16px 12px;gap:12px}
  header h1{font-size:23px}
  header p{font-size:13px;line-height:1.7}
- header .actions{width:100%;display:grid;grid-template-columns:1fr 1fr}
+ header{display:grid;grid-template-columns:1fr auto;align-items:center;gap:10px 12px}
+ header>div:first-child{grid-column:1/-1;width:100%}
+ header .actions{grid-column:1;width:auto;display:flex;flex-wrap:nowrap;justify-self:start}
+ header .headerShareBtn{grid-column:2;grid-row:2;margin-left:0;justify-self:end;white-space:nowrap}
+ header .actions .toolsWrap{width:auto}
  header .actions .btn,header .actions label.btn{text-align:center;font-size:13px;padding:10px 8px}
- header .actions .danger{grid-column:1/-1}
+ header .actions .danger{grid-column:auto}
  nav{display:none}
  main{padding:0 12px 28px}
  .cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-bottom:12px}
