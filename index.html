@@ -685,8 +685,8 @@ function prepDocDisplay(d){
  let par=text.match(/^(.*?)[（(]([^）)]+)[）)]\s*$/);
  if(par){title=par[1].trim();detail='（'+par[2].trim()+'）'}
  if(/相片|照片/.test(text)){
-  let raw=text.replace(/^雙方/,'').trim(),m=raw.match(/^(?:相片|照片)\s*(.*)$/);
-  title='相片';if(m&&m[1].trim())detail='（'+m[1].trim().replace(/^[（(]|[）)]$/g,'')+'）';
+  title='相片';
+  detail='（雙方各1張｜最近2年內拍攝｜正面彩色｜4.5 × 3.5 cm｜白色背景｜符合國民身分證相片規格；亦可使用符合規定的數位相片）';
  }
  return {title:title||text,detail,infoOnly:false}
 }
