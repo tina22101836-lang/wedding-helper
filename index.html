@@ -860,8 +860,8 @@ function addPrepDoc(i){
 function deletePrepDoc(i,j){normalizeDualDocs(data.prep[i]).splice(j,1);data.prep[i].done=prepDone(data.prep[i]);save()}
 function prepDocReadHtml(d){
  let v=prepDocDisplay(d);
- if(d.owner==='雙方')return '<div class="familyPrepDoc dualPrepDoc"><span class="dualDocName">'+esc(v.title)+'</span>'+(v.detail?'<span class="prepDocDetail">'+esc(v.detail)+'</span>':'')+'<span class="dualChecks"><span class="dualCheck">'+(d.groomDone?'☑':'☐')+' 男方</span><span class="dualCheck">'+(d.brideDone?'☑':'☐')+' 女方</span></span></div>';
- return '<div class="familyPrepDoc singlePrepDoc"><span class="dualDocName">'+esc(v.title)+'</span>'+(v.detail?'<span class="prepDocDetail">'+esc(v.detail)+'</span>':'')+'<span class="singlePrepCheck">'+(d.done?'☑':'☐')+' <span class="badge">'+esc(d.owner)+'</span></span></div>'
+ if(d.owner==='雙方')return '<div class="familyPrepDoc dualPrepDoc"><span class="dualDocName">'+esc(v.title)+'</span>'+(v.detail?'<span class="prepDocDetail">'+esc(v.detail)+'</span>':'')+'<span class="dualChecks"><span class="dualCheck">'+(d.groomDone?'已準備':'未準備')+' 男方</span><span class="dualCheck">'+(d.brideDone?'已準備':'未準備')+' 女方</span></span></div>';
+ return '<div class="familyPrepDoc singlePrepDoc"><span class="dualDocName">'+esc(v.title)+'</span>'+(v.detail?'<span class="prepDocDetail">'+esc(v.detail)+'</span>':'')+'<span class="singlePrepCheck">'+(d.done?'已準備':'未準備')+' <span class="badge">'+esc(d.owner)+'</span></span></div>'
 }
 function prepDocEditHtml(d,i,j){
  let v=prepDocDisplay(d);
