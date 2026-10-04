@@ -161,7 +161,7 @@ body.readonly .editOnly{display:none!important}body.readonly #gift>.cards{displa
 
 @media(max-width:800px){.recordForm{grid-template-columns:1fr}.recordGrid{grid-template-columns:1fr}}
 @media(max-width:800px){#scheduleBody td:nth-child(8):before{content:"參考／成果紀錄"}header{align-items:flex-start;flex-direction:column}.cards{grid-template-columns:repeat(2,1fr)}main{padding:0 3vw 40px}nav{padding-left:3vw;overflow:auto}.tab{white-space:nowrap}}
-</style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
 <style id="responsive-v3">
 .mobileNav{display:none}
 @media(max-width:800px){
@@ -280,7 +280,7 @@ body.readonly .editOnly{display:none!important}body.readonly #gift>.cards{displa
  <div class="claimCard"><div class="claimIcon">🎁</div><h1>禮盒領取確認</h1><div id="claimContent" class="claimContent">正在確認資料…</div></div>
 </div>
 <div id="qrPrintScreen" class="qrPrintScreen">
- <div class="qrPrintToolbar"><button class="btn" onclick="closeQrPrint()">← 返回禮盒名單</button><b>🎁 禮盒 QR 標籤</b><button class="btn primary" onclick="window.print()">🖨️ 列印／存成 PDF</button></div>
+ <div class="qrPrintToolbar"><button class="btn" onclick="closeQrPrint()">← 返回禮盒名單</button><b>🎁 禮盒 QR 標籤</b><button class="btn primary" onclick="generateGiftQrPdf(this)">📄 產生 A4 PDF</button></div>
  <div class="qrPrintHelp">A4 直式｜每格 8 × 5 cm｜每頁固定 10 格</div>
  <div id="qrPrintArea" class="qrPrintArea"></div>
 </div>
@@ -557,6 +557,33 @@ async function printGiftQRCodes(){
  let area=document.getElementById('qrPrintArea');area.innerHTML='';
  area.style.height='auto';data.gifts.forEach((r,i)=>{if(i%10===0){let p=document.createElement('div'),pn=Math.floor(i/10);p.className='qrPage';p.id='qrPage'+pn;area.appendChild(p)}let page=document.getElementById('qrPage'+Math.floor(i/10)),el=document.createElement('div'),slot=i%10,row=Math.floor(slot/2),col=slot%2;el.className='qrLabel';el.style.left=(25+col*80)+'mm';el.style.top=(23.5+row*50)+'mm';el.innerHTML='<div class="qrCode" id="giftQr'+i+'"></div><div class="qrInfo"><div class="qrSide">'+(r.side==='如'?'女方':'男方')+'</div><div class="qrName">'+esc(r.name||'未命名')+'</div><div class="qrGift">'+esc(giftLabel(r.gift)||'禮盒')+'</div><div class="qrHint">'+esc(qrHintText())+'</div></div>';page.appendChild(el);new QRCode(document.getElementById('giftQr'+i),{text:giftClaimUrl(r),width:180,height:180,correctLevel:QRCode.CorrectLevel.M})});
  document.body.classList.add('qrPrintMode');window.scrollTo(0,0)
+}
+async function generateGiftQrPdf(btn){
+ if(!window.jspdf||!window.jspdf.jsPDF){alert('PDF 元件尚未載入，請重新整理後再試一次');return}
+ let old=btn?btn.textContent:'';if(btn){btn.disabled=true;btn.textContent='產生 PDF 中…'}
+ try{
+  const {jsPDF}=window.jspdf,pdf=new jsPDF({orientation:'portrait',unit:'mm',format:'a4',compress:true});
+  const pageW=210,pageH=297,labelW=80,labelH=50,startX=(pageW-labelW*2)/2,startY=(pageH-labelH*5)/2;
+  for(let i=0;i<data.gifts.length;i++){
+   if(i>0&&i%10===0)pdf.addPage('a4','portrait');
+   let r=data.gifts[i],slot=i%10,row=Math.floor(slot/2),col=slot%2,x=startX+col*labelW,y=startY+row*labelH;
+   pdf.setDrawColor(155);pdf.setLineDashPattern([1,1],0);pdf.rect(x,y,labelW,labelH);
+   let qrEl=document.getElementById('giftQr'+i),canvas=qrEl&&qrEl.querySelector('canvas'),img=qrEl&&qrEl.querySelector('img'),qrData='';
+   if(canvas)qrData=canvas.toDataURL('image/png');else if(img)qrData=img.src;
+   if(qrData)pdf.addImage(qrData,'PNG',x+4,y+10.5,29,29);
+   pdf.setTextColor(35);pdf.setFont('helvetica','normal');pdf.setFontSize(8);pdf.text(r.side==='如'?'Bride':'Groom',x+37,y+9);
+   pdf.setFont('helvetica','bold');pdf.setFontSize(12);
+   let name=String(r.name||'').replace(/[^\x00-\x7F]/g,'');pdf.text(name||' ',x+37,y+17,{maxWidth:38});
+   pdf.setFont('helvetica','normal');pdf.setFontSize(8);
+   let gift=giftLabel(r.gift)||'Gift';let giftAscii=String(gift).replace(/[^\x00-\x7F]/g,'');pdf.text(giftAscii||'Gift',x+37,y+24,{maxWidth:38});
+   let hint=qrHintText();let hintAscii=String(hint).replace(/[^\x00-\x7F]/g,'');pdf.setFontSize(6.5);pdf.text(hintAscii||'Scan QR Code after pickup',x+37,y+32,{maxWidth:38});
+  }
+  // Use blob URL rather than browser print CSS. On iPhone this opens a fixed-layout PDF.
+  let blob=pdf.output('blob'),url=URL.createObjectURL(blob);
+  window.open(url,'_blank');
+  setTimeout(()=>URL.revokeObjectURL(url),120000);
+ }catch(e){console.error(e);alert('PDF 產生失敗，請重新整理後再試一次')}
+ finally{if(btn){btn.disabled=false;btn.textContent=old}}
 }
 function closeQrPrint(){document.body.classList.remove('qrPrintMode');document.getElementById('qrPrintArea').innerHTML='';goPage('gift')}
 async function handleClaimMode(){
