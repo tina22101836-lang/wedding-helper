@@ -576,7 +576,7 @@ body.readonly td input,body.readonly td select{color:var(--ink);opacity:1;backgr
 </section>
 <section id="schedule" class="page">
 <div class="cards"><div class="card"><span class="label">全部排程</span><b id="sTotal">0</b></div><div class="card"><span class="label">已完成</span><b id="sDone">0</b></div><div class="card"><span class="label">婚戒相關</span><b id="sRing">0</b></div><div class="card"><span class="label">最近待辦</span><b id="sNext">—</b></div></div>
-<div class="panel"><div class="panelHead"><div><h2>婚禮時間軸</h2></div><div class="filters"><input id="sSearch" placeholder="搜尋項目／店面／備註" oninput="renderSchedule()"><button class="btn" onclick="exportICS()">📅 匯出 TimeTree</button><button class="btn primary editOnly" onclick="addSchedule()">＋ 新增排程</button></div></div>
+<div class="panel"><div class="panelHead"><div><h2>婚禮時間軸</h2></div><div class="filters"><input id="sSearch" placeholder="搜尋項目／店面／備註" oninput="renderSchedule()"><button class="btn editOnly" onclick="exportICS()">📅 匯出 TimeTree</button><button class="btn primary editOnly" onclick="addSchedule()">＋ 新增排程</button></div></div>
 <div class="hint">婚戒可直接填「店面／地點」，例如：○○珠寶嘉義店；也可以記錄預約時間、戒圍、預算、交期等資訊。</div>
 <div class="tableWrap"><table><thead><tr><th>完成</th><th>日期／區間</th><th>項目</th><th>店面／地點</th><th>預約時間</th><th>備註</th><th>預算</th><th>參考／成果紀錄</th><th></th></tr></thead><tbody id="scheduleBody"></tbody></table></div></div></section>
 
@@ -860,8 +860,8 @@ function addPrepDoc(i){
 function deletePrepDoc(i,j){normalizeDualDocs(data.prep[i]).splice(j,1);data.prep[i].done=prepDone(data.prep[i]);save()}
 function prepDocReadHtml(d){
  let v=prepDocDisplay(d);
- if(d.owner==='雙方')return '<div class="familyPrepDoc dualPrepDoc"><span class="dualDocName">'+esc(v.title)+'</span>'+(v.detail?'<span class="prepDocDetail">'+esc(v.detail)+'</span>':'')+'<span class="dualChecks"><span class="dualCheck">'+(d.groomDone?'已準備':'未準備')+' 男方</span><span class="dualCheck">'+(d.brideDone?'已準備':'未準備')+' 女方</span></span></div>';
- return '<div class="familyPrepDoc singlePrepDoc"><span class="dualDocName">'+esc(v.title)+'</span>'+(v.detail?'<span class="prepDocDetail">'+esc(v.detail)+'</span>':'')+'<span class="singlePrepCheck">'+(d.done?'已準備':'未準備')+' <span class="badge">'+esc(d.owner)+'</span></span></div>'
+ if(d.owner==='雙方')return '<div class="familyPrepDoc dualPrepDoc"><span class="dualDocName">'+esc(v.title)+'</span>'+(v.detail?'<span class="prepDocDetail">'+esc(v.detail)+'</span>':'')+'<span class="dualChecks"><span class="dualCheck">'+(d.groomDone?'☑':'☐')+' 男方</span><span class="dualCheck">'+(d.brideDone?'☑':'☐')+' 女方</span></span></div>';
+ return '<div class="familyPrepDoc singlePrepDoc"><span class="dualDocName">'+esc(v.title)+'</span>'+(v.detail?'<span class="prepDocDetail">'+esc(v.detail)+'</span>':'')+'<span class="singlePrepCheck">'+(d.done?'☑':'☐')+' <span class="badge">'+esc(d.owner)+'</span></span></div>'
 }
 function prepDocEditHtml(d,i,j){
  let v=prepDocDisplay(d);
