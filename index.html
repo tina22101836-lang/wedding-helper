@@ -434,6 +434,19 @@ body.readonly .editOnly{display:none!important}body.readonly #gift>.cards{displa
 #prep .hasPrepDetail .prepDocDetail{grid-column:1;grid-row:2;margin:0 0 3px!important}
 #prep .dualPrepEdit.hasPrepDetail .dualChecks,#prep .singlePrepEdit.hasPrepDetail .singlePrepCheck{grid-column:1;grid-row:3!important}
 #prep .dualPrepEdit.hasPrepDetail .dualDelete,#prep .singlePrepEdit.hasPrepDetail .singleDelete{grid-column:2;grid-row:1/4!important;align-self:center}
+
+/* family view: visually separate each preparation document group */
+body.readonly #prep .prepDataCell>.familyPrepDoc{
+ padding:10px 0!important;
+ border-bottom:1px solid var(--line)!important;
+ margin:0!important;
+}
+body.readonly #prep .prepDataCell>.familyPrepDoc:first-of-type{padding-top:3px!important}
+body.readonly #prep .prepDataCell>.familyPrepDoc:last-of-type{border-bottom:0!important;padding-bottom:4px!important}
+body.readonly #prep .prepDataCell>.familyPrepDoc .dualDocName{margin-bottom:3px!important}
+body.readonly #prep .prepDataCell>.familyPrepDoc .prepDocDetail{margin:2px 0 6px!important}
+body.readonly #prep .prepDataCell>.familyPrepDoc .dualChecks,
+body.readonly #prep .prepDataCell>.familyPrepDoc .singlePrepCheck{margin-top:5px!important}
 </style></head><body>
 <div id="claimPanel" class="claimPanel">
  <div class="claimCard"><div class="claimIcon">🎁</div><h1>禮盒領取確認</h1><div id="claimContent" class="claimContent">正在確認資料…</div></div>
