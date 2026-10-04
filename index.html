@@ -280,7 +280,7 @@ body.readonly .editOnly{display:none!important}body.readonly #gift>.cards{displa
  <div class="claimCard"><div class="claimIcon">🎁</div><h1>禮盒領取確認</h1><div id="claimContent" class="claimContent">正在確認資料…</div></div>
 </div>
 <div id="qrPrintScreen" class="qrPrintScreen">
- <div class="qrPrintToolbar"><button class="btn" onclick="closeQrPrint()">← 返回禮盒名單</button><b>🎁 禮盒 QR 標籤</b><button class="btn primary" onclick="printQrLabels()">🖨️ 列印／存成 PDF</button></div>
+ <div class="qrPrintToolbar"><button class="btn" onclick="closeQrPrint()">← 返回禮盒名單</button><b>🎁 禮盒 QR 標籤</b><button class="btn primary" onclick="generateQrImagePdf(this)">📄 產生固定版 A4 PDF</button></div>
  <div class="qrPrintHelp">A4 直式｜每格 8 × 5 cm｜每頁固定 10 格</div>
  <div id="qrPrintArea" class="qrPrintArea"></div>
 </div>
@@ -558,7 +558,47 @@ async function printGiftQRCodes(){
  area.style.height='auto';data.gifts.forEach((r,i)=>{if(i%10===0){let p=document.createElement('div'),pn=Math.floor(i/10);p.className='qrPage';p.id='qrPage'+pn;area.appendChild(p)}let page=document.getElementById('qrPage'+Math.floor(i/10)),el=document.createElement('div'),slot=i%10,row=Math.floor(slot/2),col=slot%2;el.className='qrLabel';el.style.left=(25+col*80)+'mm';el.style.top=(23.5+row*50)+'mm';el.innerHTML='<div class="qrCode" id="giftQr'+i+'"></div><div class="qrInfo"><div class="qrSide">'+(r.side==='如'?'女方':'男方')+'</div><div class="qrName">'+esc(r.name||'未命名')+'</div><div class="qrGift">'+esc(giftLabel(r.gift)||'禮盒')+'</div><div class="qrHint">'+esc(qrHintText())+'</div></div>';page.appendChild(el);new QRCode(document.getElementById('giftQr'+i),{text:giftClaimUrl(r),width:180,height:180,correctLevel:QRCode.CorrectLevel.M})});
  document.body.classList.add('qrPrintMode');window.scrollTo(0,0)
 }
-function printQrLabels(){window.print()}
+function dataUrlBytes(url){let b=atob(url.split(',')[1]),a=new Uint8Array(b.length);for(let i=0;i<b.length;i++)a[i]=b.charCodeAt(i);return a}
+function buildImagePdf(images,w,h){
+ const enc=new TextEncoder(),parts=[],offs=[0],push=x=>{let a=typeof x==='string'?enc.encode(x):x;parts.push(a);return a.length};
+ let len=0,add=x=>{let n=push(x);len+=n},obj=(n,body)=>{offs[n]=len;add(n+' 0 obj\n'+body+'\nendobj\n')};
+ add('%PDF-1.4\n%1234\n');let count=2+images.length*3,kids=[];
+ obj(1,'<< /Type /Catalog /Pages 2 0 R >>');
+ // reserve pages object after building ids; offsets can be out of numeric order
+ let pageIds=images.map((_,i)=>3+i*3);kids=pageIds.map(n=>n+' 0 R');
+ obj(2,'<< /Type /Pages /Kids ['+kids.join(' ')+'] /Count '+images.length+' >>');
+ images.forEach((im,i)=>{let p=3+i*3,img=p+1,cont=p+2,name='Im'+(i+1),jpeg=dataUrlBytes(im);
+  obj(p,'<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Resources << /XObject << /'+name+' '+img+' 0 R >> >> /Contents '+cont+' 0 R >>');
+  offs[img]=len;add(img+' 0 obj\n<< /Type /XObject /Subtype /Image /Width '+w+' /Height '+h+' /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length '+jpeg.length+' >>\nstream\n');add(jpeg);add('\nendstream\nendobj\n');
+  let stream='q\n595.28 0 0 841.89 0 0 cm\n/'+name+' Do\nQ\n',sb=enc.encode(stream);offs[cont]=len;add(cont+' 0 obj\n<< /Length '+sb.length+' >>\nstream\n');add(sb);add('endstream\nendobj\n');
+ });
+ let xref=len;add('xref\n0 '+(count+1)+'\n0000000000 65535 f \n');for(let i=1;i<=count;i++)add(String(offs[i]||0).padStart(10,'0')+' 00000 n \n');
+ add('trailer\n<< /Size '+(count+1)+' /Root 1 0 R >>\nstartxref\n'+xref+'\n%%EOF');
+ return new Blob(parts,{type:'application/pdf'})
+}
+function fitCanvasText(ctx,text,maxWidth,fontSize,weight){
+ let s=fontSize;do{ctx.font=(weight||'400')+' '+s+'px -apple-system,BlinkMacSystemFont,"Noto Sans TC","Microsoft JhengHei",sans-serif';if(ctx.measureText(text).width<=maxWidth||s<=16)break;s-=1}while(s>16);return s
+}
+function generateQrImagePdf(btn){
+ let old=btn?btn.textContent:'';if(btn){btn.disabled=true;btn.textContent='PDF 產生中…'}
+ try{
+  const W=1240,H=1754,labelW=472,labelH=295,startX=Math.round((W-labelW*2)/2),startY=Math.round((H-labelH*5)/2),pages=[];
+  for(let pg=0;pg<Math.ceil(data.gifts.length/10);pg++){
+   let cv=document.createElement('canvas');cv.width=W;cv.height=H;let ctx=cv.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);
+   for(let j=0;j<10;j++){let i=pg*10+j;if(i>=data.gifts.length)break;let r=data.gifts[i],row=Math.floor(j/2),col=j%2,x=startX+col*labelW,y=startY+row*labelH;
+    ctx.strokeStyle='#999';ctx.lineWidth=1;ctx.setLineDash([4,4]);ctx.strokeRect(x+.5,y+.5,labelW-1,labelH-1);ctx.setLineDash([]);
+    let qr=document.querySelector('#giftQr'+i+' canvas'),qi=document.querySelector('#giftQr'+i+' img');if(qr)ctx.drawImage(qr,x+24,y+62,171,171);else if(qi)ctx.drawImage(qi,x+24,y+62,171,171);
+    let tx=x+218,tw=labelW-238;ctx.fillStyle='#333';ctx.font='400 17px -apple-system,BlinkMacSystemFont,"Noto Sans TC","Microsoft JhengHei",sans-serif';ctx.fillText(r.side==='如'?'女方':'男方',tx,y+55);
+    let name=String(r.name||'未命名');fitCanvasText(ctx,name,tw,31,'700');ctx.fillText(name,tx,y+93);
+    let gift=String(giftLabel(r.gift)||'禮盒');fitCanvasText(ctx,gift,tw,20,'400');ctx.fillText(gift,tx,y+132);
+    let hint=qrHintText();fitCanvasText(ctx,hint,tw,16,'400');ctx.fillStyle='#555';ctx.fillText(hint,tx,y+174);
+   }
+   pages.push(cv.toDataURL('image/jpeg',0.92));
+  }
+  let blob=buildImagePdf(pages,W,H),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.target='_blank';a.rel='noopener';a.download='禮盒QR標籤_A4.pdf';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),120000);
+ }catch(e){console.error(e);alert('PDF 產生失敗，請重新整理後再試一次')}
+ finally{if(btn){btn.disabled=false;btn.textContent=old}}
+}
 function closeQrPrint(){document.body.classList.remove('qrPrintMode');document.getElementById('qrPrintArea').innerHTML='';goPage('gift')}
 async function handleClaimMode(){
  if(!CLAIM_TOKEN)return;
