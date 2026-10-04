@@ -415,7 +415,14 @@ body.readonly .editOnly{display:none!important}body.readonly #gift>.cards{displa
  #prep .dualPrepDoc{display:block!important}
  #prep .dualChecks{gap:12px!important}
  #prep .dualPrepEdit{display:grid!important;grid-template-columns:minmax(0,1fr) auto!important}
-}</style></head><body>
+}
+#prep .singlePrepDoc{display:block!important;padding:5px 0!important}
+#prep .singlePrepCheck{display:flex;align-items:center;gap:5px;margin-top:4px;white-space:nowrap}
+#prep .singlePrepEdit{display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;gap:3px 8px!important;align-items:start}
+#prep .singlePrepEdit .dualDocName{grid-column:1;grid-row:1;margin:0}
+#prep .singlePrepEdit .singlePrepCheck{grid-column:1;grid-row:2;margin:0}
+#prep .singlePrepEdit .singleDelete{grid-column:2;grid-row:1/3;align-self:center}
+</style></head><body>
 <div id="claimPanel" class="claimPanel">
  <div class="claimCard"><div class="claimIcon">🎁</div><h1>禮盒領取確認</h1><div id="claimContent" class="claimContent">正在確認資料…</div></div>
 </div>
@@ -680,11 +687,11 @@ function addPrepDoc(i){
 function deletePrepDoc(i,j){normalizeDualDocs(data.prep[i]).splice(j,1);data.prep[i].done=prepDone(data.prep[i]);save()}
 function prepDocReadHtml(d){
  if(d.owner==='雙方')return '<div class="familyPrepDoc dualPrepDoc"><span class="dualDocName">'+esc(d.text)+'</span><span class="dualChecks"><span class="dualCheck">'+(d.groomDone?'☑':'☐')+' 男方</span><span class="dualCheck">'+(d.brideDone?'☑':'☐')+' 女方</span></span></div>';
- return '<div class="familyPrepDoc">'+(d.done?'☑':'☐')+' <span class="badge">'+esc(d.owner)+'</span> '+esc(d.text)+'</div>'
+ return '<div class="familyPrepDoc singlePrepDoc"><span class="dualDocName">'+esc(d.text)+'</span><span class="singlePrepCheck">'+(d.done?'☑':'☐')+' <span class="badge">'+esc(d.owner)+'</span></span></div>'
 }
 function prepDocEditHtml(d,i,j){
  if(d.owner==='雙方')return `<div class="prepDocEditRow dualPrepEdit"><span class="dualDocName">${esc(d.text)}</span><span class="dualChecks"><label><input class="check" type="checkbox" ${d.groomDone?'checked':''} onchange="togglePrepDoc(${i},${j},this.checked,'男方')">男方</label><label><input class="check" type="checkbox" ${d.brideDone?'checked':''} onchange="togglePrepDoc(${i},${j},this.checked,'女方')">女方</label></span><button class="btn danger editOnly dualDelete" style="padding:3px 7px" onclick="deletePrepDoc(${i},${j})">×</button></div>`;
- return `<div class="prepDocEditRow"><input class="check" type="checkbox" ${d.done?'checked':''} onchange="togglePrepDoc(${i},${j},this.checked)"><span class="badge">${esc(d.owner)}</span><span style="${d.done?'text-decoration:line-through;opacity:.55':''}">${esc(d.text)}</span><button class="btn danger editOnly" style="padding:3px 7px" onclick="deletePrepDoc(${i},${j})">×</button></div>`
+ return `<div class="prepDocEditRow singlePrepEdit"><span class="dualDocName" style="${d.done?'text-decoration:line-through;opacity:.55':''}">${esc(d.text)}</span><label class="singlePrepCheck"><input class="check" type="checkbox" ${d.done?'checked':''} onchange="togglePrepDoc(${i},${j},this.checked)"><span class="badge">${esc(d.owner)}</span></label><button class="btn danger editOnly singleDelete" style="padding:3px 7px" onclick="deletePrepDoc(${i},${j})">×</button></div>`
 }
 function prepStats(all,o){
  let total=0,done=0;
