@@ -229,8 +229,12 @@ body.readonly .editOnly{display:none!important}body.readonly #gift>.cards{displa
  body.readonly #gift .filters #gSide{width:100%;min-height:42px}
 }
 @media(min-width:801px){.mobileNav{display:none!important}}
+.undoWrap{position:relative;display:flex}.undoWrap>.btn:first-child{border-radius:9px 0 0 9px}.undoArrow{border-radius:0 9px 9px 0!important;padding-left:8px!important;padding-right:8px!important;margin-left:-1px}.undoMenu{display:none;position:absolute;top:calc(100% + 6px);left:0;width:min(340px,85vw);max-height:360px;overflow:auto;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 12px 30px #0002;z-index:1000;padding:6px}.undoMenu.show{display:block}.undoItem{display:block;width:100%;border:0;background:#fff;text-align:left;padding:10px 12px;border-radius:8px;color:var(--ink);cursor:pointer}.undoItem:hover,.undoItem:active{background:#f5f2ee}.undoItem small{display:block;color:var(--muted);margin-top:2px}.undoEmpty{padding:12px;color:var(--muted);font-size:13px}
 </style></head><body>
-<header><div><h1>♡ 🐟&如 結婚小幫手</h1><p>把 Excel 變成可以每天一起更新的婚禮工作台　<span id="cloudState" class="badge">☁️ 連線中</span> <span id="viewModeBadge" class="badge"></span></p></div><div class="actions editOnly"><button class="btn" onclick="exportData()">備份資料</button><label class="btn">還原資料<input id="importFile" type="file" accept=".json" hidden onchange="importData(this)"></label><button class="btn danger editOnly" onclick="resetData()">重設成 Excel 原始資料</button></div><button class="btn" onclick="openShareModal()">🔗 分享</button></header>
+<header><div><h1>♡ 🐟&如 結婚小幫手</h1><p>把 Excel 變成可以每天一起更新的婚禮工作台　<span id="cloudState" class="badge">☁️ 連線中</span> <span id="viewModeBadge" class="badge"></span></p></div><div class="actions editOnly">
+<div class="undoWrap"><button class="btn" onclick="undoOne()">↶ 復原</button><button class="btn undoArrow" onclick="toggleUndoMenu(event)">▼</button><div id="undoMenu" class="undoMenu"></div></div>
+<button class="btn" id="redoBtn" onclick="redoOne()">↷ 重做</button>
+<button class="btn" onclick="exportData()">備份資料</button><label class="btn">從備份還原<input id="importFile" type="file" accept=".json" hidden onchange="importData(this)"></label><button class="btn danger editOnly" onclick="resetData()">重設成 Excel 原始資料</button></div><button class="btn" onclick="openShareModal()">🔗 分享</button></header>
 <nav><button class="tab active" data-page="overview">♡ 婚禮總覽</button><button class="tab" data-page="schedule">① 結婚排程</button><button class="tab" data-page="gift">② 禮盒統計</button><button class="tab" data-page="prep">③ 準備清單</button><button class="tab" data-page="after">④ 婚後待辦</button></nav>
 <main>
 <section id="overview" class="page active">
@@ -322,7 +326,30 @@ async function syncCloud(){
   if(error)throw error;setCloudState('☁️ 已同步');
  }catch(e){console.error(e);setCloudState('☁️ 同步失敗')}
 }
-function save(){if(READ_ONLY)return;localStorage.setItem(KEY,JSON.stringify(data));renderSchedule();renderGift();renderPrep();renderAfter();renderOverview();clearTimeout(cloudTimer);cloudTimer=setTimeout(syncCloud,500)}
+const HISTORY_KEY=KEY+'-history-v1',REDO_KEY=KEY+'-redo-v1',HISTORY_MAX=30;
+let lastSavedSnapshot='';
+function cloneData(v){return JSON.parse(JSON.stringify(v))}
+function loadHistory(k){try{let a=JSON.parse(localStorage.getItem(k)||'[]');return Array.isArray(a)?a:[]}catch(e){return []}}
+function inferAction(before,after){
+ const groups=[['schedule','排程'],['gifts','禮盒'],['prep','準備清單'],['after','婚後待辦']];
+ for(const [key,label] of groups){let a=Array.isArray(before[key])?before[key]:[],b=Array.isArray(after[key])?after[key]:[];
+  if(b.length>a.length){let x=b[b.length-1]||{};return '新增'+label+(x.item||x.name?'－'+(x.item||x.name):'')}
+  if(b.length<a.length)return '刪除'+label;
+  if(JSON.stringify(a)!==JSON.stringify(b)){let idx=a.findIndex((x,i)=>JSON.stringify(x)!==JSON.stringify(b[i]));let x=b[idx]||a[idx]||{};return '修改'+label+(x.item||x.name?'－'+(x.item||x.name):'')}
+ }
+ if(JSON.stringify(before.giftNames)!==JSON.stringify(after.giftNames))return '修改禮盒名稱';
+ return '修改資料'
+}
+function pushHistory(before,after){if(!before||JSON.stringify(before)===JSON.stringify(after))return;let h=loadHistory(HISTORY_KEY);h.push({label:inferAction(before,after),state:before,at:new Date().toISOString()});if(h.length>HISTORY_MAX)h=h.slice(-HISTORY_MAX);localStorage.setItem(HISTORY_KEY,JSON.stringify(h));localStorage.setItem(REDO_KEY,'[]');renderUndoMenu()}
+function persistCurrent(){localStorage.setItem(KEY,JSON.stringify(data));lastSavedSnapshot=JSON.stringify(data);renderSchedule();renderGift();renderPrep();renderAfter();renderOverview();clearTimeout(cloudTimer);cloudTimer=setTimeout(syncCloud,500);renderUndoMenu()}
+function save(){if(READ_ONLY)return;let before;try{before=lastSavedSnapshot?JSON.parse(lastSavedSnapshot):JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){before=null}if(before)pushHistory(before,data);persistCurrent()}
+function renderUndoMenu(){let m=document.getElementById('undoMenu');if(!m)return;let h=loadHistory(HISTORY_KEY);if(!h.length){m.innerHTML='<div class="undoEmpty">目前沒有可復原的操作</div>';return}m.innerHTML=h.slice().reverse().map((x,i)=>'<button class="undoItem" onclick="undoTo('+(i+1)+')">復原 '+(i+1)+' 個動作：'+esc(x.label||'修改資料')+'<small>'+new Date(x.at).toLocaleString('zh-TW',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'})+'</small></button>').join('')}
+function toggleUndoMenu(e){if(e)e.stopPropagation();let m=document.getElementById('undoMenu');renderUndoMenu();m.classList.toggle('show')}
+function undoOne(){undoTo(1)}
+function undoTo(count){let h=loadHistory(HISTORY_KEY);if(!h.length)return;count=Math.min(count,h.length);let redo=loadHistory(REDO_KEY);for(let n=0;n<count;n++){let entry=h.pop();redo.push({label:entry.label,state:cloneData(data),at:new Date().toISOString()});data=cloneData(entry.state)}localStorage.setItem(HISTORY_KEY,JSON.stringify(h));localStorage.setItem(REDO_KEY,JSON.stringify(redo.slice(-HISTORY_MAX)));document.getElementById('undoMenu')?.classList.remove('show');persistCurrent()}
+function redoOne(){let redo=loadHistory(REDO_KEY);if(!redo.length)return;let entry=redo.pop(),h=loadHistory(HISTORY_KEY);h.push({label:entry.label,state:cloneData(data),at:new Date().toISOString()});data=cloneData(entry.state);localStorage.setItem(HISTORY_KEY,JSON.stringify(h.slice(-HISTORY_MAX)));localStorage.setItem(REDO_KEY,JSON.stringify(redo));persistCurrent()}
+document.addEventListener('click',e=>{let m=document.getElementById('undoMenu');if(m&&!e.target.closest('.undoWrap'))m.classList.remove('show')});
+
 function goPage(page){document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.page===page));document.querySelectorAll('.mobileNav button').forEach(x=>x.classList.toggle('active',x.dataset.page===page));document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===page));if(page==='overview')renderOverview();window.scrollTo({top:0,behavior:'smooth'})}
 function renderOverview(){let today=new Date().toISOString().slice(0,10);let upcoming=data.schedule.filter(x=>!x.done&&x.date&&x.date>=today).sort((a,b)=>a.date.localeCompare(b.date));let todo=data.schedule.filter(x=>!x.done).length;let totalG=data.gifts.length,arrived=data.gifts.filter(x=>x.status==='已送達').length,wait=data.gifts.filter(x=>x.status==='待配送').length,shipping=data.gifts.filter(x=>x.status==='配送中').length,big=data.gifts.filter(x=>x.gift==='大小餅禮盒'&&x.status!=='已送達').length,small=data.gifts.filter(x=>x.gift==='小禮盒'&&x.status!=='已送達').length,pct=totalG?Math.round(arrived/totalG*100):0;let rings=data.schedule.filter(x=>/戒/.test(x.item));let ringDone=rings.filter(x=>x.done).length;let ringPct=rings.length?Math.round(ringDone/rings.length*100):0;document.getElementById('oTodo').textContent=todo;document.getElementById('oGiftRemain').textContent=big+small;document.getElementById('oDelivery').textContent=pct+'%';let gs=document.getElementById('oGiftSummary');if(gs)gs.innerHTML='<span class="badge">'+esc(giftLabel('大小餅禮盒'))+'：<b>'+big+'</b> 盒</span><span class="badge">'+esc(giftLabel('小禮盒'))+'：<b>'+small+'</b> 盒</span><span class="badge">已送：<b>'+arrived+'</b> 盒</span>';document.getElementById('oWait').textContent=wait;document.getElementById('oShipping').textContent=shipping;document.getElementById('oArrived').textContent=arrived;document.getElementById('oDeliveryBar').style.width=pct+'%';document.getElementById('oDeliveryText').textContent=totalG?`已送達 ${arrived} / ${totalG} 盒（${pct}%）`:'尚未建立禮盒名單';document.getElementById('oTodoList').innerHTML=upcoming.slice(0,5).map(x=>`<li><span>${esc(x.item)}<br><span class="muted">${esc(x.place||x.note||'尚未填寫地點')}</span></span><b>${esc(x.date)}</b></li>`).join('')||'<li class="muted">目前沒有近期未完成排程 🎉</li>'}
 let activeScheduleEditIndex=-1,scheduleCreating=false;
@@ -462,5 +489,5 @@ function importData(el){let f=el.files[0];if(!f)return;let rd=new FileReader();r
 function resetData(){if(confirm('確定要捨棄目前網站修改，回到 Excel 原始資料嗎？')){data=structuredClone(ORIGINAL);save()}}
 document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>goPage(b.dataset.page));
 window.addEventListener('resize',()=>{if(document.getElementById('gift').classList.contains('active'))renderGift();if(document.getElementById('schedule').classList.contains('active'))renderSchedule();if(document.getElementById('after').classList.contains('active'))renderAfter()});
-applyViewMode();renderSchedule();renderGift();renderPrep();renderAfter();renderOverview();loadCloud();
+applyViewMode();renderSchedule();renderGift();renderPrep();renderAfter();renderOverview();lastSavedSnapshot=JSON.stringify(data);renderUndoMenu();loadCloud().then(()=>{lastSavedSnapshot=JSON.stringify(data);renderUndoMenu()});
 </script></body></html>
