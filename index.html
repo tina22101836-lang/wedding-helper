@@ -104,7 +104,11 @@ body.readonly .editOnly{display:none!important}body.readonly #gift>.cards{displa
  body:not(.readonly) #schedule table{display:table;min-width:0;width:100%;table-layout:fixed}
  body:not(.readonly) #schedule thead{display:table-header-group}
  body:not(.readonly) #schedule tbody{display:table-row-group}
- body:not(.readonly) #schedule tr{display:table-row;background:#fff;border:0;border-radius:0;margin:0;padding:0;box-shadow:none;cursor:pointer}
+ body:not(.readonly) #schedule tr{display:table-row;background:#fff;border:0;border-radius:0;margin:0;padding:0;box-shadow:none;cursor:pointer;height:58px}
+ body:not(.readonly) #schedule tbody tr{height:58px}
+ body:not(.readonly) #schedule tbody td{height:58px;max-height:58px;overflow:hidden}
+ body:not(.readonly) #schedule tbody td:nth-child(2),body:not(.readonly) #schedule tbody td:nth-child(3){white-space:nowrap;text-overflow:ellipsis;overflow:hidden}
+ body:not(.readonly) #schedule tbody td:nth-child(3) b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
  body:not(.readonly) #schedule th,body:not(.readonly) #schedule td{display:table-cell!important;padding:11px 6px;border-bottom:1px solid var(--line);font-size:13px;vertical-align:middle}
  body:not(.readonly) #schedule td:before{display:none!important;content:none!important}
  body:not(.readonly) #schedule th:nth-child(1),body:not(.readonly) #schedule td:nth-child(1){width:52px;text-align:center}
