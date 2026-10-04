@@ -398,6 +398,44 @@ body.readonly .editOnly{display:none!important}body.readonly #gift>.cards{displa
  body.readonly #prep .tableWrap{overflow:hidden!important}
  body.readonly #prep table{width:100%!important;min-width:0!important}
 }
+
+/* mobile readonly parity: keep view mode geometry aligned with edit mode */
+@media(max-width:800px){
+ body.readonly #schedule .tableWrap{overflow-x:hidden!important;padding:0!important}
+ body.readonly #schedule table{display:table!important;width:100%!important;min-width:0!important;table-layout:fixed!important}
+ body.readonly #schedule thead{display:table-header-group!important}
+ body.readonly #schedule tbody{display:table-row-group!important}
+ body.readonly #schedule tr{display:table-row!important;height:58px!important;background:#fff!important;border:0!important;border-radius:0!important;margin:0!important;padding:0!important;box-shadow:none!important}
+ body.readonly #schedule th,body.readonly #schedule td{display:table-cell!important;height:58px!important;max-height:58px!important;padding:11px 6px!important;border-bottom:1px solid var(--line)!important;font-size:13px!important;vertical-align:middle!important;min-width:0!important}
+ body.readonly #schedule td:before{display:none!important;content:none!important}
+ body.readonly #schedule th:nth-child(1),body.readonly #schedule td:nth-child(1){width:52px!important;text-align:center!important}
+ body.readonly #schedule th:nth-child(2),body.readonly #schedule td:nth-child(2){width:92px!important}
+ body.readonly #schedule th:nth-child(3),body.readonly #schedule td:nth-child(3){width:auto!important}
+ body.readonly #schedule th:nth-child(8),body.readonly #schedule td:nth-child(8){display:table-cell!important;width:72px!important;text-align:center!important}
+ body.readonly #schedule th:nth-child(4),body.readonly #schedule td:nth-child(4),
+ body.readonly #schedule th:nth-child(5),body.readonly #schedule td:nth-child(5),
+ body.readonly #schedule th:nth-child(6),body.readonly #schedule td:nth-child(6),
+ body.readonly #schedule th:nth-child(7),body.readonly #schedule td:nth-child(7),
+ body.readonly #schedule th:nth-child(9),body.readonly #schedule td:nth-child(9){display:none!important}
+ body.readonly #schedule tbody td:nth-child(2),body.readonly #schedule tbody td:nth-child(3){white-space:nowrap!important;text-overflow:ellipsis!important;overflow:hidden!important}
+ body.readonly #schedule tbody td:nth-child(3) b{display:block!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+
+ body.readonly #prep .tableWrap{overflow:visible!important;padding:0 12px 14px!important}
+ body.readonly #prep table,body.readonly #prep tbody{display:block!important;width:100%!important;min-width:0!important}
+ body.readonly #prep thead{display:none!important}
+ body.readonly #prep tr.familyPrepRow{display:grid!important;width:100%!important;box-sizing:border-box!important;margin:14px 0!important;padding:14px 16px!important;border:1px solid var(--line)!important;border-radius:16px!important;background:#fff!important;gap:0!important}
+ body.readonly #prep tr.familyPrepRow td{display:grid!important;grid-template-columns:118px minmax(0,1fr)!important;width:100%!important;max-width:none!important;box-sizing:border-box!important;padding:11px 0!important;border:0!important;border-bottom:1px dashed var(--line)!important;font-size:14px!important;line-height:1.5!important;vertical-align:middle!important;white-space:normal!important;word-break:normal!important}
+ body.readonly #prep tr.familyPrepRow td:before{display:block!important;content:attr(data-label)!important;color:var(--muted)!important;font-weight:600!important;padding-right:10px!important}
+ body.readonly #prep tr.familyPrepRow td:nth-child(1),
+ body.readonly #prep tr.familyPrepRow td:nth-child(2),
+ body.readonly #prep tr.familyPrepRow td:nth-child(3),
+ body.readonly #prep tr.familyPrepRow td:nth-child(4){width:100%!important}
+ body.readonly #prep tr.familyPrepRow td.prepDataCell{display:block!important;padding-top:14px!important;border-bottom:0!important}
+ body.readonly #prep tr.familyPrepRow td.prepDataCell:before{display:none!important}
+ body.readonly #prep tr.familyPrepRow td:nth-child(6),body.readonly #prep tr.familyPrepRow td:nth-child(7){display:none!important}
+ body.readonly #prep .prepDataTitle{font-weight:700!important;margin-bottom:8px!important}
+ body.readonly #prep .prepActualTime{margin-top:5px!important;color:var(--muted)!important}
+}
 </style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style id="responsive-v3">
 .mobileNav{display:none}
