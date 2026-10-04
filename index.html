@@ -142,7 +142,7 @@ body.readonly .editOnly{display:none!important}body.readonly #gift>.cards{displa
 
 @media(max-width:800px){.recordForm{grid-template-columns:1fr}.recordGrid{grid-template-columns:1fr}}
 @media(max-width:800px){#scheduleBody td:nth-child(8):before{content:"參考／成果紀錄"}header{align-items:flex-start;flex-direction:column}.cards{grid-template-columns:repeat(2,1fr)}main{padding:0 3vw 40px}nav{padding-left:3vw;overflow:auto}.tab{white-space:nowrap}}
-</style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style id="responsive-v3">
 .mobileNav{display:none}
 @media(max-width:800px){
@@ -241,7 +241,21 @@ body.readonly .editOnly{display:none!important}body.readonly #gift>.cards{displa
 .headerShareBtn{margin-left:auto;flex:0 0 auto}
 .toolsWrap{position:relative}.toolsMenu{display:none;position:absolute;right:0;top:calc(100% + 7px);width:min(310px,88vw);background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 12px 30px #0002;z-index:1100;padding:8px}.toolsMenu.show{display:block}.toolRow{display:flex;gap:7px;padding:4px 4px 8px}.toolRow .undoWrap{flex:1}.toolRow .undoWrap>.btn:first-child{flex:1}.toolMenuBtn{display:block;width:100%;border:0;background:#fff;color:var(--ink);text-align:left;padding:11px 12px;border-radius:8px;font:inherit;cursor:pointer}.toolMenuBtn:hover,.toolMenuBtn:active{background:#f5f2ee}.dangerText{color:#a33}
 .undoWrap{position:relative;display:flex}.undoWrap>.btn:first-child{border-radius:9px 0 0 9px}.undoArrow{border-radius:0 9px 9px 0!important;padding-left:8px!important;padding-right:8px!important;margin-left:-1px}.undoMenu{display:none;position:absolute;top:calc(100% + 6px);left:0;width:min(340px,85vw);max-height:360px;overflow:auto;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 12px 30px #0002;z-index:1000;padding:6px}.undoMenu.show{display:block}.undoItem{display:block;width:100%;border:0;background:#fff;text-align:left;padding:10px 12px;border-radius:8px;color:var(--ink);cursor:pointer}.undoItem:hover,.undoItem:active{background:#f5f2ee}.undoItem small{display:block;color:var(--muted);margin-top:2px}.undoEmpty{padding:12px;color:var(--muted);font-size:13px}
+.claimPanel{display:none;min-height:100dvh;padding:24px;background:linear-gradient(135deg,#fff9f7,#fff2f5);align-items:center;justify-content:center}.claimCard{width:min(460px,100%);background:#fff;border:1px solid var(--line);border-radius:22px;padding:28px;text-align:center;box-shadow:var(--shadow)}.claimIcon{font-size:54px}.claimCard h1{font-size:24px;margin:8px 0 18px}.claimName{font-size:28px;font-weight:800;margin:8px 0}.claimGift{font-size:17px;color:var(--muted);margin-bottom:18px}.claimSuccess{background:#eef8f1;color:#356348;border-radius:14px;padding:16px;font-weight:700;font-size:18px}.claimError{background:#fff1f1;color:#9b3f49;border-radius:14px;padding:16px}.claimTime{font-size:13px;color:var(--muted);margin-top:12px}.claimMode>header,.claimMode>nav,.claimMode>main,.claimMode>.mobileNav,.claimMode>.recordModal{display:none!important}.claimMode #claimPanel{display:flex!important}.qrPrintArea{display:none}
+@media print{
+ @page{size:A4;margin:8mm}
+ body.printQr{background:#fff!important}
+ body.printQr>*{display:none!important}
+ body.printQr #qrPrintArea{display:grid!important;grid-template-columns:repeat(2,1fr);gap:5mm;width:100%}
+ .qrLabel{height:62mm;border:1px dashed #999;border-radius:3mm;padding:5mm;display:grid;grid-template-columns:34mm 1fr;gap:5mm;align-items:center;break-inside:avoid;page-break-inside:avoid;background:#fff;color:#111}
+ .qrCode{width:32mm;height:32mm;display:flex;align-items:center;justify-content:center}.qrCode img,.qrCode canvas{width:32mm!important;height:32mm!important}
+ .qrInfo{min-width:0}.qrSide{font-size:10pt}.qrName{font-size:17pt;font-weight:800;margin:2mm 0;word-break:break-all}.qrGift{font-size:11pt}.qrHint{font-size:8.5pt;margin-top:3mm;color:#555}
+}
 </style></head><body>
+<div id="claimPanel" class="claimPanel">
+ <div class="claimCard"><div class="claimIcon">🎁</div><h1>禮盒領取確認</h1><div id="claimContent" class="claimContent">正在確認資料…</div></div>
+</div>
+<div id="qrPrintArea" class="qrPrintArea"></div>
 <header><div><h1>♡ 🐟&如 結婚小幫手</h1><p>把 Excel 變成可以每天一起更新的婚禮工作台　<span id="cloudState" class="badge">☁️ 連線中</span> <span id="viewModeBadge" class="badge"></span></p></div><div class="actions editOnly"><div class="toolsWrap"><button class="btn" onclick="toggleToolsMenu(event)">⚙️ 工具 ▾</button><div id="toolsMenu" class="toolsMenu" onclick="event.stopPropagation()">
 <div class="toolRow"><div class="undoWrap"><button class="btn" onclick="undoOne()">↶ 復原</button><button class="btn undoArrow" onclick="toggleUndoMenu(event)">▼</button><div id="undoMenu" class="undoMenu"></div></div><button class="btn" id="redoBtn" onclick="redoOne()">↷ 重做</button></div>
 <button class="toolMenuBtn" onclick="exportData();closeToolsMenu()">💾 備份資料</button>
@@ -265,7 +279,7 @@ body.readonly .editOnly{display:none!important}body.readonly #gift>.cards{displa
 
 <section id="gift" class="page">
 <div class="cards"><div class="card"><span class="label">全部送禮名單</span><b id="gTotal">0</b></div><div class="card"><span class="label">全部大小餅</span><b id="gBig">0</b></div><div class="card"><span class="label">全部小禮盒</span><b id="gSmall">0</b></div><div class="card"><span class="label">全部已送達</span><b id="gDone">0</b></div></div>
-<div class="panel"><div class="panelHead"><div><h2>禮盒名單</h2><div id="giftFilterSummary" class="muted" style="font-size:14px;margin-top:5px"></div></div><div class="filters"><select id="gSide" onchange="renderGift()"><option value="">全部</option><option value="🐟">男方</option><option value="如">女方</option></select><select id="gStatus" onchange="renderGift()"><option value="">全部狀態</option><option>待配送</option><option>配送中</option><option>已送達</option></select><input id="gSearch" placeholder="搜尋姓名／關係／備註" oninput="renderGift()"><button class="btn primary editOnly" onclick="addGift()">＋ 新增禮盒</button></div></div>
+<div class="panel"><div class="panelHead"><div><h2>禮盒名單</h2><div id="giftFilterSummary" class="muted" style="font-size:14px;margin-top:5px"></div></div><div class="filters"><select id="gSide" onchange="renderGift()"><option value="">全部</option><option value="🐟">男方</option><option value="如">女方</option></select><select id="gStatus" onchange="renderGift()"><option value="">全部狀態</option><option>待配送</option><option>配送中</option><option>已送達</option></select><input id="gSearch" placeholder="搜尋姓名／關係／備註" oninput="renderGift()"><button class="btn editOnly" onclick="printGiftQRCodes()">🖨️ QR 標籤</button><button class="btn primary editOnly" onclick="addGift()">＋ 新增禮盒</button></div></div>
 <div class="hint editOnly" style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
 <span>禮盒名稱：</span>
 <label class="giftNameRow"><span>大小餅禮盒</span><input id="bigGiftName" placeholder="例如：世唯喜餅" oninput="setGiftName('big',this.value)"></label>
@@ -286,7 +300,8 @@ body.readonly .editOnly{display:none!important}body.readonly #gift>.cards{displa
 <div class="tableWrap"><table><thead><tr><th>完成</th><th>類別</th><th>事項</th><th>誰處理</th><th>必要性</th><th>完成日期</th><th>備註</th><th></th></tr></thead><tbody id="afterBody"></tbody></table></div></div>
 </section></main><div class="mobileNav" id="mobileNav"><button data-page="overview" class="active" onclick="goPage('overview')"><span>♡</span>總覽</button><button data-page="schedule" onclick="goPage('schedule')"><span>📅</span>排程</button><button data-page="gift" onclick="goPage('gift')"><span>🎁</span>禮盒</button><button data-page="prep" onclick="goPage('prep')"><span>📋</span>準備</button><button data-page="after" onclick="goPage('after')"><span>💑</span>婚後</button></div>
 <script>
-const READ_ONLY=new URLSearchParams(location.search).get('view')==='family';
+const URL_PARAMS=new URLSearchParams(location.search),CLAIM_TOKEN=URL_PARAMS.get('claim')||'';
+const READ_ONLY=URL_PARAMS.get('view')==='family';
 function applyViewMode(){document.body.classList.toggle('readonly',READ_ONLY);let b=document.getElementById('viewModeBadge');if(b)b.textContent=READ_ONLY?'👀 查看版':'✏️ 共同編輯版'}
 function openShareModal(){document.getElementById('shareModal').classList.add('show');let r=document.querySelector('input[name="shareMode"][value="'+(READ_ONLY?'family':'edit')+'"]');if(r)r.checked=true;updateShareLink()}
 function closeShareModal(){document.getElementById('shareModal').classList.remove('show')}
@@ -499,10 +514,31 @@ function exportICS(){
  let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([out.join('\r\n')],{type:'text/calendar;charset=utf-8'}));a.download='結婚小幫手-TimeTree.ics';a.click()
 }
 function nextDateICS(s){let d=new Date(s+'T00:00:00');d.setDate(d.getDate()+1);return d.toISOString().slice(0,10).replace(/-/g,'')}
+function makeQrToken(){return (crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+'-'+Math.random().toString(36).slice(2)+Math.random().toString(36).slice(2)).replace(/-/g,'')}
+function ensureGiftQrTokens(){let changed=false;data.gifts.forEach(r=>{if(!r.qrToken){r.qrToken=makeQrToken();changed=true}});return changed}
+function giftClaimUrl(r){let u=new URL(location.href);u.search='';u.searchParams.set('claim',r.qrToken);return u.toString()}
+async function printGiftQRCodes(){
+ if(!data.gifts.length){alert('目前沒有禮盒名單');return}
+ if(ensureGiftQrTokens()){save();await syncCloud()}
+ else if(cloudReady)await syncCloud();
+ let area=document.getElementById('qrPrintArea');area.innerHTML='';
+ data.gifts.forEach((r,i)=>{let el=document.createElement('div');el.className='qrLabel';el.innerHTML='<div class="qrCode" id="giftQr'+i+'"></div><div class="qrInfo"><div class="qrSide">'+(r.side==='如'?'女方':'男方')+'</div><div class="qrName">'+esc(r.name||'未命名')+'</div><div class="qrGift">'+esc(giftLabel(r.gift)||'禮盒')+'</div><div class="qrHint">領取／親送完成後掃描此 QR Code</div></div>';area.appendChild(el);new QRCode(document.getElementById('giftQr'+i),{text:giftClaimUrl(r),width:180,height:180,correctLevel:QRCode.CorrectLevel.M})});
+ document.body.classList.add('printQr');setTimeout(()=>{window.print();setTimeout(()=>document.body.classList.remove('printQr'),300)},250)
+}
+async function handleClaimMode(){
+ if(!CLAIM_TOKEN)return;
+ document.body.classList.add('claimMode');let box=document.getElementById('claimContent');
+ let r=data.gifts.find(x=>x.qrToken===CLAIM_TOKEN);
+ if(!r){box.innerHTML='<div class="claimError">找不到這份禮盒資料，可能 QR Code 已失效或資料尚未同步。</div>';return}
+ let wasDone=r.status==='已送達';
+ if(!wasDone){r.status='已送達';r.sent=true;r.claimedAt=new Date().toISOString();save();await syncCloud()}
+ let t=r.claimedAt?new Date(r.claimedAt).toLocaleString('zh-TW'):'';
+ box.innerHTML='<div class="claimName">'+esc(r.name||'未命名')+'</div><div class="claimGift">'+esc((r.side==='如'?'女方':'男方')+'｜'+(giftLabel(r.gift)||'禮盒'))+'</div><div class="claimSuccess">'+(wasDone?'✓ 此禮盒已完成領取':'✓ 已完成領取')+'</div>'+(t?'<div class="claimTime">完成時間：'+esc(t)+'</div>':'');
+}
 function exportData(){let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));a.download='結婚小幫手備份.json';a.click()}
 function importData(el){let f=el.files[0];if(!f)return;let rd=new FileReader();rd.onload=()=>{try{data=JSON.parse(rd.result);save();alert('資料已還原')}catch(e){alert('檔案格式不正確')}};rd.readAsText(f)}
 function resetData(){if(confirm('確定要捨棄目前網站修改，回到 Excel 原始資料嗎？')){data=structuredClone(ORIGINAL);save()}}
 document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>goPage(b.dataset.page));
 window.addEventListener('resize',()=>{if(document.getElementById('gift').classList.contains('active'))renderGift();if(document.getElementById('schedule').classList.contains('active'))renderSchedule();if(document.getElementById('after').classList.contains('active'))renderAfter()});
-applyViewMode();renderSchedule();renderGift();renderPrep();renderAfter();renderOverview();lastSavedSnapshot=JSON.stringify(data);renderUndoMenu();loadCloud().then(()=>{lastSavedSnapshot=JSON.stringify(data);renderUndoMenu()});
+applyViewMode();renderSchedule();renderGift();renderPrep();renderAfter();renderOverview();lastSavedSnapshot=JSON.stringify(data);renderUndoMenu();loadCloud().then(()=>{lastSavedSnapshot=JSON.stringify(data);renderUndoMenu();if(CLAIM_TOKEN)handleClaimMode()});
 </script></body></html>
