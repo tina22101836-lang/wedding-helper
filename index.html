@@ -429,6 +429,11 @@ body.readonly .editOnly{display:none!important}body.readonly #gift>.cards{displa
 #prep .infoPrepEdit .dualDocName{grid-column:1;grid-row:1;margin:0}
 #prep .infoPrepEdit .prepDocDetail{grid-column:1;grid-row:2}
 #prep .infoPrepEdit .infoDelete{grid-column:2;grid-row:1/3;align-self:center}
+
+#prep .dualPrepDoc .prepDocDetail,#prep .singlePrepDoc .prepDocDetail{display:block;margin:2px 0 5px!important}
+#prep .hasPrepDetail .prepDocDetail{grid-column:1;grid-row:2;margin:0 0 3px!important}
+#prep .dualPrepEdit.hasPrepDetail .dualChecks,#prep .singlePrepEdit.hasPrepDetail .singlePrepCheck{grid-column:1;grid-row:3!important}
+#prep .dualPrepEdit.hasPrepDetail .dualDelete,#prep .singlePrepEdit.hasPrepDetail .singleDelete{grid-column:2;grid-row:1/4!important;align-self:center}
 </style></head><body>
 <div id="claimPanel" class="claimPanel">
  <div class="claimCard"><div class="claimIcon">🎁</div><h1>禮盒領取確認</h1><div id="claimContent" class="claimContent">正在確認資料…</div></div>
@@ -676,16 +681,16 @@ function normalizeDualDocs(r){
  r.docItems=out;return out
 }
 function prepDocDisplay(d){
- let text=String(d.text||'').trim();
+ let text=String(d.text||'').trim(),title=text,detail='';
+ let par=text.match(/^(.*?)[（(]([^）)]+)[）)]\s*$/);
+ if(par){title=par[1].trim();detail='（'+par[2].trim()+'）'}
  if(/相片|照片/.test(text)){
-  let detail=text.replace(/^雙方/,'').replace(/^最近2年/,'最近2年').trim();
-  if(/^相片/.test(detail))detail=detail.replace(/^相片\s*/,'').trim();
-  if(/^照片/.test(detail))detail=detail.replace(/^照片\s*/,'').trim();
-  return {title:'相片',detail:detail?'（'+detail+'）':'' ,infoOnly:true}
+  let raw=text.replace(/^雙方/,'').trim(),m=raw.match(/^(?:相片|照片)\s*(.*)$/);
+  title='相片';if(m&&m[1].trim())detail='（'+m[1].trim().replace(/^[（(]|[）)]$/g,'')+'）';
  }
- return {title:text,detail:'',infoOnly:false}
+ return {title:title||text,detail,infoOnly:false}
 }
-function prepDocDone(d){if(prepDocDisplay(d).infoOnly)return true;return d.owner==='雙方'?!!d.brideDone&&!!d.groomDone:!!d.done}
+function prepDocDone(d){return d.owner==='雙方'?!!d.brideDone&&!!d.groomDone:!!d.done}
 function prepDone(r){let a=normalizeDualDocs(r);return a.length>0&&a.every(prepDocDone)}
 function togglePrepDoc(i,j,v,side){
  const d=normalizeDualDocs(data.prep[i])[j];
@@ -703,14 +708,14 @@ function addPrepDoc(i){
 }
 function deletePrepDoc(i,j){normalizeDualDocs(data.prep[i]).splice(j,1);data.prep[i].done=prepDone(data.prep[i]);save()}
 function prepDocReadHtml(d){
- let v=prepDocDisplay(d);if(v.infoOnly)return '<div class="familyPrepDoc infoPrepDoc"><span class="dualDocName">'+esc(v.title)+'</span>'+(v.detail?'<span class="prepDocDetail">'+esc(v.detail)+'</span>':'')+'</div>';
- if(d.owner==='雙方')return '<div class="familyPrepDoc dualPrepDoc"><span class="dualDocName">'+esc(v.title)+'</span><span class="dualChecks"><span class="dualCheck">'+(d.groomDone?'☑':'☐')+' 男方</span><span class="dualCheck">'+(d.brideDone?'☑':'☐')+' 女方</span></span></div>';
- return '<div class="familyPrepDoc singlePrepDoc"><span class="dualDocName">'+esc(v.title)+'</span><span class="singlePrepCheck">'+(d.done?'☑':'☐')+' <span class="badge">'+esc(d.owner)+'</span></span></div>'
+ let v=prepDocDisplay(d);
+ if(d.owner==='雙方')return '<div class="familyPrepDoc dualPrepDoc"><span class="dualDocName">'+esc(v.title)+'</span>'+(v.detail?'<span class="prepDocDetail">'+esc(v.detail)+'</span>':'')+'<span class="dualChecks"><span class="dualCheck">'+(d.groomDone?'☑':'☐')+' 男方</span><span class="dualCheck">'+(d.brideDone?'☑':'☐')+' 女方</span></span></div>';
+ return '<div class="familyPrepDoc singlePrepDoc"><span class="dualDocName">'+esc(v.title)+'</span>'+(v.detail?'<span class="prepDocDetail">'+esc(v.detail)+'</span>':'')+'<span class="singlePrepCheck">'+(d.done?'☑':'☐')+' <span class="badge">'+esc(d.owner)+'</span></span></div>'
 }
 function prepDocEditHtml(d,i,j){
- let v=prepDocDisplay(d);if(v.infoOnly)return `<div class="prepDocEditRow infoPrepEdit"><span class="dualDocName">${esc(v.title)}</span>${v.detail?`<span class="prepDocDetail">${esc(v.detail)}</span>`:''}<button class="btn danger editOnly infoDelete" style="padding:3px 7px" onclick="deletePrepDoc(${i},${j})">×</button></div>`;
- if(d.owner==='雙方')return `<div class="prepDocEditRow dualPrepEdit"><span class="dualDocName">${esc(d.text)}</span><span class="dualChecks"><label><input class="check" type="checkbox" ${d.groomDone?'checked':''} onchange="togglePrepDoc(${i},${j},this.checked,'男方')">男方</label><label><input class="check" type="checkbox" ${d.brideDone?'checked':''} onchange="togglePrepDoc(${i},${j},this.checked,'女方')">女方</label></span><button class="btn danger editOnly dualDelete" style="padding:3px 7px" onclick="deletePrepDoc(${i},${j})">×</button></div>`;
- return `<div class="prepDocEditRow singlePrepEdit"><span class="dualDocName" style="${d.done?'text-decoration:line-through;opacity:.55':''}">${esc(d.text)}</span><label class="singlePrepCheck"><input class="check" type="checkbox" ${d.done?'checked':''} onchange="togglePrepDoc(${i},${j},this.checked)"><span class="badge">${esc(d.owner)}</span></label><button class="btn danger editOnly singleDelete" style="padding:3px 7px" onclick="deletePrepDoc(${i},${j})">×</button></div>`
+ let v=prepDocDisplay(d);
+ if(d.owner==='雙方')return `<div class="prepDocEditRow dualPrepEdit hasPrepDetail"><span class="dualDocName">${esc(v.title)}</span>${v.detail?`<span class="prepDocDetail">${esc(v.detail)}</span>`:''}<span class="dualChecks"><label><input class="check" type="checkbox" ${d.groomDone?'checked':''} onchange="togglePrepDoc(${i},${j},this.checked,'男方')">男方</label><label><input class="check" type="checkbox" ${d.brideDone?'checked':''} onchange="togglePrepDoc(${i},${j},this.checked,'女方')">女方</label></span><button class="btn danger editOnly dualDelete" style="padding:3px 7px" onclick="deletePrepDoc(${i},${j})">×</button></div>`;
+ return `<div class="prepDocEditRow singlePrepEdit hasPrepDetail"><span class="dualDocName" style="${d.done?'text-decoration:line-through;opacity:.55':''}">${esc(v.title)}</span>${v.detail?`<span class="prepDocDetail">${esc(v.detail)}</span>`:''}<label class="singlePrepCheck"><input class="check" type="checkbox" ${d.done?'checked':''} onchange="togglePrepDoc(${i},${j},this.checked)"><span class="badge">${esc(d.owner)}</span></label><button class="btn danger editOnly singleDelete" style="padding:3px 7px" onclick="deletePrepDoc(${i},${j})">×</button></div>`
 }
 function prepStats(all,o){
  let total=0,done=0;
@@ -721,7 +726,7 @@ function renderPrep(){if(READ_ONLY){
  if(!Array.isArray(data.prep))data.prep=structuredClone(DEFAULT_PREP);const body=document.getElementById('prepBody');data.prep.forEach(x=>normalizeDualDocs(x));
  body.innerHTML=data.prep.map(r=>{let docs=normalizeDualDocs(r);let list=docs.map(prepDocReadHtml).join('')||'<div class="muted">尚無資料</div>';let note=r.note?'<div class="prepInlineNote"><b>備註：</b>'+esc(r.note)+'</div>':'';return '<tr class="familyPrepRow"><td data-label="狀態"><b>'+(prepDone(r)?'✅ 已完成':'⏳ 準備中')+'</b></td><td data-label="項目"><b>'+esc(r.item||'—')+'</b></td><td data-label="地點">'+esc(r.place||'—')+'</td><td data-label="日期">'+esc(r.date||'—')+'</td><td class="prepDataCell"><div class="prepDataTitle">準備資料</div>'+list+note+'</td><td class="prepLegacyNote"></td><td></td></tr>'}).join('');
  const all=data.prep.flatMap(r=>normalizeDualDocs(r));document.getElementById('pBride').textContent=prepStats(all,'女方');document.getElementById('pGroom').textContent=prepStats(all,'男方');document.getElementById('pTogether').textContent=prepStats(all,'共同');
- let active=all.filter(d=>!prepDocDisplay(d).infoOnly),units=active.reduce((n,d)=>n+(d.owner==='雙方'?2:1),0),done=active.reduce((n,d)=>n+(d.owner==='雙方'?(d.brideDone?1:0)+(d.groomDone?1:0):(d.done?1:0)),0);document.getElementById('pPct').textContent=(units?Math.round(done/units*100):0)+'%';return
+ let active=all,units=active.reduce((n,d)=>n+(d.owner==='雙方'?2:1),0),done=active.reduce((n,d)=>n+(d.owner==='雙方'?(d.brideDone?1:0)+(d.groomDone?1:0):(d.done?1:0)),0);document.getElementById('pPct').textContent=(units?Math.round(done/units*100):0)+'%';return
  }
  if(!Array.isArray(data.prep))data.prep=structuredClone(DEFAULT_PREP);
  data.prep.forEach(x=>{if(!x.owner)x.owner='共同';normalizeDualDocs(x);x.done=prepDone(x)});
@@ -731,7 +736,7 @@ function renderPrep(){if(READ_ONLY){
   return `<tr class="${r.done?'done':''}"><td><b>${r.done?'✅ 已完成':'⏳ 準備中'}</b></td><td><input value="${esc(r.item)}" onchange="data.prep[${i}].item=this.value;save()"></td><td><input value="${esc(r.place)}" onchange="data.prep[${i}].place=this.value;save()"></td><td><input type="date" value="${esc(r.date)}" onchange="data.prep[${i}].date=this.value;save()"></td><td class="prepDataCell"><div class="prepDataTitle">準備資料</div><div>${checklist}</div>${r.note?`<div class="prepInlineNote"><b>備註：</b>${esc(r.note)}</div>`:''}<button class="btn" style="margin-top:7px" onclick="addPrepDoc(${i})">＋ 新增資料</button></td><td class="prepLegacyNote"></td><td><button class="btn danger editOnly" onclick="data.prep.splice(${i},1);save()">刪除</button></td></tr>`
  }).join(''):'<tr><td colspan="7" class="empty">尚未建立準備項目</td></tr>';
  const all=data.prep.flatMap(r=>normalizeDualDocs(r));document.getElementById('pBride').textContent=prepStats(all,'女方');document.getElementById('pGroom').textContent=prepStats(all,'男方');document.getElementById('pTogether').textContent=prepStats(all,'共同');
- let active=all.filter(d=>!prepDocDisplay(d).infoOnly),units=active.reduce((n,d)=>n+(d.owner==='雙方'?2:1),0),done=active.reduce((n,d)=>n+(d.owner==='雙方'?(d.brideDone?1:0)+(d.groomDone?1:0):(d.done?1:0)),0);document.getElementById('pPct').textContent=(units?Math.round(done/units*100):0)+'%';
+ let active=all,units=active.reduce((n,d)=>n+(d.owner==='雙方'?2:1),0),done=active.reduce((n,d)=>n+(d.owner==='雙方'?(d.brideDone?1:0)+(d.groomDone?1:0):(d.done?1:0)),0);document.getElementById('pPct').textContent=(units?Math.round(done/units*100):0)+'%';
 }
 let activePrepEditIndex=-1,prepCreating=false;
 function openPrepEdit(i){if(READ_ONLY)return;prepCreating=false;document.getElementById('peDeleteBtn').style.display='';document.getElementById('peSaveBtn').textContent='儲存修改';activePrepEditIndex=i;let r=data.prep[i];document.getElementById('peDone').value=r.done?'1':'0';document.getElementById('peDate').value=r.date||'';document.getElementById('peItem').value=r.item||'';document.getElementById('pePlace').value=r.place||'';let docs=Array.isArray(r.docItems)&&r.docItems.length?r.docItems.map(x=>x.text).filter(Boolean).join('、'):(r.docs||'');document.getElementById('peDocs').value=docs;document.getElementById('peNote').value=r.note||'';document.getElementById('prepEditModal').classList.add('show')}
