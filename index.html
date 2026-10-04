@@ -104,7 +104,7 @@ main{padding:0 5vw 50px}.page{display:none}.page.active{display:block}.cards{dis
 <div class="panel"><div class="panelHead"><div><h2>📋 辦理項目準備表</h2><div class="muted">記錄每個行程要去哪裡、要辦什麼、需要帶哪些資料</div></div><button class="btn primary" onclick="addPrep()">＋ 新增項目</button></div>
 <div class="hint">已先放入「結婚登記」官方應備資料作為範例；實際辦理前仍建議向受理機關確認最新規定。</div>
 <div class="tableWrap"><table><thead><tr><th>狀態</th><th>辦理項目</th><th>地點／機關</th><th>日期</th><th>需要準備的資料</th><th>備註</th><th></th></tr></thead><tbody id="prepBody"></tbody></table></div></div>
-<div class="panel" style="margin-top:14px"><div class="panelHead"><div><h2>🧳 共同資料統整</h2><div class="muted">相同資料只列一次，並顯示哪些辦理項目會用到</div></div></div><div style="padding:14px 18px" id="commonPrep"></div></div>
+
 </section><section id="after" class="page">
 <div class="cards"><div class="card"><span class="label">婚後待辦</span><b id="aTotal">0</b></div><div class="card"><span class="label">已完成</span><b id="aDone">0</b></div><div class="card"><span class="label">尚未完成</span><b id="aLeft">0</b></div><div class="card"><span class="label">完成率</span><b id="aPct">0%</b></div></div>
 <div class="panel"><div class="panelHead"><div><h2>💑 婚後可能需要辦理／變更</h2><div class="muted">依你們實際狀況判斷，不是每一項都一定要辦</div></div><div class="filters"><select id="aFilter" onchange="renderAfter()"><option value="">全部類別</option></select><button class="btn primary" onclick="addAfter()">＋ 新增待辦</button></div></div>
