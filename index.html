@@ -101,7 +101,6 @@ main{padding:0 5vw 50px}.page{display:none}.page.active{display:block}.cards{dis
 .tableWrap{overflow:auto;max-height:65vh}table{width:100%;border-collapse:collapse;min-width:1050px}th,td{padding:10px;border-bottom:1px solid #f0e6e8;text-align:left;vertical-align:middle}th{position:sticky;top:0;background:#fff8f9;z-index:1;font-size:13px}td input,td select{width:100%;border:1px solid #e7dadd;border-radius:8px;padding:8px;background:#fff;color:inherit}td input:focus,td select:focus{outline:2px solid #f1cbd1;border-color:var(--rose)}.check{width:18px;height:18px;accent-color:var(--green)}
 .badge{display:inline-block;padding:4px 8px;border-radius:999px;font-size:12px;background:var(--pink);color:var(--rose)}.done{opacity:.55}.done input{text-decoration:line-through}.empty{padding:28px;text-align:center;color:var(--muted)}
 .hint{font-size:13px;color:var(--muted);padding:12px 18px;background:#fffbfb}.heart{color:var(--rose)}
-body.readonly .editOnly{display:none!important}body.readonly #gift>.cards{display:none!important}body.readonly #gift .filters #gStatus,body.readonly #gift .filters #gSearch{display:none!important}body.readonly #gift .filters{display:flex}body.readonly #gift .filters:before{content:"查看名單：";align-self:center;font-size:13px;color:var(--muted)}body.readonly td input:not([type="search"]),body.readonly td select{pointer-events:none;background:#faf7f7;border-color:transparent}body.readonly td input[type="checkbox"]{pointer-events:none}body.readonly .danger{display:none!important}
 .shareChoices{display:grid;gap:10px}.shareChoice{display:flex;gap:12px;align-items:flex-start;border:1px solid var(--line);border-radius:14px;padding:14px;cursor:pointer}.shareChoice input{margin-top:4px}.shareChoice span{display:grid;gap:4px}.shareChoice small{color:var(--muted);line-height:1.5}.shareLinkRow{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:16px}.shareLinkRow input{min-width:0;border:1px solid var(--line);border-radius:9px;padding:10px;background:#fafafa}
 .recordModal{display:none;position:fixed;inset:0;background:#0007;z-index:50;padding:5vh 4vw;overflow:auto}.recordModal.show{display:block}.recordBox{max-width:900px;margin:auto;background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 20px 60px #0004}.recordForm{display:grid;grid-template-columns:1.2fr 1.2fr 1fr auto auto;gap:8px}.recordForm input{border:1px solid var(--line);border-radius:9px;padding:9px;min-width:0}.recordGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.recordCard{border:1px solid var(--line);border-radius:14px;padding:12px;background:#fffaf9}.recordCard img{width:100%;max-height:280px;object-fit:contain;background:#f7f3f3;border-radius:10px;margin-top:8px}.recordCard a{word-break:break-all}
 #giftFilterSummary{white-space:pre-line;line-height:1.65}
@@ -119,50 +118,50 @@ body.readonly .editOnly{display:none!important}body.readonly #gift>.cards{displa
  .recordModal .giftEditActions{position:sticky;bottom:0;z-index:5;background:#fff;padding:12px 0 calc(10px + env(safe-area-inset-bottom));margin-bottom:0;border-top:1px solid var(--line)}
 }
 @media(max-width:800px){
- body:not(.readonly) #after .tableWrap{overflow-x:auto;padding:0}
- body:not(.readonly) #after table{display:table;min-width:0;width:100%;table-layout:fixed}
- body:not(.readonly) #after thead{display:table-header-group}
- body:not(.readonly) #after tbody{display:table-row-group}
- body:not(.readonly) #after tr{display:table-row;background:#fff;border:0;border-radius:0;margin:0;padding:0;box-shadow:none;cursor:pointer}
- body:not(.readonly) #after th,body:not(.readonly) #after td{display:table-cell!important;padding:11px 6px;border-bottom:1px solid var(--line);font-size:13px;vertical-align:middle}
- body:not(.readonly) #after td:before{display:none!important;content:none!important}
- body:not(.readonly) #after th:nth-child(1),body:not(.readonly) #after td:nth-child(1){width:52px;text-align:center}
- body:not(.readonly) #after th:nth-child(2),body:not(.readonly) #after td:nth-child(2){width:82px}
- body:not(.readonly) #after th:nth-child(3),body:not(.readonly) #after td:nth-child(3){width:auto}
- body:not(.readonly) #after th:nth-child(5),body:not(.readonly) #after td:nth-child(5){width:72px}
- body:not(.readonly) #after th:nth-child(4),body:not(.readonly) #after td:nth-child(4),
- body:not(.readonly) #after th:nth-child(6),body:not(.readonly) #after td:nth-child(6),
- body:not(.readonly) #after th:nth-child(7),body:not(.readonly) #after td:nth-child(7),
- body:not(.readonly) #after th:nth-child(8),body:not(.readonly) #after td:nth-child(8){display:none!important}
+ body #after .tableWrap{overflow-x:auto;padding:0}
+ body #after table{display:table;min-width:0;width:100%;table-layout:fixed}
+ body #after thead{display:table-header-group}
+ body #after tbody{display:table-row-group}
+ body #after tr{display:table-row;background:#fff;border:0;border-radius:0;margin:0;padding:0;box-shadow:none;cursor:pointer}
+ body #after th,body #after td{display:table-cell!important;padding:11px 6px;border-bottom:1px solid var(--line);font-size:13px;vertical-align:middle}
+ body #after td:before{display:none!important;content:none!important}
+ body #after th:nth-child(1),body #after td:nth-child(1){width:52px;text-align:center}
+ body #after th:nth-child(2),body #after td:nth-child(2){width:82px}
+ body #after th:nth-child(3),body #after td:nth-child(3){width:auto}
+ body #after th:nth-child(5),body #after td:nth-child(5){width:72px}
+ body #after th:nth-child(4),body #after td:nth-child(4),
+ body #after th:nth-child(6),body #after td:nth-child(6),
+ body #after th:nth-child(7),body #after td:nth-child(7),
+ body #after th:nth-child(8),body #after td:nth-child(8){display:none!important}
 }
 @media(max-width:800px){
- body:not(.readonly) #schedule .tableWrap{overflow-x:auto;padding:0}
- body:not(.readonly) #schedule table{display:table;min-width:0;width:100%;table-layout:fixed}
- body:not(.readonly) #schedule thead{display:table-header-group}
- body:not(.readonly) #schedule tbody{display:table-row-group}
- body:not(.readonly) #schedule tr{display:table-row;background:#fff;border:0;border-radius:0;margin:0;padding:0;box-shadow:none;cursor:pointer;height:58px}
- body:not(.readonly) #schedule tbody tr{height:58px}
- body:not(.readonly) #schedule tbody td{height:58px;max-height:58px;overflow:hidden}
- body:not(.readonly) #schedule tbody td:nth-child(2),body:not(.readonly) #schedule tbody td:nth-child(3){white-space:nowrap;text-overflow:ellipsis;overflow:hidden}
- body:not(.readonly) #schedule tbody td:nth-child(3) b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
- body:not(.readonly) #schedule th,body:not(.readonly) #schedule td{display:table-cell!important;padding:11px 6px;border-bottom:1px solid var(--line);font-size:13px;vertical-align:middle}
- body:not(.readonly) #schedule td:before{display:none!important;content:none!important}
- body:not(.readonly) #schedule th:nth-child(1),body:not(.readonly) #schedule td:nth-child(1){width:52px;text-align:center}
- body:not(.readonly) #schedule th:nth-child(2),body:not(.readonly) #schedule td:nth-child(2){width:92px}
- body:not(.readonly) #schedule th:nth-child(3),body:not(.readonly) #schedule td:nth-child(3){width:auto}
- body:not(.readonly) #schedule th:nth-child(8),body:not(.readonly) #schedule td:nth-child(8){width:72px;text-align:center}
- body:not(.readonly) #schedule th:nth-child(4),body:not(.readonly) #schedule td:nth-child(4),
- body:not(.readonly) #schedule th:nth-child(5),body:not(.readonly) #schedule td:nth-child(5),
- body:not(.readonly) #schedule th:nth-child(6),body:not(.readonly) #schedule td:nth-child(6),
- body:not(.readonly) #schedule th:nth-child(7),body:not(.readonly) #schedule td:nth-child(7),
- body:not(.readonly) #schedule th:nth-child(9),body:not(.readonly) #schedule td:nth-child(9){display:none!important}
- body:not(.readonly) #schedule td:nth-child(8) .btn{padding:6px 5px;min-height:34px;font-size:12px;white-space:nowrap}
+ body #schedule .tableWrap{overflow-x:auto;padding:0}
+ body #schedule table{display:table;min-width:0;width:100%;table-layout:fixed}
+ body #schedule thead{display:table-header-group}
+ body #schedule tbody{display:table-row-group}
+ body #schedule tr{display:table-row;background:#fff;border:0;border-radius:0;margin:0;padding:0;box-shadow:none;cursor:pointer;height:58px}
+ body #schedule tbody tr{height:58px}
+ body #schedule tbody td{height:58px;max-height:58px;overflow:hidden}
+ body #schedule tbody td:nth-child(2),body #schedule tbody td:nth-child(3){white-space:nowrap;text-overflow:ellipsis;overflow:hidden}
+ body #schedule tbody td:nth-child(3) b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ body #schedule th,body #schedule td{display:table-cell!important;padding:11px 6px;border-bottom:1px solid var(--line);font-size:13px;vertical-align:middle}
+ body #schedule td:before{display:none!important;content:none!important}
+ body #schedule th:nth-child(1),body #schedule td:nth-child(1){width:52px;text-align:center}
+ body #schedule th:nth-child(2),body #schedule td:nth-child(2){width:92px}
+ body #schedule th:nth-child(3),body #schedule td:nth-child(3){width:auto}
+ body #schedule th:nth-child(8),body #schedule td:nth-child(8){width:72px;text-align:center}
+ body #schedule th:nth-child(4),body #schedule td:nth-child(4),
+ body #schedule th:nth-child(5),body #schedule td:nth-child(5),
+ body #schedule th:nth-child(6),body #schedule td:nth-child(6),
+ body #schedule th:nth-child(7),body #schedule td:nth-child(7),
+ body #schedule th:nth-child(9),body #schedule td:nth-child(9){display:none!important}
+ body #schedule td:nth-child(8) .btn{padding:6px 5px;min-height:34px;font-size:12px;white-space:nowrap}
 }
-@media(max-width:800px){body:not(.readonly) #gift .tableWrap{overflow-x:auto;padding:0}body:not(.readonly) #gift table{display:table;min-width:0;width:100%;table-layout:fixed}body:not(.readonly) #gift thead{display:table-header-group}body:not(.readonly) #gift tbody{display:table-row-group}body:not(.readonly) #gift tr{display:table-row;background:#fff;border:0;border-radius:0;margin:0;padding:0;box-shadow:none;cursor:pointer}body:not(.readonly) #gift th,body:not(.readonly) #gift td{display:table-cell!important;padding:11px 7px;border-bottom:1px solid var(--line);font-size:14px;vertical-align:middle}body:not(.readonly) #gift td:before{display:none!important;content:none!important}body:not(.readonly) #gift th:nth-child(1),body:not(.readonly) #gift td:nth-child(1){width:64px}body:not(.readonly) #gift th:nth-child(2),body:not(.readonly) #gift td:nth-child(2){width:auto}body:not(.readonly) #gift th:nth-child(4),body:not(.readonly) #gift td:nth-child(4){width:38%}body:not(.readonly) #gift th:nth-child(3),body:not(.readonly) #gift td:nth-child(3),body:not(.readonly) #gift th:nth-child(5),body:not(.readonly) #gift td:nth-child(5),body:not(.readonly) #gift th:nth-child(6),body:not(.readonly) #gift td:nth-child(6),body:not(.readonly) #gift th:nth-child(7),body:not(.readonly) #gift td:nth-child(7),body:not(.readonly) #gift th:nth-child(8),body:not(.readonly) #gift td:nth-child(8),body:not(.readonly) #gift th:nth-child(9),body:not(.readonly) #gift td:nth-child(9),body:not(.readonly) #gift th:nth-child(10),body:not(.readonly) #gift td:nth-child(10){display:none!important}.giftEditForm{grid-template-columns:1fr}.giftEditForm .wide{grid-column:auto}.giftEditActions{grid-column:auto!important}}
+@media(max-width:800px){body #gift .tableWrap{overflow-x:auto;padding:0}body #gift table{display:table;min-width:0;width:100%;table-layout:fixed}body #gift thead{display:table-header-group}body #gift tbody{display:table-row-group}body #gift tr{display:table-row;background:#fff;border:0;border-radius:0;margin:0;padding:0;box-shadow:none;cursor:pointer}body #gift th,body #gift td{display:table-cell!important;padding:11px 7px;border-bottom:1px solid var(--line);font-size:14px;vertical-align:middle}body #gift td:before{display:none!important;content:none!important}body #gift th:nth-child(1),body #gift td:nth-child(1){width:64px}body #gift th:nth-child(2),body #gift td:nth-child(2){width:auto}body #gift th:nth-child(4),body #gift td:nth-child(4){width:38%}body #gift th:nth-child(3),body #gift td:nth-child(3),body #gift th:nth-child(5),body #gift td:nth-child(5),body #gift th:nth-child(6),body #gift td:nth-child(6),body #gift th:nth-child(7),body #gift td:nth-child(7),body #gift th:nth-child(8),body #gift td:nth-child(8),body #gift th:nth-child(9),body #gift td:nth-child(9),body #gift th:nth-child(10),body #gift td:nth-child(10){display:none!important}.giftEditForm{grid-template-columns:1fr}.giftEditForm .wide{grid-column:auto}.giftEditActions{grid-column:auto!important}}
 
 @media(max-width:800px){.recordForm{grid-template-columns:1fr}.recordGrid{grid-template-columns:1fr}}
 @media(max-width:800px){#scheduleBody td:nth-child(8):before{content:"參考／成果紀錄"}header{align-items:flex-start;flex-direction:column}.cards{grid-template-columns:repeat(2,1fr)}main{padding:0 3vw 40px}nav{padding-left:3vw;overflow:auto}.tab{white-space:nowrap}}
-.giftPriceCalc{margin:14px 0;padding:16px;background:#fffaf9;border:1px solid var(--line);border-radius:14px}.giftPriceHead{display:flex;justify-content:space-between;align-items:center;gap:12px}.giftGrandTotal{text-align:right}.giftGrandTotal span,.giftSubtotal span{display:block;font-size:12px;color:var(--muted)}.giftGrandTotal strong{font-size:22px}.giftPriceRow{display:grid;grid-template-columns:1.3fr 1fr 1fr .8fr;gap:9px;align-items:end;padding:11px 0;border-top:1px solid var(--line)}.giftPriceRow label{display:grid;gap:4px;font-size:12px;color:var(--muted)}.giftPriceRow input{width:100%;box-sizing:border-box}.giftSubtotal{text-align:right}.giftPriceType small{display:block;color:var(--muted)}.giftPriceNote{font-size:12px}body.readonly #giftPriceCalc{display:none!important}@media(max-width:800px){.giftPriceRow{grid-template-columns:1fr 1fr}.giftPriceType,.giftSubtotal{grid-column:1/3}.giftSubtotal{display:flex;justify-content:space-between}.giftPriceRow input{font-size:16px}}@media(max-width:800px){
+.giftPriceCalc{margin:14px 0;padding:16px;background:#fffaf9;border:1px solid var(--line);border-radius:14px}.giftPriceHead{display:flex;justify-content:space-between;align-items:center;gap:12px}.giftGrandTotal{text-align:right}.giftGrandTotal span,.giftSubtotal span{display:block;font-size:12px;color:var(--muted)}.giftGrandTotal strong{font-size:22px}.giftPriceRow{display:grid;grid-template-columns:1.3fr 1fr 1fr .8fr;gap:9px;align-items:end;padding:11px 0;border-top:1px solid var(--line)}.giftPriceRow label{display:grid;gap:4px;font-size:12px;color:var(--muted)}.giftPriceRow input{width:100%;box-sizing:border-box}.giftSubtotal{text-align:right}.giftPriceType small{display:block;color:var(--muted)}.giftPriceNote{font-size:12px}@media(max-width:800px){.giftPriceRow{grid-template-columns:1fr 1fr}.giftPriceType,.giftSubtotal{grid-column:1/3}.giftSubtotal{display:flex;justify-content:space-between}.giftPriceRow input{font-size:16px}}@media(max-width:800px){
  #giftPriceCalc{padding:14px}
  #giftPriceCalc .giftPriceHead{align-items:flex-start}
  #giftPriceCalc .giftGrandTotal{min-width:105px}
@@ -229,12 +228,12 @@ body.readonly .editOnly{display:none!important}body.readonly #gift>.cards{displa
 }
 .giftNameFields{display:flex;gap:8px;align-items:center;min-width:0}.giftNameFields .giftShopInput{width:150px;min-width:110px}.giftNameFields .giftStyleInput{width:260px;min-width:180px}@media(max-width:800px){.giftNameSetting{width:100%;display:grid!important;grid-template-columns:110px minmax(0,1fr);align-items:center;gap:8px}.giftNameFields{display:grid;grid-template-columns:115px minmax(0,1fr);gap:8px;width:100%}.giftNameFields .giftShopInput,.giftNameFields .giftStyleInput{width:100%!important;min-width:0!important;box-sizing:border-box}.giftNameFields input{font-size:16px}}
 @media(max-width:800px){
- body:not(.readonly) #prep tbody tr>td input:not([type="checkbox"]):not([type="radio"]),body:not(.readonly) #prep tbody tr>td select{width:88%!important;max-width:360px!important;box-sizing:border-box!important}
- body:not(.readonly) #prep .prepDocEditRow input:not([type="checkbox"]){width:100%!important;max-width:none!important}
- body:not(.readonly) #prep .prepDateFields{width:88%!important;max-width:360px!important}
- body:not(.readonly) #prep .prepDateFields>input[type="date"],body:not(.readonly) #prep .prepTimeField input[type="time"]{width:100%!important;max-width:none!important;border:1.5px solid #c9949b!important;border-radius:14px!important;background:linear-gradient(180deg,#fff,#fff9fa)!important;box-shadow:0 0 0 3px rgba(185,117,126,.08)!important;padding:10px 13px!important}
- body:not(.readonly) #prep .prepTimeField{position:relative;padding-top:1px}
- body:not(.readonly) #prep .prepTimeField span{font-weight:600;color:#9b777b!important}
+ body #prep tbody tr>td input:not([type="checkbox"]):not([type="radio"]),body #prep tbody tr>td select{width:88%!important;max-width:360px!important;box-sizing:border-box!important}
+ body #prep .prepDocEditRow input:not([type="checkbox"]){width:100%!important;max-width:none!important}
+ body #prep .prepDateFields{width:88%!important;max-width:360px!important}
+ body #prep .prepDateFields>input[type="date"],body #prep .prepTimeField input[type="time"]{width:100%!important;max-width:none!important;border:1.5px solid #c9949b!important;border-radius:14px!important;background:linear-gradient(180deg,#fff,#fff9fa)!important;box-shadow:0 0 0 3px rgba(185,117,126,.08)!important;padding:10px 13px!important}
+ body #prep .prepTimeField{position:relative;padding-top:1px}
+ body #prep .prepTimeField span{font-weight:600;color:#9b777b!important}
  #prepEditModal .giftEditForm input,#prepEditModal .giftEditForm select{width:88%!important;max-width:360px!important}
  #prepEditModal #peDate,#prepEditModal #peTime{border:1.5px solid #c9949b!important;border-radius:14px!important;background:linear-gradient(180deg,#fff,#fff9fa)!important;box-shadow:0 0 0 3px rgba(185,117,126,.08)!important}
 }
@@ -252,244 +251,41 @@ body.readonly .editOnly{display:none!important}body.readonly #gift>.cards{displa
  #gift .giftNameFields .giftStyleInput{width:100%!important;font-size:14px!important}
  #gift .giftNameFields .giftStyleInput::placeholder{font-size:13px!important}
 }
-@media(max-width:800px){body.readonly #schedule .tableWrap{overflow-x:hidden!important;padding:0!important}body.readonly #schedule table{display:table!important;width:100%!important;min-width:0!important;table-layout:fixed!important}body.readonly #schedule thead{display:table-header-group!important}body.readonly #schedule th:nth-child(n+4),body.readonly #schedule td:nth-child(n+4){display:none!important}body.readonly #schedule th:nth-child(1),body.readonly #schedule td:nth-child(1){width:42px!important}body.readonly #schedule th:nth-child(2),body.readonly #schedule td:nth-child(2){width:126px!important}body.readonly #schedule th:nth-child(3),body.readonly #schedule td:nth-child(3){width:auto!important}body.readonly #schedule .familyScheduleMobile{height:auto!important}body.readonly #schedule .familyScheduleMobile td{padding:9px 5px!important;white-space:normal!important;overflow:hidden!important}body.readonly #schedule .familyScheduleMobile td:nth-child(3) b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}body.readonly #schedule .familyScheduleMobile td:nth-child(3) small{display:block;font-size:11px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
+@media(max-width:800px){}
 @media(max-width:800px){
- body.readonly #schedule .tableWrap{overflow-x:hidden!important;width:100%!important}
- body.readonly #schedule table{width:100%!important;min-width:0!important;max-width:100%!important;table-layout:fixed!important}
- body.readonly #schedule thead th:nth-child(n+4),body.readonly #schedule tbody td:nth-child(n+4){display:none!important}
- body.readonly #schedule th:nth-child(1),body.readonly #schedule td:nth-child(1){width:34px!important;min-width:34px!important;max-width:34px!important}
- body.readonly #schedule th:nth-child(2),body.readonly #schedule td:nth-child(2){width:112px!important;min-width:112px!important;max-width:112px!important}
- body.readonly #schedule th:nth-child(3),body.readonly #schedule td:nth-child(3){width:auto!important;min-width:0!important;max-width:none!important}
- body.readonly #schedule .familyScheduleMobile td{box-sizing:border-box!important}
 }
 @media(max-width:800px){
- body.readonly #schedule .tableWrap{overflow-x:hidden!important;overflow-y:visible!important;width:100%!important;padding:0!important}
- body.readonly #schedule table{display:table!important;width:100%!important;min-width:0!important;max-width:100%!important;table-layout:fixed!important}
- body.readonly #schedule thead{display:table-header-group!important}
- body.readonly #schedule tbody{display:table-row-group!important}
- body.readonly #schedule th:nth-child(n+4),body.readonly #schedule td:nth-child(n+4){display:none!important}
- body.readonly #schedule th:nth-child(1),body.readonly #schedule td:nth-child(1){width:34px!important;min-width:34px!important;max-width:34px!important}
- body.readonly #schedule th:nth-child(2),body.readonly #schedule td:nth-child(2){width:112px!important;min-width:112px!important;max-width:112px!important}
- body.readonly #schedule th:nth-child(3),body.readonly #schedule td:nth-child(3){width:auto!important;min-width:0!important;max-width:none!important}
- body.readonly #schedule tr.familyScheduleMobile{display:table-row!important;width:100%!important}
- body.readonly #schedule tr.familyScheduleMobile td{box-sizing:border-box!important;white-space:normal!important;overflow:hidden!important}
 }
 @media(max-width:800px){
- body.readonly #schedule .tableWrap{overflow:hidden!important;padding:0!important}
- body.readonly #schedule table{width:100%!important;min-width:0!important;table-layout:fixed!important}
- body.readonly #schedule th:nth-child(1),body.readonly #schedule td:nth-child(1){width:34px!important}
- body.readonly #schedule th:nth-child(2),body.readonly #schedule td:nth-child(2){width:126px!important}
- body.readonly #schedule th:nth-child(3),body.readonly #schedule td:nth-child(3){width:auto!important}
- body.readonly #schedule th:nth-child(8),body.readonly #schedule td:nth-child(8){display:table-cell!important;width:58px!important}
- body.readonly #schedule th:nth-child(4),body.readonly #schedule th:nth-child(5),body.readonly #schedule th:nth-child(6),body.readonly #schedule th:nth-child(7),body.readonly #schedule th:nth-child(9),
- body.readonly #schedule td:nth-child(4),body.readonly #schedule td:nth-child(5),body.readonly #schedule td:nth-child(6),body.readonly #schedule td:nth-child(7),body.readonly #schedule td:nth-child(9){display:none!important}
- body.readonly #schedule .familyScheduleMobile td{padding:9px 4px!important;box-sizing:border-box!important;overflow:hidden!important}
- body.readonly #schedule .scheduleMobileDate{font-size:11.5px!important;line-height:1.35!important;white-space:normal!important}
- body.readonly #schedule .scheduleMobileDate .dateStart,body.readonly #schedule .scheduleMobileDate .dateEnd,body.readonly #schedule .scheduleMobileDate .dateSingle{display:block!important;white-space:nowrap!important;overflow:visible!important;letter-spacing:-.15px}
- body.readonly #schedule .familyScheduleMobile td:nth-child(3){padding-left:7px!important;min-width:0!important}
- body.readonly #schedule .familyScheduleMobile td:nth-child(3) b{display:block!important;white-space:normal!important;overflow:visible!important;text-overflow:clip!important;word-break:break-word!important;line-height:1.35!important}
- body.readonly #schedule .familyScheduleMobile td:nth-child(3) small{display:none!important}
 }
-@media(max-width:800px){body.readonly #schedule tr.familyScheduleMobile.hasRecords{cursor:pointer}body.readonly #schedule tr.familyScheduleMobile.hasRecords:active{background:#fff7f8!important}body.readonly #schedule .tableWrap{overflow-x:hidden!important}body.readonly #schedule table{width:100%!important;min-width:0!important;table-layout:fixed!important}body.readonly #schedule .familyScheduleMobile td:nth-child(3){white-space:normal!important;overflow:visible!important;text-overflow:clip!important;word-break:break-word!important}}
-@media(max-width:800px){body.readonly #schedule .familyScheduleMobile{cursor:pointer!important}body.readonly #schedule .familyScheduleMobile td:nth-child(3) b{white-space:normal!important;text-overflow:clip!important;overflow:visible!important}.familyScheduleDetail{display:grid;gap:0;margin-bottom:14px}.familyScheduleInfo{display:grid;grid-template-columns:86px minmax(0,1fr);gap:10px;padding:9px 0;border-bottom:1px solid var(--line)}.familyScheduleInfo span{font-size:12px;color:var(--muted)}.familyScheduleInfo b{font-size:14px;white-space:normal;word-break:break-word}.familyScheduleTodos{padding:10px 0;line-height:1.7}.familyScheduleTodos>b{display:block;margin-bottom:3px}.familyRecordHead{margin:8px 0 4px;padding-top:4px}}
+@media(max-width:800px){}
+@media(max-width:800px){.familyScheduleDetail{display:grid;gap:0;margin-bottom:14px}.familyScheduleInfo{display:grid;grid-template-columns:86px minmax(0,1fr);gap:10px;padding:9px 0;border-bottom:1px solid var(--line)}.familyScheduleInfo span{font-size:12px;color:var(--muted)}.familyScheduleInfo b{font-size:14px;white-space:normal;word-break:break-word}.familyScheduleTodos{padding:10px 0;line-height:1.7}.familyScheduleTodos>b{display:block;margin-bottom:3px}.familyRecordHead{margin:8px 0 4px;padding-top:4px}}
 @media(max-width:800px){
- body.readonly #schedule .tableWrap{overflow-x:hidden!important;width:100%!important;padding:0!important}
- body.readonly #schedule table{width:100%!important;min-width:0!important;max-width:100%!important;table-layout:fixed!important}
- body.readonly #schedule thead{display:table-header-group!important}
- body.readonly #schedule th,body.readonly #schedule td{box-sizing:border-box!important}
- body.readonly #schedule th:nth-child(1),body.readonly #schedule td:nth-child(1){display:table-cell!important;width:50px!important}
- body.readonly #schedule th:nth-child(2),body.readonly #schedule td:nth-child(2){display:table-cell!important;width:126px!important}
- body.readonly #schedule th:nth-child(3),body.readonly #schedule td:nth-child(3){display:table-cell!important;width:auto!important}
- body.readonly #schedule th:nth-child(8),body.readonly #schedule td:nth-child(8){display:table-cell!important;width:58px!important}
- body.readonly #schedule th:nth-child(4),body.readonly #schedule td:nth-child(4),
- body.readonly #schedule th:nth-child(5),body.readonly #schedule td:nth-child(5),
- body.readonly #schedule th:nth-child(6),body.readonly #schedule td:nth-child(6),
- body.readonly #schedule th:nth-child(7),body.readonly #schedule td:nth-child(7),
- body.readonly #schedule th:nth-child(9),body.readonly #schedule td:nth-child(9){display:none!important}
- body.readonly #schedule .familyViewScheduleRow td{height:58px!important;max-height:58px!important;padding-top:8px!important;padding-bottom:8px!important}
- body.readonly #schedule .familyViewScheduleRow.dateRangeRow td{height:66px!important;max-height:66px!important}
- body.readonly #schedule td.scheduleMobileDate{font-size:11.5px!important;line-height:1.35!important;padding-left:4px!important;padding-right:3px!important;white-space:normal!important;overflow:hidden!important;text-overflow:clip!important}
- body.readonly #schedule .scheduleMobileDate .dateStart,body.readonly #schedule .scheduleMobileDate .dateEnd,body.readonly #schedule .scheduleMobileDate .dateSingle{display:block!important;white-space:nowrap!important;overflow:visible!important;text-overflow:clip!important;letter-spacing:-.15px}
- body.readonly #schedule .familyViewScheduleRow td:nth-child(3){min-width:0!important;overflow:hidden!important;padding-left:7px!important}
- body.readonly #schedule .familyViewScheduleRow td:nth-child(3) b{display:block!important;max-width:100%!important;overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important}
- body.readonly #schedule .familyViewScheduleRow td:nth-child(8){padding-left:3px!important;padding-right:3px!important}
 }
 @media(max-width:800px){
- body.readonly #schedule .tableWrap{overflow-x:hidden!important;padding:0!important}
- body.readonly #schedule table{display:table!important;width:100%!important;min-width:0!important;table-layout:fixed!important}
- body.readonly #schedule thead{display:table-header-group!important}
- body.readonly #schedule tbody{display:table-row-group!important}
- body.readonly #schedule tr.familyViewScheduleRow{display:table-row!important;height:58px!important}
- body.readonly #schedule tr.familyViewScheduleRow.dateRangeRow{height:66px!important}
- body.readonly #schedule .familyViewScheduleRow td{display:table-cell!important;height:58px!important;max-height:58px!important;padding:8px 6px!important;vertical-align:middle!important;border-bottom:1px solid var(--line)!important}
- body.readonly #schedule .familyViewScheduleRow.dateRangeRow td{height:66px!important;max-height:66px!important}
- body.readonly #schedule th:nth-child(1),body.readonly #schedule td:nth-child(1){width:52px!important;text-align:center!important}
- body.readonly #schedule th:nth-child(2),body.readonly #schedule td:nth-child(2){width:112px!important}
- body.readonly #schedule th:nth-child(8),body.readonly #schedule td:nth-child(8){width:58px!important;text-align:center!important}
- body.readonly #schedule th:nth-child(3),body.readonly #schedule td:nth-child(3){width:auto!important}
- body.readonly #schedule .familyViewScheduleRow td:nth-child(3) b{display:block!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
- body.readonly #schedule th:nth-child(4),body.readonly #schedule td:nth-child(4),body.readonly #schedule th:nth-child(5),body.readonly #schedule td:nth-child(5),body.readonly #schedule th:nth-child(6),body.readonly #schedule td:nth-child(6),body.readonly #schedule th:nth-child(7),body.readonly #schedule td:nth-child(7),body.readonly #schedule th:nth-child(9),body.readonly #schedule td:nth-child(9){display:none!important}
 }
 /* readonly layout parity: mobile viewer follows editor geometry */
 @media(max-width:800px){
- body.readonly #schedule .tableWrap,body.readonly #gift .tableWrap,body.readonly #prep .tableWrap,body.readonly #after .tableWrap{overflow-x:auto!important;padding:0!important}
- body.readonly #schedule table,body.readonly #gift table,body.readonly #after table{display:table!important;min-width:0!important;width:100%!important;table-layout:fixed!important}
- body.readonly #schedule thead,body.readonly #gift thead,body.readonly #after thead{display:table-header-group!important}
- body.readonly #schedule tbody,body.readonly #gift tbody,body.readonly #after tbody{display:table-row-group!important}
- body.readonly #schedule tr,body.readonly #gift tr,body.readonly #after tr{display:table-row!important;background:#fff!important;border:0!important;border-radius:0!important;margin:0!important;padding:0!important;box-shadow:none!important}
- body.readonly #schedule th,body.readonly #schedule td{display:table-cell!important;padding:11px 6px!important;border-bottom:1px solid var(--line)!important;font-size:13px!important;vertical-align:middle!important}
- body.readonly #schedule td:before,body.readonly #gift td:before,body.readonly #after td:before{display:none!important;content:none!important}
- body.readonly #schedule tbody tr,body.readonly #schedule tbody td{height:58px!important;max-height:58px!important}
- body.readonly #schedule tbody td{overflow:hidden!important}
- body.readonly #schedule tbody td:nth-child(2),body.readonly #schedule tbody td:nth-child(3),body.readonly #schedule tbody td:nth-child(3) b{white-space:nowrap!important;text-overflow:ellipsis!important;overflow:hidden!important}
- body.readonly #schedule th:nth-child(1),body.readonly #schedule td:nth-child(1){width:52px!important;text-align:center!important}
- body.readonly #schedule th:nth-child(2),body.readonly #schedule td:nth-child(2){width:92px!important}
- body.readonly #schedule th:nth-child(3),body.readonly #schedule td:nth-child(3){width:auto!important}
- body.readonly #schedule th:nth-child(8),body.readonly #schedule td:nth-child(8){width:72px!important;text-align:center!important}
- body.readonly #schedule th:nth-child(4),body.readonly #schedule td:nth-child(4),body.readonly #schedule th:nth-child(5),body.readonly #schedule td:nth-child(5),body.readonly #schedule th:nth-child(6),body.readonly #schedule td:nth-child(6),body.readonly #schedule th:nth-child(7),body.readonly #schedule td:nth-child(7),body.readonly #schedule th:nth-child(9),body.readonly #schedule td:nth-child(9){display:none!important}
-
- body.readonly #gift table.giftSimpleTable{display:table!important;width:100%!important;min-width:0!important;table-layout:fixed!important;border-collapse:collapse!important}
- body.readonly #gift .giftSimpleTable thead{display:table-header-group!important}
- body.readonly #gift .giftSimpleTable tbody{display:table-row-group!important}
- body.readonly #gift .giftSimpleTable tr{display:table-row!important}
- body.readonly #gift .giftSimpleTable th,body.readonly #gift .giftSimpleTable td{display:table-cell!important;padding:11px 7px!important;border-bottom:1px solid var(--line)!important;font-size:14px!important;vertical-align:middle!important;width:auto!important;white-space:normal!important}
- body.readonly #gift .giftSimpleTable th:nth-child(1),body.readonly #gift .giftSimpleTable td:nth-child(1),body.readonly #gift .giftSimpleTable th:nth-child(3),body.readonly #gift .giftSimpleTable td:nth-child(3){width:25%!important}
- body.readonly #gift .giftSimpleTable th:nth-child(2),body.readonly #gift .giftSimpleTable td:nth-child(2),body.readonly #gift .giftSimpleTable th:nth-child(4),body.readonly #gift .giftSimpleTable td:nth-child(4){width:25%!important}
-
- body.readonly #prep table{display:table!important;width:100%!important;min-width:0!important;table-layout:fixed!important}
- body.readonly #prep thead{display:table-header-group!important}
- body.readonly #prep tbody{display:table-row-group!important}
- body.readonly #prep tr.familyPrepRow{display:table-row!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;background:#fff!important}
- body.readonly #prep tr.familyPrepRow td{display:table-cell!important;width:auto!important;max-width:none!important;padding:11px 6px!important;border:0!important;border-bottom:1px solid var(--line)!important;font-size:13px!important;vertical-align:middle!important}
- body.readonly #prep tr.familyPrepRow td:before{display:none!important;content:none!important}
- body.readonly #prep tr.familyPrepRow td:nth-child(1){width:74px!important}
- body.readonly #prep tr.familyPrepRow td:nth-child(2){width:23%!important}
- body.readonly #prep tr.familyPrepRow td:nth-child(3){width:23%!important}
- body.readonly #prep tr.familyPrepRow td:nth-child(4){width:25%!important}
- body.readonly #prep tr.familyPrepRow td:nth-child(5){display:table-cell!important;width:auto!important}
- body.readonly #prep tr.familyPrepRow td:nth-child(6),body.readonly #prep tr.familyPrepRow td:nth-child(7){display:none!important}
-
- body.readonly #after th,body.readonly #after td{display:table-cell!important;padding:11px 6px!important;border-bottom:1px solid var(--line)!important;font-size:13px!important;vertical-align:middle!important}
- body.readonly #after th:nth-child(1),body.readonly #after td:nth-child(1){width:52px!important;text-align:center!important}
- body.readonly #after th:nth-child(2),body.readonly #after td:nth-child(2){width:82px!important}
- body.readonly #after th:nth-child(3),body.readonly #after td:nth-child(3){width:auto!important}
- body.readonly #after th:nth-child(5),body.readonly #after td:nth-child(5){width:72px!important}
- body.readonly #after th:nth-child(4),body.readonly #after td:nth-child(4),body.readonly #after th:nth-child(6),body.readonly #after td:nth-child(6),body.readonly #after th:nth-child(7),body.readonly #after td:nth-child(7),body.readonly #after th:nth-child(8),body.readonly #after td:nth-child(8){display:none!important}
 }
 /* readonly mobile uses the same geometry as editable mobile */
 @media(max-width:800px){
- body.readonly #schedule .tableWrap,body.readonly #after .tableWrap{overflow:hidden!important}
- body.readonly #schedule table,body.readonly #after table{width:100%!important;min-width:0!important;table-layout:fixed!important}
- body.readonly #schedule tbody tr,body.readonly #after tbody tr{width:100%!important}
- body.readonly #schedule tbody td,body.readonly #after tbody td{min-width:0!important;max-width:none!important;overflow:hidden!important;white-space:normal!important;text-overflow:clip!important}
- body.readonly #schedule tbody td:nth-child(1){width:44px!important}
- body.readonly #schedule tbody td:nth-child(2){width:34%!important}
- body.readonly #schedule tbody td:nth-child(3){width:auto!important;word-break:break-word!important}
- body.readonly #schedule tbody td:nth-child(4),body.readonly #schedule tbody td:nth-child(5),body.readonly #schedule tbody td:nth-child(6),body.readonly #schedule tbody td:nth-child(7),body.readonly #schedule tbody td:nth-child(9){display:none!important}
- body.readonly #schedule tbody td:nth-child(8){width:62px!important}
- body.readonly #after tbody td:nth-child(1){width:44px!important}
- body.readonly #after tbody td:nth-child(2){width:25%!important}
- body.readonly #after tbody td:nth-child(3){width:auto!important;word-break:break-word!important}
- body.readonly #after tbody td:nth-child(4),body.readonly #after tbody td:nth-child(6),body.readonly #after tbody td:nth-child(7),body.readonly #after tbody td:nth-child(8){display:none!important}
- body.readonly #after tbody td:nth-child(5){width:25%!important}
- body.readonly #gift .giftSimpleTable,body.readonly #gift .giftSimpleTable tbody,body.readonly #gift .giftSimpleTable thead{width:100%!important;min-width:0!important}
- body.readonly #gift .giftSimpleTable{table-layout:fixed!important}
- body.readonly #gift .giftSimpleTable td,body.readonly #gift .giftSimpleTable th{min-width:0!important;white-space:normal!important;word-break:break-word!important}
- body.readonly #prep .tableWrap{overflow:hidden!important}
- body.readonly #prep table{width:100%!important;min-width:0!important}
 }
 
 /* mobile readonly parity: keep view mode geometry aligned with edit mode */
 @media(max-width:800px){
- body.readonly #schedule .tableWrap{overflow-x:hidden!important;padding:0!important}
- body.readonly #schedule table{display:table!important;width:100%!important;min-width:0!important;table-layout:fixed!important}
- body.readonly #schedule thead{display:table-header-group!important}
- body.readonly #schedule tbody{display:table-row-group!important}
- body.readonly #schedule tr{display:table-row!important;height:58px!important;background:#fff!important;border:0!important;border-radius:0!important;margin:0!important;padding:0!important;box-shadow:none!important}
- body.readonly #schedule th,body.readonly #schedule td{display:table-cell!important;height:58px!important;max-height:58px!important;padding:11px 6px!important;border-bottom:1px solid var(--line)!important;font-size:13px!important;vertical-align:middle!important;min-width:0!important}
- body.readonly #schedule td:before{display:none!important;content:none!important}
- body.readonly #schedule th:nth-child(1),body.readonly #schedule td:nth-child(1){width:52px!important;text-align:center!important}
- body.readonly #schedule th:nth-child(2),body.readonly #schedule td:nth-child(2){width:92px!important}
- body.readonly #schedule th:nth-child(3),body.readonly #schedule td:nth-child(3){width:auto!important}
- body.readonly #schedule th:nth-child(8),body.readonly #schedule td:nth-child(8){display:table-cell!important;width:72px!important;text-align:center!important}
- body.readonly #schedule th:nth-child(4),body.readonly #schedule td:nth-child(4),
- body.readonly #schedule th:nth-child(5),body.readonly #schedule td:nth-child(5),
- body.readonly #schedule th:nth-child(6),body.readonly #schedule td:nth-child(6),
- body.readonly #schedule th:nth-child(7),body.readonly #schedule td:nth-child(7),
- body.readonly #schedule th:nth-child(9),body.readonly #schedule td:nth-child(9){display:none!important}
- body.readonly #schedule tbody td:nth-child(2),body.readonly #schedule tbody td:nth-child(3){white-space:nowrap!important;text-overflow:ellipsis!important;overflow:hidden!important}
- body.readonly #schedule tbody td:nth-child(3) b{display:block!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
-
- body.readonly #prep .tableWrap{overflow:visible!important;padding:0 12px 14px!important}
- body.readonly #prep table,body.readonly #prep tbody{display:block!important;width:100%!important;min-width:0!important}
- body.readonly #prep thead{display:none!important}
- body.readonly #prep tr.familyPrepRow{display:grid!important;width:100%!important;box-sizing:border-box!important;margin:14px 0!important;padding:14px 16px!important;border:1px solid var(--line)!important;border-radius:16px!important;background:#fff!important;gap:0!important}
- body.readonly #prep tr.familyPrepRow td{display:grid!important;grid-template-columns:118px minmax(0,1fr)!important;width:100%!important;max-width:none!important;box-sizing:border-box!important;padding:11px 0!important;border:0!important;border-bottom:1px dashed var(--line)!important;font-size:14px!important;line-height:1.5!important;vertical-align:middle!important;white-space:normal!important;word-break:normal!important}
- body.readonly #prep tr.familyPrepRow td:before{display:block!important;content:attr(data-label)!important;color:var(--muted)!important;font-weight:600!important;padding-right:10px!important}
- body.readonly #prep tr.familyPrepRow td:nth-child(1),
- body.readonly #prep tr.familyPrepRow td:nth-child(2),
- body.readonly #prep tr.familyPrepRow td:nth-child(3),
- body.readonly #prep tr.familyPrepRow td:nth-child(4){width:100%!important}
- body.readonly #prep tr.familyPrepRow td.prepDataCell{display:block!important;padding-top:14px!important;border-bottom:0!important}
- body.readonly #prep tr.familyPrepRow td.prepDataCell:before{display:none!important}
- body.readonly #prep tr.familyPrepRow td:nth-child(6),body.readonly #prep tr.familyPrepRow td:nth-child(7){display:none!important}
- body.readonly #prep .prepDataTitle{font-weight:700!important;margin-bottom:8px!important}
- body.readonly #prep .prepActualTime{margin-top:5px!important;color:var(--muted)!important}
 }
 @media(max-width:800px){
- body.readonly #schedule .tableWrap{overflow-x:auto!important;padding:0!important}
- body.readonly #schedule table{display:table!important;min-width:0!important;width:100%!important;max-width:100%!important;table-layout:fixed!important}
- body.readonly #schedule thead{display:table-header-group!important}
- body.readonly #schedule tbody{display:table-row-group!important}
- body.readonly #schedule tr{display:table-row!important;background:#fff!important;border:0!important;border-radius:0!important;margin:0!important;padding:0!important;box-shadow:none!important;cursor:pointer!important;height:58px!important}
- body.readonly #schedule tbody tr{height:58px!important}
- body.readonly #schedule th,body.readonly #schedule td{display:table-cell!important;padding:11px 6px!important;border-bottom:1px solid var(--line)!important;font-size:13px!important;vertical-align:middle!important;box-sizing:border-box!important}
- body.readonly #schedule tbody td{height:58px!important;max-height:58px!important;overflow:hidden!important}
- body.readonly #schedule td:before{display:none!important;content:none!important}
- body.readonly #schedule th:nth-child(1),body.readonly #schedule td:nth-child(1){display:table-cell!important;width:52px!important;min-width:52px!important;max-width:52px!important;text-align:center!important}
- body.readonly #schedule th:nth-child(2),body.readonly #schedule td:nth-child(2){display:table-cell!important;width:92px!important;min-width:92px!important;max-width:92px!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
- body.readonly #schedule th:nth-child(3),body.readonly #schedule td:nth-child(3){display:table-cell!important;width:auto!important;min-width:0!important;max-width:none!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
- body.readonly #schedule td:nth-child(3) b{display:block!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
- body.readonly #schedule th:nth-child(8),body.readonly #schedule td:nth-child(8){display:table-cell!important;width:72px!important;min-width:72px!important;max-width:72px!important;text-align:center!important}
- body.readonly #schedule th:nth-child(4),body.readonly #schedule td:nth-child(4),
- body.readonly #schedule th:nth-child(5),body.readonly #schedule td:nth-child(5),
- body.readonly #schedule th:nth-child(6),body.readonly #schedule td:nth-child(6),
- body.readonly #schedule th:nth-child(7),body.readonly #schedule td:nth-child(7),
- body.readonly #schedule th:nth-child(9),body.readonly #schedule td:nth-child(9){display:none!important}
- body.readonly #schedule td:nth-child(8) .btn{padding:6px 5px!important;min-height:34px!important;font-size:12px!important;white-space:nowrap!important}
 }
 
-.viewOnly{display:none!important}body.readonly .viewOnly{display:flex!important}
+.viewOnly{display:none!important}
 .giftNamesReadonly{gap:12px;flex-wrap:wrap;padding:12px 18px;background:#fffbfb;border-top:1px solid var(--line)}
 .giftNamesReadonly>div{display:grid;grid-template-columns:92px auto;gap:3px 10px;align-items:center}
 .giftNamesReadonly span{grid-row:1/3;color:var(--muted);font-size:13px}.giftNamesReadonly b{font-size:14px}.giftNamesReadonly small{color:var(--muted);font-size:12px}
 @media(max-width:800px){
- body.readonly #schedule .tableWrap{overflow-x:hidden!important}
- body.readonly #schedule table{width:100%!important;min-width:0!important;table-layout:fixed!important}
- body.readonly #schedule th:nth-child(1),body.readonly #schedule td:nth-child(1){width:44px!important}
- body.readonly #schedule th:nth-child(2),body.readonly #schedule td:nth-child(2){width:34%!important;min-width:0!important;max-width:none!important}
- body.readonly #schedule th:nth-child(3),body.readonly #schedule td:nth-child(3){width:auto!important;min-width:0!important}
- body.readonly #schedule th:nth-child(8),body.readonly #schedule td:nth-child(8){width:62px!important}
- body.readonly #schedule tbody td:nth-child(2){white-space:normal!important;text-overflow:clip!important}
- body.readonly #schedule tbody td:nth-child(3),body.readonly #schedule tbody td:nth-child(3) b{white-space:normal!important;text-overflow:clip!important;word-break:break-word!important}
- body.readonly #prep .tableWrap{overflow:visible!important;padding:0!important}
- body.readonly #prep table,body.readonly #prep tbody{display:block!important;width:100%!important;min-width:0!important}
- body.readonly #prep thead{display:none!important}
- body.readonly #prep tbody tr{display:block!important;margin:14px 12px!important;padding:14px 16px!important;border:1px solid var(--line)!important;border-radius:16px!important;background:#fff!important}
- body.readonly #prep tbody tr>td{display:grid!important;grid-template-columns:118px minmax(0,1fr)!important;width:100%!important;box-sizing:border-box!important;padding:11px 0!important;border:0!important;border-bottom:1px dashed var(--line)!important;font-size:14px!important}
- body.readonly #prep tbody tr>td:before{display:block!important;content:attr(data-label)!important}
- body.readonly #prep tbody tr>td:nth-child(1):before{content:"狀態"!important}body.readonly #prep tbody tr>td:nth-child(2):before{content:"辦理項目"!important}body.readonly #prep tbody tr>td:nth-child(3):before{content:"地點 / 機關"!important}body.readonly #prep tbody tr>td:nth-child(4):before{content:"日期"!important}
- body.readonly #prep tbody tr>td:nth-child(5){display:block!important;border-bottom:0!important}
- body.readonly #prep tbody tr>td:nth-child(5):before{display:none!important}
- body.readonly #prep tbody tr>td:nth-child(6),body.readonly #prep tbody tr>td:nth-child(7){display:none!important}
- body.readonly #prep tbody tr>td input:not([type="checkbox"]){width:88%!important;max-width:360px!important;box-sizing:border-box!important;pointer-events:none!important}
- body.readonly #prep .prepDateFields{width:88%!important;max-width:360px!important}
- body.readonly #prep .prepDateFields>input[type="date"],body.readonly #prep .prepTimeField input[type="time"]{width:100%!important;max-width:none!important;border:1.5px solid #c9949b!important;border-radius:14px!important;background:linear-gradient(180deg,#fff,#fff9fa)!important;box-shadow:0 0 0 3px rgba(185,117,126,.08)!important;padding:10px 13px!important}
- body.readonly #prep .prepTimeField span{font-weight:600;color:#9b777b!important}
  .giftNamesReadonly{display:grid!important;grid-template-columns:1fr!important}
 }
 </style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-<style id="responsive-v3">
+<style>
 .mobileNav{display:none}
 @media(max-width:800px){
  body{padding-bottom:76px}
@@ -545,43 +341,6 @@ body.readonly .editOnly{display:none!important}body.readonly #gift>.cards{displa
  .mobileNav button.active{color:var(--rose);font-weight:700}
 }
 @media(max-width:800px){
- body.readonly .page>.cards{display:none!important}
- body.readonly .tableWrap{overflow-x:auto;padding:0;-webkit-overflow-scrolling:touch}
- body.readonly table{display:table;width:100%;min-width:680px;border-collapse:collapse}
- body.readonly thead{display:table-header-group}
- body.readonly tbody{display:table-row-group}
- body.readonly tr{display:table-row;background:#fff;border:0;border-radius:0;margin:0;padding:0;box-shadow:none}
- body.readonly td{display:table-cell;padding:10px 8px;border-bottom:1px solid var(--line);vertical-align:middle;white-space:normal}
- body.readonly td:before{display:none!important;content:none!important}
- body.readonly th{padding:9px 8px;white-space:nowrap;font-size:12px}
- body.readonly #gift table{min-width:0;table-layout:fixed}
- body.readonly #gift th,body.readonly #gift td{padding:11px 7px;font-size:14px}
- body.readonly #gift th:nth-child(1),body.readonly #gift td:nth-child(1){display:table-cell!important;width:64px}
- body.readonly #gift th:nth-child(2),body.readonly #gift td:nth-child(2){display:table-cell!important;width:auto}
- body.readonly #gift th:nth-child(4),body.readonly #gift td:nth-child(4){display:table-cell!important;width:42%}
- body.readonly #gift th:nth-child(3),body.readonly #gift td:nth-child(3),
- body.readonly #gift th:nth-child(5),body.readonly #gift td:nth-child(5),
- body.readonly #gift th:nth-child(6),body.readonly #gift td:nth-child(6),
- body.readonly #gift th:nth-child(7),body.readonly #gift td:nth-child(7),
- body.readonly #gift th:nth-child(8),body.readonly #gift td:nth-child(8),
- body.readonly #gift th:nth-child(9),body.readonly #gift td:nth-child(9),
- body.readonly #gift th:nth-child(10),body.readonly #gift td:nth-child(10){display:none!important}
- body.readonly #schedule table{min-width:900px}
- body.readonly #schedule th:nth-child(8),body.readonly #schedule td:nth-child(8){min-width:150px}
- body.readonly #schedule td:nth-child(8) .btn{white-space:nowrap}
- body.readonly #prep table{min-width:760px;table-layout:fixed}
- body.readonly #prep th:nth-child(1),body.readonly #prep td:nth-child(1){width:82px}
- body.readonly #prep th:nth-child(2),body.readonly #prep td:nth-child(2){width:120px}
- body.readonly #prep th:nth-child(3),body.readonly #prep td:nth-child(3){width:120px}
- body.readonly #prep th:nth-child(4),body.readonly #prep td:nth-child(4){width:100px}
- body.readonly #prep th:nth-child(5),body.readonly #prep td:nth-child(5){width:280px;white-space:nowrap}
- body.readonly #prep th:nth-child(6),body.readonly #prep td:nth-child(6){width:100px;white-space:normal}
- body.readonly #prep th:nth-child(7),body.readonly #prep td:nth-child(7){display:none!important}
- body.readonly #prep td:nth-child(5)>div{white-space:nowrap}
-
- body.readonly #gift .panelHead{display:block}
- body.readonly #gift .filters{margin-top:10px;display:flex;width:100%}
- body.readonly #gift .filters #gSide{width:100%;min-height:42px}
 }
 @media(min-width:801px){.mobileNav{display:none!important}}
 .headerShareBtn{margin-left:auto;flex:0 0 auto}
@@ -603,23 +362,23 @@ body.readonly .editOnly{display:none!important}body.readonly #gift>.cards{displa
 }
 .featureGuideBox{max-width:900px;max-height:88dvh;overflow-y:auto}.featureGuide{padding:18px}.featureIntro{background:var(--pink);border:1px solid var(--line);border-radius:14px;padding:16px 18px}.featureIntro b{font-size:17px}.featureIntro p{margin:7px 0 0;line-height:1.75}.featureGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:14px 0}.featureItem{border:1px solid var(--line);border-radius:12px;padding:14px;background:#fff}.featureItem>b{display:block;font-size:16px}.featureItem>span{display:inline-block;margin:5px 0 3px;padding:3px 7px;border-radius:999px;background:#f5f2ee;color:var(--muted);font-size:12px}.featureItem p{margin:5px 0 0;line-height:1.6;font-size:14px}.featureBottom{margin-top:10px}@media(max-width:800px){.featureGuideBox{max-height:calc(100dvh - 95px)!important}.featureGuide{padding:12px}.featureGrid{grid-template-columns:1fr}.featureIntro{padding:14px}.featureItem{padding:12px}}
 @media(max-width:800px){
- body:not(.readonly) #schedule th:nth-child(2),body:not(.readonly) #schedule td:nth-child(2){width:112px}
- body:not(.readonly) #schedule tbody td.scheduleMobileDate{white-space:normal!important;text-overflow:clip!important;overflow:visible!important;line-height:1.35;font-size:12.5px}
+ body #schedule th:nth-child(2),body #schedule td:nth-child(2){width:112px}
+ body #schedule tbody td.scheduleMobileDate{white-space:normal!important;text-overflow:clip!important;overflow:visible!important;line-height:1.35;font-size:12.5px}
  .scheduleMobileDate .dateStart,.scheduleMobileDate .dateEnd,.scheduleMobileDate .dateSingle{display:block;white-space:nowrap}
- body:not(.readonly) #schedule tbody tr.dateRangeRow,body:not(.readonly) #schedule tbody tr.dateRangeRow td{height:66px;max-height:66px}
+ body #schedule tbody tr.dateRangeRow,body #schedule tbody tr.dateRangeRow td{height:66px;max-height:66px}
 }
 .giftViewSwitch{display:inline-flex;gap:4px;padding:3px;border:1px solid var(--line);border-radius:12px;background:#fff}.giftViewSwitch .btn{border:0;padding:6px 10px}.giftSimpleTable{table-layout:fixed}.giftSimpleTable{width:100%;table-layout:fixed}.giftSimpleTable th,.giftSimpleTable td{width:25%}.giftSimpleTable .femaleHead,.giftSimpleTable .femaleSplit{border-left:2px solid var(--line)}.giftSimpleTable .maleHead,.giftSimpleTable .femaleHead{text-align:center}.giftSimpleTable .simpleWho{width:27%}.giftSimpleTable .simpleGift{width:23%}#gift.giftSimpleMode #gSide,#gift.giftSimpleMode #gStatus,#gift.giftSimpleMode #giftPendingBtn{display:none!important}
 @media(max-width:800px){.giftViewSwitch{width:100%}.giftViewSwitch .btn{flex:1}.giftSimpleTable th,.giftSimpleTable td{width:25%!important}.giftSimpleTable .simpleWho{width:27%!important}.giftSimpleTable .simpleGift{width:23%!important;white-space:normal;line-height:1.3}.giftSimpleTable .femaleHead,.giftSimpleTable .femaleSplit{border-left:2px solid #d9c9c9!important}.giftSimpleTable tbody td{padding:10px 4px!important;font-size:12px!important}.giftSimpleTable td:nth-child(2) b{font-size:13px}.giftSimpleTable .badge{padding:3px 5px;font-size:11px}}
 #gift.giftSimpleMode .tableWrap{overflow-x:hidden}#gift.giftSimpleMode #giftTable{width:100%!important;min-width:0!important;table-layout:fixed!important}#gift.giftSimpleMode #giftTable th,#gift.giftSimpleMode #giftTable td{box-sizing:border-box;width:25%!important;max-width:25%!important;padding-left:14px;padding-right:14px}#gift.giftSimpleMode #giftTable th:nth-child(3),#gift.giftSimpleMode #giftTable td:nth-child(3){border-left:3px solid var(--line)!important}#gift.giftSimpleMode #giftTable .simpleWho,#gift.giftSimpleMode #giftTable .simpleGift{white-space:normal;overflow-wrap:anywhere}#gift.giftSimpleMode #giftTable .maleHead,#gift.giftSimpleMode #giftTable .femaleHead{text-align:center;font-weight:700;background:#fbf5f5}
 @media(min-width:801px){#gift.giftSimpleMode #giftTable{max-width:1100px;margin:0 auto}#gift.giftSimpleMode #giftTable th,#gift.giftSimpleMode #giftTable td{height:58px;font-size:15px}#gift.giftSimpleMode #giftTable .simpleWho{width:27%!important}#gift.giftSimpleMode #giftTable .simpleGift{width:23%!important}}
 .sideSummary{display:flex;flex-direction:column;align-items:flex-start;gap:4px;text-align:left}.sideSummary small{font-weight:400;line-height:1.45;color:var(--muted);white-space:nowrap}@media(max-width:800px){.sideSummary{gap:2px}.sideSummary b{font-size:12px}.sideSummary small{font-size:10px;line-height:1.35;white-space:normal}}@media(max-width:800px){
- body:not(.readonly) #gift.giftSimpleMode #giftTable th:nth-child(1),body:not(.readonly) #gift.giftSimpleMode #giftTable td:nth-child(1),
- body:not(.readonly) #gift.giftSimpleMode #giftTable th:nth-child(2),body:not(.readonly) #gift.giftSimpleMode #giftTable td:nth-child(2),
- body:not(.readonly) #gift.giftSimpleMode #giftTable th:nth-child(3),body:not(.readonly) #gift.giftSimpleMode #giftTable td:nth-child(3),
- body:not(.readonly) #gift.giftSimpleMode #giftTable th:nth-child(4),body:not(.readonly) #gift.giftSimpleMode #giftTable td:nth-child(4){display:table-cell!important}
- body:not(.readonly) #gift.giftSimpleMode #giftTable th,body:not(.readonly) #gift.giftSimpleMode #giftTable td{width:25%!important;max-width:25%!important;padding:9px 4px!important}
- body:not(.readonly) #gift.giftSimpleMode #giftTable th:nth-child(3),body:not(.readonly) #gift.giftSimpleMode #giftTable td:nth-child(3){border-left:2px solid #d9c9c9!important}
- body:not(.readonly) #gift.giftSimpleMode #giftTable .simpleWho,body:not(.readonly) #gift.giftSimpleMode #giftTable .simpleGift{white-space:normal!important;overflow:visible!important;text-overflow:clip!important}
+ body #gift.giftSimpleMode #giftTable th:nth-child(1),body #gift.giftSimpleMode #giftTable td:nth-child(1),
+ body #gift.giftSimpleMode #giftTable th:nth-child(2),body #gift.giftSimpleMode #giftTable td:nth-child(2),
+ body #gift.giftSimpleMode #giftTable th:nth-child(3),body #gift.giftSimpleMode #giftTable td:nth-child(3),
+ body #gift.giftSimpleMode #giftTable th:nth-child(4),body #gift.giftSimpleMode #giftTable td:nth-child(4){display:table-cell!important}
+ body #gift.giftSimpleMode #giftTable th,body #gift.giftSimpleMode #giftTable td{width:25%!important;max-width:25%!important;padding:9px 4px!important}
+ body #gift.giftSimpleMode #giftTable th:nth-child(3),body #gift.giftSimpleMode #giftTable td:nth-child(3){border-left:2px solid #d9c9c9!important}
+ body #gift.giftSimpleMode #giftTable .simpleWho,body #gift.giftSimpleMode #giftTable .simpleGift{white-space:normal!important;overflow:visible!important;text-overflow:clip!important}
 }
 .giftCountLines{display:grid!important;gap:1px}.giftCountLines>span{display:grid;grid-template-columns:max-content 1em max-content;align-items:center}.giftCountLines i{font-style:normal}.giftCountLines em{font-style:normal;text-align:center}.giftCountLines strong{font-weight:400;text-align:left}@media(max-width:800px){.giftCountLines>span{grid-template-columns:minmax(0,max-content) .8em max-content}.giftCountLines i,.giftCountLines em,.giftCountLines strong{font-size:10px}}#gift.giftSimpleMode #giftTable th:nth-child(2),#gift.giftSimpleMode #giftTable td:nth-child(2),#gift.giftSimpleMode #giftTable th:nth-child(4),#gift.giftSimpleMode #giftTable td:nth-child(4){border-left:1px solid var(--line)!important}#gift.giftSimpleMode #giftTable th:nth-child(3),#gift.giftSimpleMode #giftTable td:nth-child(3){border-left:3px solid var(--line)!important}#gift.giftSimpleMode .giftCountLines{width:100%;max-width:150px}#gift.giftSimpleMode .giftCountLines>span{display:grid!important;grid-template-columns:88px 12px 42px!important;justify-content:start;align-items:center}#gift.giftSimpleMode .giftCountLines i{text-align:left;white-space:nowrap}#gift.giftSimpleMode .giftCountLines em{text-align:center;white-space:nowrap}#gift.giftSimpleMode .giftCountLines strong{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}@media(max-width:800px){#gift.giftSimpleMode .giftCountLines{max-width:130px}#gift.giftSimpleMode .giftCountLines>span{grid-template-columns:76px 10px 34px!important}#gift.giftSimpleMode .giftCountLines i,#gift.giftSimpleMode .giftCountLines em,#gift.giftSimpleMode .giftCountLines strong{font-size:10px!important}}@media(max-width:800px){
  #gift.giftSimpleMode .sideSummary{width:100%;gap:1px!important}
@@ -638,74 +397,32 @@ body.readonly .editOnly{display:none!important}body.readonly #gift>.cards{displa
  #gift.giftSimpleMode .giftCountLines{margin:0!important;padding:0!important;line-height:1.15!important}
  #gift.giftSimpleMode .giftCountLines>span{min-height:0!important;line-height:1.15!important}
 }@media(max-width:800px){
- body:not(.readonly) #gift.giftSimpleMode #giftTable>thead>tr{height:52px!important;min-height:52px!important;max-height:52px!important}
- body:not(.readonly) #gift.giftSimpleMode #giftTable>thead>tr>th{height:52px!important;min-height:52px!important;max-height:52px!important;padding:2px 4px!important;vertical-align:middle!important;overflow:hidden!important;line-height:1!important}
- body:not(.readonly) #gift.giftSimpleMode #giftTable>thead .sideSummary{height:48px!important;min-height:48px!important;max-height:48px!important;margin:0!important;padding:0!important;gap:0!important;display:flex!important;flex-direction:column!important;justify-content:center!important}
- body:not(.readonly) #gift.giftSimpleMode #giftTable>thead .sideSummary>b{height:16px!important;line-height:16px!important;margin:0!important;padding:0!important}
- body:not(.readonly) #gift.giftSimpleMode #giftTable>thead .giftCountLines{height:26px!important;line-height:13px!important;margin:0!important;padding:0!important;display:block!important}
- body:not(.readonly) #gift.giftSimpleMode #giftTable>thead .giftCountLines>span{height:13px!important;min-height:13px!important;line-height:13px!important;margin:0!important;padding:0!important;display:flex!important;align-items:center!important}
- body:not(.readonly) #gift.giftSimpleMode #giftTable>thead .giftCountLines i{width:5.6em!important;flex:0 0 5.6em!important}
+ body #gift.giftSimpleMode #giftTable>thead>tr{height:52px!important;min-height:52px!important;max-height:52px!important}
+ body #gift.giftSimpleMode #giftTable>thead>tr>th{height:52px!important;min-height:52px!important;max-height:52px!important;padding:2px 4px!important;vertical-align:middle!important;overflow:hidden!important;line-height:1!important}
+ body #gift.giftSimpleMode #giftTable>thead .sideSummary{height:48px!important;min-height:48px!important;max-height:48px!important;margin:0!important;padding:0!important;gap:0!important;display:flex!important;flex-direction:column!important;justify-content:center!important}
+ body #gift.giftSimpleMode #giftTable>thead .sideSummary>b{height:16px!important;line-height:16px!important;margin:0!important;padding:0!important}
+ body #gift.giftSimpleMode #giftTable>thead .giftCountLines{height:26px!important;line-height:13px!important;margin:0!important;padding:0!important;display:block!important}
+ body #gift.giftSimpleMode #giftTable>thead .giftCountLines>span{height:13px!important;min-height:13px!important;line-height:13px!important;margin:0!important;padding:0!important;display:flex!important;align-items:center!important}
+ body #gift.giftSimpleMode #giftTable>thead .giftCountLines i{width:5.6em!important;flex:0 0 5.6em!important}
 }@media(max-width:800px){
- body:not(.readonly) #gift.giftSimpleMode #giftTable>thead>tr>th{width:50%!important;max-width:50%!important;text-align:left!important;padding:2px 8px!important}
- body:not(.readonly) #gift.giftSimpleMode #giftTable>thead>tr>th:nth-child(2){border-left:3px solid var(--line)!important}
- body:not(.readonly) #gift.giftSimpleMode #giftTable>thead .sideSummary{align-items:flex-start!important;width:auto!important}
+ body #gift.giftSimpleMode #giftTable>thead>tr>th{width:50%!important;max-width:50%!important;text-align:left!important;padding:2px 8px!important}
+ body #gift.giftSimpleMode #giftTable>thead>tr>th:nth-child(2){border-left:3px solid var(--line)!important}
+ body #gift.giftSimpleMode #giftTable>thead .sideSummary{align-items:flex-start!important;width:auto!important}
 }
 @media(min-width:801px){
  #gift.giftSimpleMode #giftTable>thead>tr>th{width:50%!important;max-width:50%!important;text-align:left!important}
  #gift.giftSimpleMode #giftTable>thead>tr>th:nth-child(2){border-left:3px solid var(--line)!important}
-}.giftListTitle{font-size:18px;font-weight:700;padding:12px 14px 8px;border-top:1px solid var(--line)}#gift.giftSimpleMode .qrHintSetting{display:none!important}.readonly #gift .qrHintSetting{display:none!important}@media(max-width:800px){.giftListTitle{font-size:16px;padding:9px 8px 6px}#gift.giftSimpleMode .giftListTitle{padding-top:8px}}.giftOrderBtns{display:none}@media(max-width:800px){#gift.giftSimpleMode .simpleWhoInner{display:flex;align-items:center;justify-content:space-between;gap:2px;min-width:0}#gift.giftSimpleMode .simpleWhoInner>b{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.giftOrderBtns{display:flex;flex:0 0 auto;gap:1px}.giftOrderBtns button{border:1px solid var(--line);background:#fff;border-radius:5px;padding:1px 3px;min-width:19px;height:22px;line-height:16px;font-size:12px;color:var(--ink)}.giftOrderBtns button:disabled{opacity:.22}}.giftListTitle{display:flex;align-items:center;justify-content:space-between;gap:8px}.giftListTitle #giftOrderToggle{font-size:12px;padding:6px 9px}.giftOrderBtns{display:none!important}@media(max-width:800px){#gift.giftSimpleMode.giftOrderMode .giftOrderBtns{display:flex!important}#gift.giftSimpleMode:not(.giftOrderMode) .simpleWhoInner{display:block!important}#gift.giftSimpleMode:not(.giftOrderMode) .simpleWhoInner>b{display:block!important;overflow:visible!important;text-overflow:clip!important;white-space:normal!important}#gift.giftSimpleMode.giftOrderMode .simpleWhoInner>b{overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important}}.readonly #gift .filters{display:none!important}.readonly #gift .giftListTitle #giftOrderToggle{display:none!important}
+}.giftListTitle{font-size:18px;font-weight:700;padding:12px 14px 8px;border-top:1px solid var(--line)}#gift.giftSimpleMode .qrHintSetting{display:none!important}.readonly #gift .qrHintSetting{display:none!important}@media(max-width:800px){.giftListTitle{font-size:16px;padding:9px 8px 6px}#gift.giftSimpleMode .giftListTitle{padding-top:8px}}.giftOrderBtns{display:none}@media(max-width:800px){#gift.giftSimpleMode .simpleWhoInner{display:flex;align-items:center;justify-content:space-between;gap:2px;min-width:0}#gift.giftSimpleMode .simpleWhoInner>b{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.giftOrderBtns{display:flex;flex:0 0 auto;gap:1px}.giftOrderBtns button{border:1px solid var(--line);background:#fff;border-radius:5px;padding:1px 3px;min-width:19px;height:22px;line-height:16px;font-size:12px;color:var(--ink)}.giftOrderBtns button:disabled{opacity:.22}}.giftListTitle{display:flex;align-items:center;justify-content:space-between;gap:8px}.giftListTitle #giftOrderToggle{font-size:12px;padding:6px 9px}.giftOrderBtns{display:none!important}@media(max-width:800px){#gift.giftSimpleMode.giftOrderMode .giftOrderBtns{display:flex!important}#gift.giftSimpleMode:not(.giftOrderMode) .simpleWhoInner{display:block!important}#gift.giftSimpleMode:not(.giftOrderMode) .simpleWhoInner>b{display:block!important;overflow:visible!important;text-overflow:clip!important;white-space:normal!important}#gift.giftSimpleMode.giftOrderMode .simpleWhoInner>b{overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important}}.readonly #gift .giftListTitle #giftOrderToggle{display:none!important}
 @media(max-width:800px){
- .readonly #prep .tableWrap{overflow:visible!important}
- .readonly #prep table,.readonly #prep tbody{display:block!important;width:100%!important}
- .readonly #prep thead{display:none!important}
- .readonly #prep .familyPrepRow{display:block!important;margin:0 8px 10px!important;padding:8px 10px!important;border:1px solid var(--line)!important;border-radius:10px!important;background:#fff!important}
- .readonly #prep .familyPrepRow td{display:grid!important;grid-template-columns:78px minmax(0,1fr)!important;gap:8px!important;width:auto!important;min-width:0!important;padding:6px 0!important;border:0!important;border-bottom:1px solid #f2e7e8!important;white-space:normal!important;overflow:visible!important;word-break:break-word!important;vertical-align:top!important}
- .readonly #prep .familyPrepRow td:last-child{display:none!important}
- .readonly #prep .familyPrepRow td:nth-last-child(2){border-bottom:0!important}
- .readonly #prep .familyPrepRow td:before{content:attr(data-label);font-size:12px;font-weight:700;color:var(--muted)}
- .readonly #prep .familyPrepDoc{padding:2px 0!important;line-height:1.45!important}
 }
 /* authoritative family-view mobile layouts */
 @media(max-width:800px){
- body.readonly #gift .tableWrap{overflow:hidden!important;padding:0!important}
- body.readonly #gift table.giftSimpleTable{display:table!important;width:100%!important;min-width:0!important;table-layout:fixed!important;border-collapse:collapse!important}
- body.readonly #gift .giftSimpleTable thead{display:table-header-group!important}
- body.readonly #gift .giftSimpleTable tbody{display:table-row-group!important}
- body.readonly #gift .giftSimpleTable tr{display:table-row!important}
- body.readonly #gift .giftSimpleTable th,body.readonly #gift .giftSimpleTable td{display:table-cell!important;width:25%!important;box-sizing:border-box!important;padding:10px 7px!important;font-size:13px!important;white-space:normal!important;overflow:visible!important}
- body.readonly #gift .giftSimpleTable .simpleWho{width:25%!important}
- body.readonly #gift .giftSimpleTable .simpleGift{width:25%!important}
- body.readonly #gift .giftSimpleTable .femaleHead,body.readonly #gift .giftSimpleTable .femaleSplit{border-left:2px solid var(--line)!important}
- body.readonly #gift .giftSimpleTable .giftOrderBtns{display:none!important}
- body.readonly #gift .giftSimpleTable .sideSummary{height:auto!important;min-height:0!important;padding:0!important}
- body.readonly #gift .giftSimpleTable .sideSummary>b{font-size:14px!important}
- body.readonly #gift .giftSimpleTable .giftCountLines{font-size:11px!important;line-height:1.35!important;margin-top:3px!important}
- body.readonly #gift .giftSimpleTable .giftCountLines span{display:grid!important;grid-template-columns:minmax(0,1fr) 8px auto!important;gap:1px!important}
- body.readonly #gift .giftSimpleTable .giftCountLines i{overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important}
- body.readonly #gift .giftListTitle{padding:10px 14px!important}
-
- body.readonly #prep .tableWrap{overflow:visible!important;padding:0!important}
- body.readonly #prep table{display:block!important;width:100%!important;min-width:0!important;table-layout:auto!important}
- body.readonly #prep thead{display:none!important}
- body.readonly #prep tbody{display:block!important;width:100%!important}
- body.readonly #prep tr.familyPrepRow{display:block!important;width:auto!important;margin:0 8px 10px!important;padding:8px 12px!important;background:#fff!important;border:1px solid var(--line)!important;border-radius:12px!important;box-shadow:none!important}
- body.readonly #prep tr.familyPrepRow td{display:grid!important;grid-template-columns:72px minmax(0,1fr)!important;width:100%!important;max-width:none!important;box-sizing:border-box!important;gap:8px!important;padding:7px 0!important;border:0!important;border-bottom:1px solid #f2e7e8!important;white-space:normal!important;overflow:visible!important;word-break:break-word!important;line-height:1.5!important;font-size:14px!important}
- body.readonly #prep tr.familyPrepRow td:nth-child(5){width:100%!important;white-space:normal!important}
- body.readonly #prep tr.familyPrepRow td:nth-child(5)>div{white-space:normal!important}
- body.readonly #prep tr.familyPrepRow td:nth-child(6){width:100%!important;white-space:normal!important}
- body.readonly #prep tr.familyPrepRow td:nth-child(7){display:none!important}
- body.readonly #prep tr.familyPrepRow td:nth-child(6){border-bottom:0!important}
- body.readonly #prep tr.familyPrepRow td:before{display:block!important;content:attr(data-label)!important;font-size:12px!important;font-weight:700!important;color:var(--muted)!important}
- body.readonly #prep .familyPrepDoc{display:block!important;white-space:normal!important;padding:2px 0!important;line-height:1.5!important}
 }
 .prepDocEditRow{display:grid;grid-template-columns:22px 76px minmax(0,1fr) auto;align-items:center;gap:7px;padding:6px 0;border-bottom:1px dashed #eee}
 .prepInlineNote{margin-top:7px;padding:7px 9px;background:#fff8f8;border-radius:8px;line-height:1.5;color:var(--ink)}
 @media(max-width:800px){
  #prep .prepDocEditRow{grid-template-columns:22px 72px minmax(0,1fr) auto!important}
- body.readonly #prep tr.familyPrepRow td:nth-child(5){display:block!important;padding:8px 0!important}
- body.readonly #prep tr.familyPrepRow td:nth-child(5):before{display:block!important;margin-bottom:5px!important}
- body.readonly #prep tr.familyPrepRow td.prepLegacyNote{display:none!important}
- body:not(.readonly) #prep td.prepLegacyNote{display:none!important}
+ body #prep td.prepLegacyNote{display:none!important}
  #prep .prepInlineNote{margin-top:8px!important}
 }
 #prep .prepLegacyNote,#prep th:nth-child(6){display:none!important}
@@ -718,7 +435,6 @@ body.readonly .editOnly{display:none!important}body.readonly #gift>.cards{displa
  #prep .prepDataCell:before{display:none!important;content:none!important}
  #prep .prepDataTitle{display:block!important;margin-bottom:5px!important}
  #prep .prepDocEditRow{grid-template-columns:22px auto minmax(0,1fr) auto!important;gap:6px!important}
- body.readonly #prep tr.familyPrepRow td.prepDataCell{display:block!important}
 }
 #prep .dualPrepDoc{display:grid!important;grid-template-columns:auto auto minmax(0,1fr);gap:8px!important;align-items:center}
 #prep .dualCheck{white-space:nowrap;font-weight:600}
@@ -762,32 +478,18 @@ body.readonly .editOnly{display:none!important}body.readonly #gift>.cards{displa
 #prep .dualPrepEdit.hasPrepDetail .dualChecks,#prep .singlePrepEdit.hasPrepDetail .singlePrepCheck{grid-column:1;grid-row:3!important}
 #prep .dualPrepEdit.hasPrepDetail .dualDelete,#prep .singlePrepEdit.hasPrepDetail .singleDelete{grid-column:2;grid-row:1/4!important;align-self:center}
 
-/* family view: visually separate each preparation document group */
-body.readonly #prep .prepDataCell>.familyPrepDoc{
- padding:10px 0!important;
- border-bottom:1px solid var(--line)!important;
- margin:0!important;
-}
-body.readonly #prep .prepDataCell>.familyPrepDoc:first-of-type{padding-top:3px!important}
-body.readonly #prep .prepDataCell>.familyPrepDoc:last-of-type{border-bottom:0!important;padding-bottom:4px!important}
-body.readonly #prep .prepDataCell>.familyPrepDoc .dualDocName{margin-bottom:3px!important}
-body.readonly #prep .prepDataCell>.familyPrepDoc .prepDocDetail{margin:2px 0 6px!important}
-body.readonly #prep .prepDataCell>.familyPrepDoc .dualChecks,
-body.readonly #prep .prepDataCell>.familyPrepDoc .singlePrepCheck{margin-top:5px!important}
-
 #prep .prepActualTime{margin-top:5px;font-size:13px;color:var(--ink)}
 #prep .prepTimeInput{margin-top:6px}
-body.readonly #prep .prepActualTime b{font-size:12px;color:var(--muted)}
 
 #prep .prepDateFields{display:grid;gap:7px;width:100%;min-width:0}
 #prep .prepDateFields>input,#prep .prepTimeField input{width:100%;box-sizing:border-box}
 #prep .prepTimeField{display:grid;gap:4px;width:100%;font-size:12px;color:var(--muted)}
 #prep .prepTimeInput{margin-top:0!important}
 @media(max-width:800px){
- body:not(.readonly) #prep tbody tr>td:nth-child(4){align-items:start!important}
- body:not(.readonly) #prep tbody tr>td:nth-child(4)>.prepDateFields{min-width:0!important;width:100%!important}
- body:not(.readonly) #prep .prepDateFields input{max-width:100%!important;min-width:0!important}
- body:not(.readonly) #prep .prepTimeField{margin-top:2px}
+ body #prep tbody tr>td:nth-child(4){align-items:start!important}
+ body #prep tbody tr>td:nth-child(4)>.prepDateFields{min-width:0!important;width:100%!important}
+ body #prep .prepDateFields input{max-width:100%!important;min-width:0!important}
+ body #prep .prepTimeField{margin-top:2px}
 }
 
 #oTodoList .overviewDate{display:flex;flex-direction:column;align-items:flex-end;justify-content:center;flex:0 0 auto;line-height:1.2}
@@ -814,28 +516,35 @@ body.readonly #prep .prepActualTime b{font-size:12px;color:var(--muted)}
 
 /* mobile schedule: keep date range and item in separate fixed cells */
 @media(max-width:800px){
- body:not(.readonly) #schedule table{table-layout:fixed!important}
- body:not(.readonly) #schedule th:nth-child(1),body:not(.readonly) #schedule td:nth-child(1){width:50px!important}
- body:not(.readonly) #schedule th:nth-child(2),body:not(.readonly) #schedule td:nth-child(2){width:118px!important;box-sizing:border-box!important}
- body:not(.readonly) #schedule th:nth-child(8),body:not(.readonly) #schedule td:nth-child(8){width:62px!important}
- body:not(.readonly) #schedule td.scheduleMobileDate{overflow:hidden!important;white-space:normal!important;text-overflow:clip!important;font-size:12px!important;line-height:1.35!important;padding-left:5px!important;padding-right:5px!important}
- body:not(.readonly) #schedule .scheduleMobileDate .dateStart,
- body:not(.readonly) #schedule .scheduleMobileDate .dateEnd,
- body:not(.readonly) #schedule .scheduleMobileDate .dateSingle{display:block!important;max-width:100%!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:clip!important}
- body:not(.readonly) #schedule tbody td:nth-child(3){min-width:0!important;overflow:hidden!important;padding-left:8px!important}
- body:not(.readonly) #schedule tbody td:nth-child(3) b{display:block!important;max-width:100%!important;overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important}
+ body #schedule table{table-layout:fixed!important}
+ body #schedule th:nth-child(1),body #schedule td:nth-child(1){width:50px!important}
+ body #schedule th:nth-child(2),body #schedule td:nth-child(2){width:118px!important;box-sizing:border-box!important}
+ body #schedule th:nth-child(8),body #schedule td:nth-child(8){width:62px!important}
+ body #schedule td.scheduleMobileDate{overflow:hidden!important;white-space:normal!important;text-overflow:clip!important;font-size:12px!important;line-height:1.35!important;padding-left:5px!important;padding-right:5px!important}
+ body #schedule .scheduleMobileDate .dateStart,
+ body #schedule .scheduleMobileDate .dateEnd,
+ body #schedule .scheduleMobileDate .dateSingle{display:block!important;max-width:100%!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:clip!important}
+ body #schedule tbody td:nth-child(3){min-width:0!important;overflow:hidden!important;padding-left:8px!important}
+ body #schedule tbody td:nth-child(3) b{display:block!important;max-width:100%!important;overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important}
 }
 
 /* mobile schedule date ranges: preserve the complete weekday suffix */
 @media(max-width:800px){
- body:not(.readonly) #schedule th:nth-child(2),body:not(.readonly) #schedule td:nth-child(2){width:126px!important}
- body:not(.readonly) #schedule th:nth-child(8),body:not(.readonly) #schedule td:nth-child(8){width:58px!important}
- body:not(.readonly) #schedule td.scheduleMobileDate{font-size:11.5px!important;padding-left:4px!important;padding-right:3px!important}
- body:not(.readonly) #schedule .scheduleMobileDate .dateStart,
- body:not(.readonly) #schedule .scheduleMobileDate .dateEnd,
- body:not(.readonly) #schedule .scheduleMobileDate .dateSingle{overflow:visible!important;text-overflow:clip!important;letter-spacing:-.15px}
- body:not(.readonly) #schedule tbody td:nth-child(3){padding-left:7px!important}
+ body #schedule th:nth-child(2),body #schedule td:nth-child(2){width:126px!important}
+ body #schedule th:nth-child(8),body #schedule td:nth-child(8){width:58px!important}
+ body #schedule td.scheduleMobileDate{font-size:11.5px!important;padding-left:4px!important;padding-right:3px!important}
+ body #schedule .scheduleMobileDate .dateStart,
+ body #schedule .scheduleMobileDate .dateEnd,
+ body #schedule .scheduleMobileDate .dateSingle{overflow:visible!important;text-overflow:clip!important;letter-spacing:-.15px}
+ body #schedule tbody td:nth-child(3){padding-left:7px!important}
 }
+</style><style>
+body.readonly .editOnly,body.readonly .danger{display:none!important}
+.viewOnly{display:none!important}body.readonly .viewOnly{display:flex!important}
+body.readonly #gift .filters #gStatus,body.readonly #gift .filters #gSearch{display:none!important}
+body.readonly td input,body.readonly td select{color:var(--ink);opacity:1;background:#fff}
+.mobileNav{isolation:isolate;z-index:1000;pointer-events:auto}
+@media(max-width:800px){body #schedule .tableWrap,body #after .tableWrap{overflow-x:hidden!important}body #schedule table,body #after table{min-width:0!important;width:100%!important}body #schedule th:nth-child(8),body #schedule td:nth-child(8){display:table-cell!important}}
 </style></head><body>
 <div id="claimPanel" class="claimPanel">
  <div class="claimCard"><div class="claimIcon">🎁</div><h1>禮盒領取確認</h1><div id="claimContent" class="claimContent">正在確認資料…</div></div>
@@ -918,9 +627,9 @@ const DEFAULT_PREP=[{owner:'共同',done:false,item:'結婚登記',place:'斗六
 const SUPABASE_URL='https://puwqswhsvqwwjjokuejx.supabase.co';
 const SUPABASE_KEY='sb_publishable_ZfC12nkj3klCQsS88iQQVQ_ZLAjgIQj';
 const SHARE_KEY='our-wedding-2026';
-const cloud=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
-let cloudTimer=null,cloudReady=false,pendingCloudWrite=false;
-let data=JSON.parse(localStorage.getItem(KEY)||'null')||structuredClone(ORIGINAL);
+const cloud=window.supabase?.createClient(SUPABASE_URL,SUPABASE_KEY);
+let cloudTimer=null,cloudReady=false,pendingCloudWrite=false,cloudSyncRunning=false;
+let data;try{data=JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){}data=data||structuredClone(ORIGINAL);
 if(!Array.isArray(data.prep))data.prep=structuredClone(DEFAULT_PREP);data.prep.forEach(x=>{if(!x.owner)x.owner='共同'});if(!Array.isArray(data.after))data.after=structuredClone(DEFAULT_AFTER);
 const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 function setCloudState(t){let e=document.getElementById('cloudState');if(e)e.textContent=t}
@@ -936,24 +645,25 @@ async function loadCloud(){
     if(!Array.isArray(data.after))data.after=structuredClone(DEFAULT_AFTER);
     localStorage.setItem(KEY,JSON.stringify(data));
    }
-  }else{
+  }else if(!READ_ONLY){
    const {error:e}=await cloud.from('wedding_data').insert({share_key:SHARE_KEY,payload:data});
    if(e)throw e;
   }
   cloudReady=true;
-  if(pendingCloudWrite&&!READ_ONLY){pendingCloudWrite=false;await syncCloud()}
+  if(pendingCloudWrite&&!READ_ONLY){await syncCloud()}
   else setCloudState('☁️ 已同步');
   renderSchedule();renderGift();renderPrep();renderAfter();renderOverview();
  }catch(e){console.error(e);setCloudState('☁️ 離線模式')}
 }
 async function syncCloud(){
  if(READ_ONLY)return;
- if(!cloudReady)return;
+ if(!cloudReady||!cloud||cloudSyncRunning)return;cloudSyncRunning=true;
+ const snapshot=JSON.stringify(data);
  setCloudState('☁️ 同步中');
  try{
-  const {error}=await cloud.from('wedding_data').update({payload:data,updated_at:new Date().toISOString()}).eq('share_key',SHARE_KEY);
-  if(error)throw error;setCloudState('☁️ 已同步');
- }catch(e){console.error(e);setCloudState('☁️ 同步失敗')}
+  const {error}=await cloud.from('wedding_data').update({payload:JSON.parse(snapshot),updated_at:new Date().toISOString()}).eq('share_key',SHARE_KEY);
+  if(error)throw error;pendingCloudWrite=JSON.stringify(data)!==snapshot;setCloudState(pendingCloudWrite?'☁️ 同步中':'☁️ 已同步');if(pendingCloudWrite){clearTimeout(cloudTimer);cloudTimer=setTimeout(syncCloud,500)}
+ }catch(e){console.error(e);setCloudState('☁️ 同步失敗')}finally{cloudSyncRunning=false}
 }
 const HISTORY_KEY=KEY+'-history-v1',REDO_KEY=KEY+'-redo-v1',HISTORY_MAX=30;
 let lastSavedSnapshot='';
@@ -970,7 +680,7 @@ function inferAction(before,after){
  return '修改資料'
 }
 function pushHistory(before,after){try{if(!before||JSON.stringify(before)===JSON.stringify(after))return;let h=loadHistory(HISTORY_KEY);h.push({label:inferAction(before,after),state:before,at:new Date().toISOString()});if(h.length>HISTORY_MAX)h=h.slice(-HISTORY_MAX);try{localStorage.setItem(HISTORY_KEY,JSON.stringify(h))}catch(e){try{localStorage.setItem(HISTORY_KEY,JSON.stringify(h.slice(-3)))}catch(e2){}}try{localStorage.setItem(REDO_KEY,'[]')}catch(e){};renderUndoMenu()}catch(e){console.warn(e)}}
-function persistCurrent(){localStorage.setItem(KEY,JSON.stringify(data));lastSavedSnapshot=JSON.stringify(data);renderSchedule();renderGift();renderPrep();renderAfter();renderOverview();clearTimeout(cloudTimer);cloudTimer=setTimeout(syncCloud,500);renderUndoMenu()}
+function persistCurrent(){pendingCloudWrite=true;localStorage.setItem(KEY,JSON.stringify(data));lastSavedSnapshot=JSON.stringify(data);renderSchedule();renderGift();renderPrep();renderAfter();renderOverview();clearTimeout(cloudTimer);cloudTimer=setTimeout(syncCloud,500);renderUndoMenu()}
 function save(){if(READ_ONLY)return;let before;try{before=lastSavedSnapshot?JSON.parse(lastSavedSnapshot):JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){before=null}if(before)pushHistory(before,data);persistCurrent()}
 function openFeatureGuide(){document.getElementById('featureGuideModal')?.classList.add('show')}
 function closeFeatureGuide(){document.getElementById('featureGuideModal')?.classList.remove('show')}
@@ -1007,9 +717,9 @@ async function saveScheduleEdit(){
  try{renderSchedule();renderOverview()}catch(e){console.error(e)}
  try{pushHistory(before,data)}catch(e){}
  clearTimeout(cloudTimer);
- if(cloudReady){pendingCloudWrite=false;try{await syncCloud()}catch(e){console.error(e)}}else setCloudState('☁️ 已儲存，等待同步')
+ if(cloudReady){try{await syncCloud()}catch(e){console.error(e)}}else setCloudState('☁️ 已儲存，等待同步')
 }
-async function deleteScheduleEdit(){if(activeScheduleEditIndex<0)return;let idx=activeScheduleEditIndex,item=data.schedule[idx]?.item||'這筆排程';if(!confirm('確定刪除「'+item+'」嗎？'))return;let before=cloneData(data);data.schedule.splice(idx,1);pushHistory(before,data);pendingCloudWrite=true;closeScheduleEdit();localStorage.setItem(KEY,JSON.stringify(data));lastSavedSnapshot=JSON.stringify(data);renderSchedule();renderGift();renderPrep();renderAfter();renderOverview();clearTimeout(cloudTimer);if(cloudReady){pendingCloudWrite=false;await syncCloud()}else setCloudState('☁️ 已儲存，等待同步');renderUndoMenu()}
+async function deleteScheduleEdit(){if(activeScheduleEditIndex<0)return;let idx=activeScheduleEditIndex,item=data.schedule[idx]?.item||'這筆排程';if(!confirm('確定刪除「'+item+'」嗎？'))return;let before=cloneData(data);data.schedule.splice(idx,1);pushHistory(before,data);pendingCloudWrite=true;closeScheduleEdit();localStorage.setItem(KEY,JSON.stringify(data));lastSavedSnapshot=JSON.stringify(data);renderSchedule();renderGift();renderPrep();renderAfter();renderOverview();clearTimeout(cloudTimer);if(cloudReady){await syncCloud()}else setCloudState('☁️ 已儲存，等待同步');renderUndoMenu()}
 function dateWithWeekday(v){
  if(!v)return '—';
  let m=String(v).match(/^(\d{4})-(\d{2})-(\d{2})$/);if(!m)return String(v);
@@ -1018,8 +728,8 @@ function dateWithWeekday(v){
 }
 function scheduleDateText(r){if(!r.date)return '—';if(r.endDate&&r.endDate!==r.date)return dateWithWeekday(r.date)+' ～ '+dateWithWeekday(r.endDate);return dateWithWeekday(r.date)}
 function scheduleMobileDateHtml(r){if(!r.date)return '—';if(r.endDate&&r.endDate!==r.date)return '<span class="dateStart">'+esc(dateWithWeekday(r.date))+'</span><span class="dateEnd">～ '+esc(dateWithWeekday(r.endDate))+'</span>';return '<span class="dateSingle">'+esc(dateWithWeekday(r.date))+'</span>'}
-function renderSchedule(){if(READ_ONLY){let rows=data.schedule.map((r,i)=>({...r,i})).filter(r=>r.familyVisible!==false).sort((a,b)=>(a.date||'9999').localeCompare(b.date||'9999'));document.getElementById('scheduleBody').innerHTML=rows.length?rows.map(r=>{let rc=Array.isArray(r.records)?r.records.length:0;if(window.innerWidth<=800)return `<tr class="${r.done?'done':''} ${r.endDate&&r.endDate!==r.date?'dateRangeRow':''} " onclick="openFamilyScheduleView(${r.i})"><td>${r.done?'✅':'⬜'}</td><td class="scheduleMobileDate">${scheduleMobileDateHtml(r)}</td><td><b>${esc(r.item||'—')}</b></td><td></td><td></td><td></td><td></td><td>${rc?'<button class="btn" onclick="event.stopPropagation();openRecordModal('+r.i+')">🖼️ '+rc+'</button>':'—'}</td><td></td></tr>`;return `<tr><td>${r.done?'✅ 已完成':'⏳ 待辦'}</td><td>${esc(scheduleDateText(r))}</td><td><b>${esc(r.item||'—')}</b></td><td>${esc(r.place||'—')}</td><td>${esc(r.time||'—')}</td><td>${esc(r.note||'—')}${scheduleTodoSummary(r,true)}</td><td>${esc(r.budget||'—')}</td><td>${rc?'<button class="btn" onclick="openRecordModal('+r.i+')">🖼️ 查看紀錄 ('+rc+')</button>':'—'}</td><td></td></tr>`}).join(''):'<tr><td colspan="9" class="empty">目前沒有排程</td></tr>';let visibleSchedule=data.schedule.filter(x=>x.familyVisible!==false);document.getElementById('sTotal').textContent=visibleSchedule.length;document.getElementById('sDone').textContent=visibleSchedule.filter(x=>x.done).length;document.getElementById('sRing').textContent=visibleSchedule.filter(x=>/戒/.test(x.item)).length;let n=visibleSchedule.filter(x=>!x.done&&x.date).sort((a,b)=>a.date.localeCompare(b.date))[0];document.getElementById('sNext').textContent=n?n.date:'—';return}let q=(document.getElementById('sSearch').value||'').toLowerCase();let rows=data.schedule.map((r,i)=>({...r,i})).filter(r=>[r.item,r.place,r.note,r.time,...normalizeScheduleTodos(r).map(t=>t.text)].join(' ').toLowerCase().includes(q)).sort((a,b)=>(a.date||'9999').localeCompare(b.date||'9999'));
-document.getElementById('scheduleBody').innerHTML=rows.length?rows.map(r=>{let rc=Array.isArray(r.records)?r.records.length:0;if(isMobileEdit())return `<tr class="${r.done?'done':''} ${r.endDate&&r.endDate!==r.date?'dateRangeRow':''}" onclick="openScheduleEdit(${r.i})"><td>${r.done?'✅':'⬜'}</td><td class="scheduleMobileDate">${scheduleMobileDateHtml(r)}</td><td><b>${esc(r.item||'—')}</b></td><td></td><td></td><td></td><td></td><td>${rc?'<button class="btn" onclick="event.stopPropagation();openRecordModal('+r.i+')">🖼️ '+rc+'</button>':'—'}</td><td></td></tr>`;return `<tr class="${r.done?'done':''}"><td><input class="check" type="checkbox" ${r.done?'checked':''} onchange="data.schedule[${r.i}].done=this.checked;save()"></td><td><div style="display:grid;gap:5px"><input type="date" value="${esc(r.date)}" title="開始日期" onchange="data.schedule[${r.i}].date=this.value;save()"><input type="date" value="${esc(r.endDate||'')}" title="結束日期（單日可留白）" onchange="data.schedule[${r.i}].endDate=this.value;save()"></div></td><td><input value="${esc(r.item)}" onchange="data.schedule[${r.i}].item=this.value;save()"></td><td><input value="${esc(r.place)}" placeholder="婚戒店面／戶政／餐廳…" onchange="data.schedule[${r.i}].place=this.value;save()"></td><td><input value="${esc(r.time)}" placeholder="例如 14:00" onchange="data.schedule[${r.i}].time=this.value;save()"></td><td><input value="${esc(r.note)}" placeholder="戒圍、預算、交期…" onchange="data.schedule[${r.i}].note=this.value;save()">${scheduleTodoSummary(r)}</td><td><input value="${esc(r.budget)}" placeholder="$" onchange="data.schedule[${r.i}].budget=this.value;save()"></td><td><button class="btn" onclick="openRecordModal(${r.i})">🖼️ 紀錄${rc?' ('+rc+')':''}</button></td><td><button class="btn danger editOnly" onclick="data.schedule.splice(${r.i},1);save()">刪除</button></td></tr>`}).join(''):`<tr><td colspan="9" class="empty">沒有符合的排程</td></tr>`;
+function renderSchedule(){let q=(document.getElementById('sSearch').value||'').toLowerCase();let rows=data.schedule.map((r,i)=>({...r,i})).filter(r=>!READ_ONLY||r.familyVisible!==false).filter(r=>[r.item,r.place,r.note,r.time,...normalizeScheduleTodos(r).map(t=>t.text)].join(' ').toLowerCase().includes(q)).sort((a,b)=>(a.date||'9999').localeCompare(b.date||'9999'));
+document.getElementById('scheduleBody').innerHTML=rows.length?rows.map(r=>{let rc=Array.isArray(r.records)?r.records.length:0;if(isMobileEdit())return `<tr class="${r.done?'done':''} ${r.endDate&&r.endDate!==r.date?'dateRangeRow':''}" onclick="${READ_ONLY?'openFamilyScheduleView':'openScheduleEdit'}(${r.i})"><td>${r.done?'✅':'⬜'}</td><td class="scheduleMobileDate">${scheduleMobileDateHtml(r)}</td><td><b>${esc(r.item||'—')}</b></td><td></td><td></td><td></td><td></td><td>${rc?'<button class="btn" onclick="event.stopPropagation();openRecordModal('+r.i+')">🖼️ '+rc+'</button>':'—'}</td><td></td></tr>`;return `<tr class="${r.done?'done':''}"><td><input class="check" type="checkbox" ${r.done?'checked':''} onchange="data.schedule[${r.i}].done=this.checked;save()"></td><td><div style="display:grid;gap:5px"><input type="date" value="${esc(r.date)}" title="開始日期" onchange="data.schedule[${r.i}].date=this.value;save()"><input type="date" value="${esc(r.endDate||'')}" title="結束日期（單日可留白）" onchange="data.schedule[${r.i}].endDate=this.value;save()"></div></td><td><input value="${esc(r.item)}" onchange="data.schedule[${r.i}].item=this.value;save()"></td><td><input value="${esc(r.place)}" placeholder="婚戒店面／戶政／餐廳…" onchange="data.schedule[${r.i}].place=this.value;save()"></td><td><input value="${esc(r.time)}" placeholder="例如 14:00" onchange="data.schedule[${r.i}].time=this.value;save()"></td><td><input value="${esc(r.note)}" placeholder="戒圍、預算、交期…" onchange="data.schedule[${r.i}].note=this.value;save()">${scheduleTodoSummary(r)}</td><td><input value="${esc(r.budget)}" placeholder="$" onchange="data.schedule[${r.i}].budget=this.value;save()"></td><td><button class="btn" onclick="openRecordModal(${r.i})">🖼️ 紀錄${rc?' ('+rc+')':''}</button></td><td><button class="btn danger editOnly" onclick="data.schedule.splice(${r.i},1);save()">刪除</button></td></tr>`}).join(''):`<tr><td colspan="9" class="empty">沒有符合的排程</td></tr>`;
 document.getElementById('sTotal').textContent=data.schedule.length;document.getElementById('sDone').textContent=data.schedule.filter(x=>x.done).length;document.getElementById('sRing').textContent=data.schedule.filter(x=>/戒/.test(x.item)).length;let n=data.schedule.filter(x=>!x.done&&x.date).sort((a,b)=>a.date.localeCompare(b.date))[0];document.getElementById('sNext').textContent=n?n.date:'—'}
 function openFamilyScheduleView(i){if(!READ_ONLY)return;let r=data.schedule[i];if(!r)return;let todos=normalizeScheduleTodos(r).filter(x=>x.text);let todoHtml=todos.length?'<div class="familyScheduleTodos"><b>待確認／待辦</b>'+todos.map(x=>'<div>'+(x.done?'☑️ ':'☐ ')+esc(x.text)+'</div>').join('')+'</div>':'';let info=[['日期／區間',scheduleDateText(r)],['地點／店面',r.place||'—'],['時間',r.time||'—'],['備註',r.note||'—'],['預算',r.budget||'—']].map(x=>'<div class="familyScheduleInfo"><span>'+x[0]+'</span><b>'+esc(x[1])+'</b></div>').join('');let rc=Array.isArray(r.records)?r.records.length:0;document.getElementById('recordTitle').textContent='📌 '+(r.item||'排程');document.getElementById('recordList').innerHTML='<div class="familyScheduleDetail">'+info+todoHtml+'</div><div class="familyRecordHead"><b>參考／成果紀錄</b></div>';activeRecordIndex=i;document.getElementById('recordModal').classList.add('show');renderScheduleRecords()}
 let activeRecordIndex=-1;
@@ -1036,7 +746,7 @@ function setGiftStyle(k,v){if(!data.giftStyles)data.giftStyles={big:'',small:''}
 function qrHintText(){return (data.qrHintText||'領取後請掃 QR Code').trim()||'領取後請掃 QR Code'}
 function setQrHintText(v){data.qrHintText=(v||'').trim();save()}
 let activeGiftEditIndex=-1,giftCreating=false;
-function isMobileEdit(){return !READ_ONLY&&window.matchMedia('(max-width:800px)').matches}
+function isMobileEdit(){return window.matchMedia('(max-width:800px)').matches}
 function openGiftEdit(i){if(READ_ONLY)return;giftCreating=false;document.getElementById('geDeleteBtn').style.display='';document.getElementById('geSaveBtn').textContent='儲存修改';activeGiftEditIndex=i;let r=data.gifts[i];document.getElementById('geSide').value=r.side||'🐟';document.getElementById('geName').value=r.name||'';document.getElementById('geRelation').value=r.relation||'其他';let g=document.getElementById('geGift');g.innerHTML='<option value="">未選擇</option><option value="大小餅禮盒">'+esc(giftLabel('大小餅禮盒'))+'</option><option value="小禮盒">'+esc(giftLabel('小禮盒'))+'</option>';g.value=r.gift||'';document.getElementById('geDate').value=r.date||'';document.getElementById('geShipping').value=r.shipping||'待安排';document.getElementById('geStore').value=r.store||'';toggleGiftStoreField();document.getElementById('geReceiver').value=r.receiver||'';document.getElementById('geStatus').value=r.status||'待配送';document.getElementById('geNote').value=[r.address,r.note].filter(Boolean).join(' / ');document.getElementById('giftEditModal').classList.add('show')}
 function toggleGiftStoreField(){let s=document.getElementById('geShipping').value,row=document.getElementById('geStoreRow');row.style.display=(s==='全家'||s==='7-11')?'grid':'none'}
 function closeGiftEdit(){document.getElementById('giftEditModal').classList.remove('show');activeGiftEditIndex=-1;giftCreating=false}
@@ -1065,19 +775,11 @@ function giftPrices(){if(!data.giftPrices)data.giftPrices={};if(!data.giftPrices
 function setGiftPrice(kind,key,value){if(READ_ONLY)return;let p=giftPrices();p[kind][key]=value===''?'':Math.max(0,Number(value)||0);try{localStorage.setItem(KEY,JSON.stringify(data))}catch(e){console.warn(e)}clearTimeout(cloudTimer);cloudTimer=setTimeout(syncCloud,500);renderGiftPriceCalc()}
 function money(v){return '$'+Math.round(Number(v)||0).toLocaleString('zh-TW')}
 function renderGiftPriceCalc(){if(READ_ONLY)return;let p=giftPrices();let big=data.gifts.filter(function(r){return r.gift==='大小餅禮盒'}).length;let small=data.gifts.filter(function(r){return r.gift==='小禮盒'}).length;let bu=Number(p.big.unit)||0;let su=Number(p.small.unit)||0;let bRaw=big*bu;let sRaw=small*su;let bMet=p.big.threshold!==''&&big>Number(p.big.threshold);let sMet=p.small.threshold!==''&&sRaw>=Number(p.small.threshold);let br=p.big.rate===''?100:Math.min(100,Number(p.big.rate)||0);let sr=p.small.rate===''?100:Math.min(100,Number(p.small.rate)||0);let bTotal=bRaw*(bMet?br/100:1);let sTotal=sRaw*(sMet?sr/100:1);let vals=[['giftBigUnit',p.big.unit||''],['giftBigThreshold',p.big.threshold],['giftBigRate',p.big.rate],['giftSmallUnit',p.small.unit||''],['giftSmallThreshold',p.small.threshold],['giftSmallRate',p.small.rate]];vals.forEach(function(a){let e=document.getElementById(a[0]);if(e&&document.activeElement!==e)e.value=a[1]});let texts=[['giftBigPriceName',giftLabel('大小餅禮盒')],['giftSmallPriceName',giftLabel('小禮盒')],['giftBigTierName',giftLabel('大小餅禮盒')],['giftSmallTierName',giftLabel('小禮盒')],['giftBigQty',big+' 盒'],['giftSmallQty',small+' 盒'],['giftBigSubtotal',money(bTotal)],['giftSmallSubtotal',money(sTotal)],['giftGrandTotal',money(bTotal+sTotal)],['giftBigCalcUnit',(bMet?'折後單價 ':'計算單價 ')+money(bMet?bu*br/100:bu)+'/盒'],['giftSmallCalcUnit',sMet?'折後單價 '+money(su*sr/100)+'/盒':'未滿 '+money(p.small.threshold)+'，原價'],['giftBigRuleState',bMet?'（✓ 套用 '+br+'%）':'（原價）'],['giftSmallRuleState',sMet?'（✓ 套用 '+sr+'%）':'']];texts.forEach(function(a){let e=document.getElementById(a[0]);if(e)e.textContent=a[1]})}
-function renderGift(){let qh=document.getElementById('qrHintText');if(qh)qh.value=qrHintText();if(READ_ONLY){document.getElementById('gift')?.classList.add('giftSimpleMode');
- if(!data.giftNames)data.giftNames={big:'',small:''};
- let mb=data.gifts.filter(r=>r.side!=='如'&&r.gift==='大小餅禮盒').length,ms=data.gifts.filter(r=>r.side!=='如'&&r.gift==='小禮盒').length,fb=data.gifts.filter(r=>r.side==='如'&&r.gift==='大小餅禮盒').length,fs=data.gifts.filter(r=>r.side==='如'&&r.gift==='小禮盒').length;
- let head=document.getElementById('giftHead');if(head)head.innerHTML='<th colspan="2" class="maleHead"><div class="sideSummary"><b>🐟 男方</b><small class="giftCountLines"><span><i>'+esc(giftLabel('大小餅禮盒'))+'</i><em>：</em><strong>'+mb+'盒</strong></span><span><i>'+esc(giftLabel('小禮盒'))+'</i><em>：</em><strong>'+ms+'盒</strong></span></small></div></th><th colspan="2" class="femaleHead"><div class="sideSummary"><b>如 女方</b><small class="giftCountLines"><span><i>'+esc(giftLabel('大小餅禮盒'))+'</i><em>：</em><strong>'+fb+'盒</strong></span><span><i>'+esc(giftLabel('小禮盒'))+'</i><em>：</em><strong>'+fs+'盒</strong></span></small></div></th>';
- document.getElementById('giftTable')?.classList.add('giftSimpleTable');document.getElementById('gift')?.classList.add('giftSimpleMode');
- let rows=data.gifts.map((r,i)=>({...r,i}));document.getElementById('giftBody').innerHTML=rows.length?giftSimpleRows(rows):'<tr><td colspan="4" class="empty">目前沒有名單</td></tr>';
- document.getElementById('giftFilterSummary').textContent='共 '+data.gifts.length+' 盒｜'+giftLabel('大小餅禮盒')+' '+(mb+fb)+' 盒｜'+giftLabel('小禮盒')+' '+(ms+fs)+' 盒';
- document.getElementById('gTotal').textContent=data.gifts.length;document.getElementById('gBig').textContent=mb+fb;document.getElementById('gSmall').textContent=ms+fs;document.getElementById('gDone').textContent=data.gifts.filter(x=>x.status==='已送達').length;document.querySelector('#gift .cards .card:nth-child(2) .label').textContent='全部 '+giftLabel('大小餅禮盒');document.querySelector('#gift .cards .card:nth-child(3) .label').textContent='全部 '+giftLabel('小禮盒');return}
-if(!data.giftNames)data.giftNames={big:'',small:''};renderGiftPriceCalc();let simple=giftViewMode==='simple';document.getElementById('giftSimpleBtn')?.classList.toggle('primary',simple);document.getElementById('giftDetailBtn')?.classList.toggle('primary',!simple);document.getElementById('giftPendingBtn')?.classList.toggle('primary',giftPendingOnly);let head=document.getElementById('giftHead');if(head){if(simple){let mb=data.gifts.filter(r=>r.side!=='如'&&r.gift==='大小餅禮盒').length,ms=data.gifts.filter(r=>r.side!=='如'&&r.gift==='小禮盒').length,fb=data.gifts.filter(r=>r.side==='如'&&r.gift==='大小餅禮盒').length,fs=data.gifts.filter(r=>r.side==='如'&&r.gift==='小禮盒').length;head.innerHTML='<th colspan="2" class="maleHead"><div class="sideSummary"><b>🐟 男方</b><small class="giftCountLines"><span><i>'+esc(giftLabel('大小餅禮盒'))+'</i><em>：</em><strong>'+mb+'盒</strong></span><span><i>'+esc(giftLabel('小禮盒'))+'</i><em>：</em><strong>'+ms+'盒</strong></span></small></div></th><th colspan="2" class="femaleHead"><div class="sideSummary"><b>如 女方</b><small class="giftCountLines"><span><i>'+esc(giftLabel('大小餅禮盒'))+'</i><em>：</em><strong>'+fb+'盒</strong></span><span><i>'+esc(giftLabel('小禮盒'))+'</i><em>：</em><strong>'+fs+'盒</strong></span></small></div></th>'}else head.innerHTML='<th>對象</th><th>送誰</th><th>關係</th><th>禮盒</th><th>預計送禮日</th><th>配送方式</th><th>收件人</th><th>狀態</th><th>地址／備註</th><th></th>'}document.getElementById('giftTable')?.classList.toggle('giftSimpleTable',simple);document.getElementById('gift')?.classList.toggle('giftSimpleMode',simple);document.getElementById('gift')?.classList.toggle('giftOrderMode',simple&&giftOrderMode);let gob=document.getElementById('giftOrderToggle');if(gob){gob.style.display=simple?'':'none';gob.textContent=giftOrderMode?'✓ 完成排序':'↕ 調整順序'}let side=document.getElementById('gSide').value,status=document.getElementById('gStatus').value,q=(document.getElementById('gSearch').value||'').toLowerCase();let rows=data.gifts.map((r,i)=>({...r,i})).filter(r=>(simple||!side||r.side===side)&&(simple||!status||r.status===status)&&(simple||!giftPendingOnly||r.status!=='已送達')&&[r.name,r.relation,r.gift,r.address,r.note].join(' ').toLowerCase().includes(q));
+function renderGift(){if(!data.giftNames)data.giftNames={big:'',small:''};renderGiftPriceCalc();let simple=READ_ONLY||giftViewMode==='simple';document.getElementById('giftSimpleBtn')?.classList.toggle('primary',simple);document.getElementById('giftDetailBtn')?.classList.toggle('primary',!simple);document.getElementById('giftPendingBtn')?.classList.toggle('primary',giftPendingOnly);let head=document.getElementById('giftHead');if(head){if(simple){let mb=data.gifts.filter(r=>r.side!=='如'&&r.gift==='大小餅禮盒').length,ms=data.gifts.filter(r=>r.side!=='如'&&r.gift==='小禮盒').length,fb=data.gifts.filter(r=>r.side==='如'&&r.gift==='大小餅禮盒').length,fs=data.gifts.filter(r=>r.side==='如'&&r.gift==='小禮盒').length;head.innerHTML='<th colspan="2" class="maleHead"><div class="sideSummary"><b>🐟 男方</b><small class="giftCountLines"><span><i>'+esc(giftLabel('大小餅禮盒'))+'</i><em>：</em><strong>'+mb+'盒</strong></span><span><i>'+esc(giftLabel('小禮盒'))+'</i><em>：</em><strong>'+ms+'盒</strong></span></small></div></th><th colspan="2" class="femaleHead"><div class="sideSummary"><b>如 女方</b><small class="giftCountLines"><span><i>'+esc(giftLabel('大小餅禮盒'))+'</i><em>：</em><strong>'+fb+'盒</strong></span><span><i>'+esc(giftLabel('小禮盒'))+'</i><em>：</em><strong>'+fs+'盒</strong></span></small></div></th>'}else head.innerHTML='<th>對象</th><th>送誰</th><th>關係</th><th>禮盒</th><th>預計送禮日</th><th>配送方式</th><th>收件人</th><th>狀態</th><th>地址／備註</th><th></th>'}document.getElementById('giftTable')?.classList.toggle('giftSimpleTable',simple);document.getElementById('gift')?.classList.toggle('giftSimpleMode',simple);document.getElementById('gift')?.classList.toggle('giftOrderMode',simple&&giftOrderMode);let gob=document.getElementById('giftOrderToggle');if(gob){gob.style.display=simple?'':'none';gob.textContent=giftOrderMode?'✓ 完成排序':'↕ 調整順序'}let side=document.getElementById('gSide').value,status=document.getElementById('gStatus').value,q=(document.getElementById('gSearch').value||'').toLowerCase();let rows=data.gifts.map((r,i)=>({...r,i})).filter(r=>(!side||r.side===side)&&(simple||!status||r.status===status)&&(simple||!giftPendingOnly||r.status!=='已送達')&&[r.name,r.relation,r.gift,r.address,r.note].join(' ').toLowerCase().includes(q));
 let sideRows=data.gifts.filter(r=>!side||r.side===side),bigCount=sideRows.filter(x=>x.gift==='大小餅禮盒').length,smallCount=sideRows.filter(x=>x.gift==='小禮盒').length;
 let who=side==='如'?'女方':side==='🐟'?'男方':'全部';
 document.getElementById('giftFilterSummary').textContent='目前顯示 '+who+'：共 '+sideRows.length+' 盒\n'+giftLabel('大小餅禮盒')+' '+bigCount+' 盒｜'+giftLabel('小禮盒')+' '+smallCount+' 盒';
-document.getElementById('bigGiftName').value=data.giftNames.big||'';document.getElementById('smallGiftName').value=data.giftNames.small||'';if(!data.giftStyles)data.giftStyles={big:'',small:''};document.getElementById('bigGiftStyle').value=data.giftStyles.big||'';document.getElementById('smallGiftStyle').value=data.giftStyles.small||'';let bnv=document.getElementById('bigGiftNameView'),snv=document.getElementById('smallGiftNameView'),bsv=document.getElementById('bigGiftStyleView'),ssv=document.getElementById('smallGiftStyleView');if(bnv)bnv.textContent=data.giftNames.big||'大小餅禮盒';if(snv)snv.textContent=data.giftNames.small||'小禮盒';if(bsv)bsv.textContent=data.giftStyles.big||'—';if(ssv)ssv.textContent=data.giftStyles.small||'—';
+if(document.activeElement!==document.getElementById('bigGiftName'))document.getElementById('bigGiftName').value=data.giftNames.big||'';if(document.activeElement!==document.getElementById('smallGiftName'))document.getElementById('smallGiftName').value=data.giftNames.small||'';if(!data.giftStyles)data.giftStyles={big:'',small:''};if(document.activeElement!==document.getElementById('bigGiftStyle'))document.getElementById('bigGiftStyle').value=data.giftStyles.big||'';if(document.activeElement!==document.getElementById('smallGiftStyle'))document.getElementById('smallGiftStyle').value=data.giftStyles.small||'';let bnv=document.getElementById('bigGiftNameView'),snv=document.getElementById('smallGiftNameView'),bsv=document.getElementById('bigGiftStyleView'),ssv=document.getElementById('smallGiftStyleView');if(bnv)bnv.textContent=data.giftNames.big||'大小餅禮盒';if(snv)snv.textContent=data.giftNames.small||'小禮盒';if(bsv)bsv.textContent=data.giftStyles.big||'—';if(ssv)ssv.textContent=data.giftStyles.small||'—';
 document.getElementById('giftBody').innerHTML=rows.length?(simple?giftSimpleRows(rows):rows.map(r=>isMobileEdit()?`<tr class="${r.status==='已送達'?'done':''}" onclick="openGiftEdit(${r.i})"><td><span class="badge">${r.side==='如'?'女方':'男方'}</span></td><td><b>${esc(r.name||'—')}</b></td><td></td><td>${esc(giftLabel(r.gift)||'未選擇')}</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>`:`<tr class="${r.status==='已送達'?'done':''}"><td><span class="badge">${esc(r.side)}</span></td><td><input value="${esc(r.name)}" onchange="data.gifts[${r.i}].name=this.value;save()"></td><td><select onchange="data.gifts[${r.i}].relation=this.value;save()"><option ${r.relation==='親戚/團體'?'selected':''}>親戚/團體</option><option ${r.relation==='朋友'?'selected':''}>朋友</option><option ${r.relation==='同事'?'selected':''}>同事</option><option ${r.relation==='其他'?'selected':''}>其他</option></select></td><td><select onchange="data.gifts[${r.i}].gift=this.value;save()"><option value="">未選擇</option><option value="大小餅禮盒" ${r.gift==='大小餅禮盒'?'selected':''}>${esc(giftLabel('大小餅禮盒'))}</option><option value="小禮盒" ${r.gift==='小禮盒'?'selected':''}>${esc(giftLabel('小禮盒'))}</option></select></td><td><input type="date" value="${esc(r.date)}" onchange="data.gifts[${r.i}].date=this.value;save()"></td><td><select onchange="data.gifts[${r.i}].shipping=this.value;if(this.value==='全家'||this.value==='7-11'){let s=prompt('請輸入取貨門市',data.gifts[${r.i}].store||'');if(s!==null)data.gifts[${r.i}].store=s.trim()}else{data.gifts[${r.i}].store=''}save()"><option ${r.shipping==='待安排'?'selected':''}>待安排</option><option ${r.shipping==='宅配'?'selected':''}>宅配</option><option ${r.shipping==='自取'?'selected':''}>自取</option><option ${r.shipping==='親送'?'selected':''}>親送</option><option ${r.shipping==='店家配送'?'selected':''}>店家配送</option><option ${r.shipping==='全家'?'selected':''}>全家</option><option ${r.shipping==='7-11'?'selected':''}>7-11</option><option ${r.shipping==='其他'?'selected':''}>其他</option></select></td><td><input value="${esc(r.receiver)}" placeholder="收件人" onchange="data.gifts[${r.i}].receiver=this.value;save()"></td><td><select onchange="data.gifts[${r.i}].status=this.value;data.gifts[${r.i}].sent=this.value==='已送達';save()"><option ${r.status==='待配送'?'selected':''}>待配送</option><option ${r.status==='配送中'?'selected':''}>配送中</option><option ${r.status==='已送達'?'selected':''}>已送達</option></select></td><td><input value="${esc([r.address,r.note].filter(Boolean).join(' / '))}" placeholder="地址／備註" onchange="data.gifts[${r.i}].note=this.value;save()"></td><td><button class="btn danger editOnly" onclick="data.gifts.splice(${r.i},1);save()">刪除</button></td></tr>`).join('')):`<tr><td colspan="${simple?4:10}" class="empty">沒有符合的禮盒資料</td></tr>`;
 let allBig=data.gifts.filter(x=>x.gift==='大小餅禮盒').length,allSmall=data.gifts.filter(x=>x.gift==='小禮盒').length;document.getElementById('gTotal').textContent=data.gifts.length;document.getElementById('gBig').textContent=allBig;document.getElementById('gSmall').textContent=allSmall;document.getElementById('gDone').textContent=data.gifts.filter(x=>x.status==='已送達').length;
 document.querySelector('#gift .cards .card:nth-child(2) .label').textContent=giftLabel('大小餅禮盒');document.querySelector('#gift .cards .card:nth-child(3) .label').textContent=giftLabel('小禮盒')}
@@ -1166,18 +868,7 @@ function prepStats(all,o){
  all.forEach(d=>{if(prepDocDisplay(d).infoOnly)return;if(d.owner===o){total++;if(d.done)done++}else if(d.owner==='雙方'&&(o==='女方'||o==='男方')){total++;if(o==='女方'?d.brideDone:d.groomDone)done++}});
  return done+'/'+total
 }
-function renderPrep(){if(READ_ONLY){
- if(!Array.isArray(data.prep))data.prep=structuredClone(DEFAULT_PREP);
- data.prep.forEach(x=>{if(!x.owner)x.owner='共同';normalizeDualDocs(x);x.done=prepDone(x)});
- const body=document.getElementById('prepBody');if(!body)return;
- body.innerHTML=data.prep.length?data.prep.map((r,i)=>{const docs=normalizeDualDocs(r),checklist=docs.length?docs.map(d=>prepDocReadHtml(d)).join(''):'<div class="muted">尚無資料</div>';return `<tr class="${r.done?'done':''}"><td><b>${r.done?'✅ 已完成':'⏳ 準備中'}</b></td><td><input value="${esc(r.item)}" readonly></td><td><input value="${esc(r.place)}" readonly></td><td><div class="prepDateFields"><input type="date" value="${esc(r.date)}" readonly><label class="prepTimeField"><span>實際到達時間</span><input class="prepTimeInput" type="time" value="${esc(r.time||'')}" readonly></label></div></td><td class="prepDataCell"><div class="prepDataTitle">準備資料</div><div>${checklist}</div>${r.note?`<div class="prepInlineNote"><b>備註：</b>${esc(r.note)}</div>`:''}</td><td class="prepLegacyNote"></td><td></td></tr>`}).join(''):'<tr><td colspan="7" class="empty">尚未建立準備項目</td></tr>';
- const all=data.prep.flatMap(r=>normalizeDualDocs(r));document.getElementById('pBride').textContent=prepStats(all,'女方');document.getElementById('pGroom').textContent=prepStats(all,'男方');document.getElementById('pTogether').textContent=prepStats(all,'共同');let active=all,units=active.reduce((n,d)=>n+(d.owner==='雙方'?2:1),0),done=active.reduce((n,d)=>n+(d.owner==='雙方'?(d.brideDone?1:0)+(d.groomDone?1:0):(d.done?1:0)),0);document.getElementById('pPct').textContent=(units?Math.round(done/units*100):0)+'%';return
- }
- if(!Array.isArray(data.prep))data.prep=structuredClone(DEFAULT_PREP);const body=document.getElementById('prepBody');data.prep.forEach(x=>normalizeDualDocs(x));
- body.innerHTML=data.prep.map(r=>{let docs=normalizeDualDocs(r);let list=docs.map(prepDocReadHtml).join('')||'<div class="muted">尚無資料</div>';let note=r.note?'<div class="prepInlineNote"><b>備註：</b>'+esc(r.note)+'</div>':'';return '<tr class="familyPrepRow"><td data-label="狀態"><b>'+(prepDone(r)?'✅ 已完成':'⏳ 準備中')+'</b></td><td data-label="項目"><b>'+esc(r.item||'—')+'</b></td><td data-label="地點">'+esc(r.place||'—')+'</td><td data-label="日期"><span>'+esc(dateWithWeekday(r.date))+'</span>'+(r.time?'<div class="prepActualTime"><b>時間：</b>'+esc(r.time)+'</div>':'')+'</td><td class="prepDataCell"><div class="prepDataTitle">準備資料</div>'+list+note+'</td><td class="prepLegacyNote"></td><td></td></tr>'}).join('');
- const all=data.prep.flatMap(r=>normalizeDualDocs(r));document.getElementById('pBride').textContent=prepStats(all,'女方');document.getElementById('pGroom').textContent=prepStats(all,'男方');document.getElementById('pTogether').textContent=prepStats(all,'共同');
- let active=all,units=active.reduce((n,d)=>n+(d.owner==='雙方'?2:1),0),done=active.reduce((n,d)=>n+(d.owner==='雙方'?(d.brideDone?1:0)+(d.groomDone?1:0):(d.done?1:0)),0);document.getElementById('pPct').textContent=(units?Math.round(done/units*100):0)+'%';return
- }
+function renderPrep(){
  if(!Array.isArray(data.prep))data.prep=structuredClone(DEFAULT_PREP);
  data.prep.forEach(x=>{if(!x.owner)x.owner='共同';normalizeDualDocs(x);x.done=prepDone(x)});
  const body=document.getElementById('prepBody');if(!body)return;
@@ -1200,7 +891,7 @@ function openAfterEdit(i){if(READ_ONLY)return;afterCreating=false;document.getEl
 function closeAfterEdit(){document.getElementById('afterEditModal').classList.remove('show');activeAfterEditIndex=-1;afterCreating=false}
 function saveAfterEdit(){let r;if(afterCreating){r={done:false,category:'其他',item:'',who:'共同',need:'視情況',date:'',note:''};data.after.push(r)}else{if(activeAfterEditIndex<0)return;r=data.after[activeAfterEditIndex];}r.done=document.getElementById('aeDone').value==='1';r.category=document.getElementById('aeCategory').value.trim();r.item=document.getElementById('aeItem').value.trim();r.who=document.getElementById('aeWho').value;r.need=document.getElementById('aeNeed').value;r.date=document.getElementById('aeDate').value;r.note=document.getElementById('aeNote').value.trim();if(r.done&&!r.date)r.date=new Date().toISOString().slice(0,10);save();closeAfterEdit()}
 function deleteAfterEdit(){if(activeAfterEditIndex<0||!confirm('確定刪除這筆婚後待辦嗎？'))return;data.after.splice(activeAfterEditIndex,1);save();closeAfterEdit()}
-function renderAfter(){if(READ_ONLY){if(!Array.isArray(data.after))data.after=structuredClone(DEFAULT_AFTER);let filter=document.getElementById('aFilter'),cats=[...new Set(data.after.map(x=>x.category).filter(Boolean))],old=filter.value;filter.innerHTML='<option value="">全部類別</option>'+cats.map(x=>'<option>'+esc(x)+'</option>').join('');filter.value=old;let rows=data.after.filter(x=>!old||x.category===old),body=document.getElementById('afterBody');body.innerHTML=rows.map((r,i)=>window.innerWidth<=800?'<tr class="'+(r.done?'done':'')+'"><td>'+(r.done?'✅':'⬜')+'</td><td>'+esc(r.category||'—')+'</td><td><b>'+esc(r.item||'—')+'</b></td><td></td><td>'+esc(r.need||'—')+'</td><td></td><td></td><td></td></tr>':'<tr><td>'+(r.done?'✅ 已完成':'⏳ 待辦')+'</td><td>'+esc(r.category||'—')+'</td><td><b>'+esc(r.item||'—')+'</b></td><td>'+esc(r.who||'—')+'</td><td>'+esc(r.need||'—')+'</td><td>'+esc(dateWithWeekday(r.date))+'</td><td>'+esc(r.note||'—')+'</td><td></td></tr>').join('');let done=data.after.filter(x=>x.done).length;document.getElementById('aTotal').textContent=data.after.length;document.getElementById('aDone').textContent=done;document.getElementById('aLeft').textContent=data.after.length-done;document.getElementById('aPct').textContent=(data.after.length?Math.round(done/data.after.length*100):0)+'%';return}
+function renderAfter(){
  if(!Array.isArray(data.after))data.after=structuredClone(DEFAULT_AFTER);
  const cats=[...new Set(data.after.map(x=>x.category).filter(Boolean))];
  const filter=document.getElementById('aFilter');if(!filter)return;
@@ -1296,5 +987,13 @@ function importData(el){let f=el.files[0];if(!f)return;let rd=new FileReader();r
 function resetData(){if(confirm('確定要捨棄目前網站修改，回到 Excel 原始資料嗎？')){data=structuredClone(ORIGINAL);save()}}
 document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>goPage(b.dataset.page));
 window.addEventListener('resize',()=>{if(document.getElementById('gift').classList.contains('active'))renderGift();if(document.getElementById('schedule').classList.contains('active'))renderSchedule();if(document.getElementById('after').classList.contains('active'))renderAfter()});
+function lockViewControls(){if(!READ_ONLY)return;document.querySelectorAll('tbody input,tbody select,tbody textarea').forEach(el=>{el.disabled=true;el.removeAttribute('onchange');el.removeAttribute('oninput')});document.querySelectorAll('#prepBody button').forEach(el=>el.hidden=true)}
+const sharedRenderers=[renderSchedule,renderGift,renderPrep,renderAfter];
+[renderSchedule,renderGift,renderPrep,renderAfter]=sharedRenderers.map(fn=>function(){fn();lockViewControls()});
+let cloudRefreshRunning=false;
+async function refreshSharedData(){if(cloudRefreshRunning||document.hidden)return;cloudRefreshRunning=true;try{if(pendingCloudWrite&&!READ_ONLY){if(cloudReady)await syncCloud();else await loadCloud()}else await loadCloud()}finally{cloudRefreshRunning=false}}
+setInterval(refreshSharedData,3000);
+window.addEventListener('focus',refreshSharedData);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)refreshSharedData()});
 applyViewMode();renderSchedule();renderGift();renderPrep();renderAfter();renderOverview();lastSavedSnapshot=JSON.stringify(data);renderUndoMenu();loadCloud().then(()=>{lastSavedSnapshot=JSON.stringify(data);renderUndoMenu();if(CLAIM_TOKEN)handleClaimMode()});
 </script></body></html>
