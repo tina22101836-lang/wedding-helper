@@ -326,7 +326,7 @@ body.readonly .editOnly{display:none!important}body.readonly #gift>.cards{displa
 @media(min-width:801px){
  #gift.giftSimpleMode #giftTable>thead>tr>th{width:50%!important;max-width:50%!important;text-align:left!important}
  #gift.giftSimpleMode #giftTable>thead>tr>th:nth-child(2){border-left:3px solid var(--line)!important}
-}</style></head><body>
+}.giftListTitle{font-size:18px;font-weight:700;padding:12px 14px 8px;border-top:1px solid var(--line)}#gift.giftSimpleMode .qrHintSetting{display:none!important}.readonly #gift .qrHintSetting{display:none!important}@media(max-width:800px){.giftListTitle{font-size:16px;padding:9px 8px 6px}#gift.giftSimpleMode .giftListTitle{padding-top:8px}}</style></head><body>
 <div id="claimPanel" class="claimPanel">
  <div class="claimCard"><div class="claimIcon">🎁</div><h1>禮盒領取確認</h1><div id="claimContent" class="claimContent">正在確認資料…</div></div>
 </div>
@@ -364,8 +364,9 @@ body.readonly .editOnly{display:none!important}body.readonly #gift>.cards{displa
 <label class="giftNameRow"><span>大小餅禮盒</span><input id="bigGiftName" placeholder="例如：世唯喜餅" oninput="setGiftName('big',this.value)"></label>
 <label class="giftNameRow"><span>小禮盒</span><input id="smallGiftName" placeholder="例如：小盒喜餅" oninput="setGiftName('small',this.value)"></label>
 <span class="muted">留白時仍顯示原本分類名稱。</span>
-<label class="giftNameRow" style="flex-basis:100%"><span>QR 標籤提示文字</span><input id="qrHintText" style="min-width:240px" placeholder="領取後請掃 QR Code" onchange="setQrHintText(this.value)"></label>
+<label class="giftNameRow qrHintSetting" style="flex-basis:100%"><span>QR 標籤提示文字</span><input id="qrHintText" style="min-width:240px" placeholder="領取後請掃 QR Code" onchange="setQrHintText(this.value)"></label>
 </div>
+<div class="giftListTitle">🎁 送禮名單</div>
 <div class="tableWrap"><table id="giftTable"><thead><tr id="giftHead"><th>對象</th><th>送誰</th><th>關係</th><th>禮盒</th><th>預計送禮日</th><th>配送方式</th><th>收件人</th><th>狀態</th><th>地址／備註</th><th></th></tr></thead><tbody id="giftBody"></tbody></table></div></div></section>
 <section id="prep" class="page">
 <div class="cards"><div class="card"><span class="label">👰 女方</span><b id="pBride">0/0</b><div class="muted">已完成／全部</div></div><div class="card"><span class="label">🤵 男方</span><b id="pGroom">0/0</b><div class="muted">已完成／全部</div></div><div class="card"><span class="label">💍 共同</span><b id="pTogether">0/0</b><div class="muted">已完成／全部</div></div><div class="card"><span class="label">全部完成率</span><b id="pPct">0%</b></div></div>
