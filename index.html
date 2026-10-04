@@ -165,7 +165,7 @@ body.readonly .editOnly{display:none!important}body.readonly #gift>.cards{displa
 </section></main><div class="mobileNav" id="mobileNav"><button data-page="overview" class="active" onclick="goPage('overview')"><span>♡</span>總覽</button><button data-page="schedule" onclick="goPage('schedule')"><span>📅</span>排程</button><button data-page="gift" onclick="goPage('gift')"><span>🎁</span>禮盒</button><button data-page="prep" onclick="goPage('prep')"><span>📋</span>準備</button><button data-page="after" onclick="goPage('after')"><span>💑</span>婚後</button></div>
 <script>
 const READ_ONLY=new URLSearchParams(location.search).get('view')==='family';
-function applyViewMode(){document.body.classList.toggle('readonly',READ_ONLY);let b=document.getElementById('viewModeBadge');if(b)b.textContent=READ_ONLY?'👀 長輩查看版':'✏️ 共同編輯版'}
+function applyViewMode(){document.body.classList.toggle('readonly',READ_ONLY);let b=document.getElementById('viewModeBadge');if(b)b.textContent=READ_ONLY?'👀 查看版':'✏️ 共同編輯版'}
 function openShareModal(){document.getElementById('shareModal').classList.add('show');let r=document.querySelector('input[name="shareMode"][value="'+(READ_ONLY?'family':'edit')+'"]');if(r)r.checked=true;updateShareLink()}
 function closeShareModal(){document.getElementById('shareModal').classList.remove('show')}
 function getShareUrl(){let mode=(document.querySelector('input[name="shareMode"]:checked')||{}).value||'edit',u=new URL(location.href);u.search='';if(mode==='family')u.searchParams.set('view','family');return u.toString()}
