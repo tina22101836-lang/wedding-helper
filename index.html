@@ -1,5 +1,15 @@
 <!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>我們的結婚小幫手</title>
+<div id="recordModal" class="recordModal" onclick="if(event.target===this)closeRecordModal()"><div class="recordBox">
+<div class="panelHead"><div><h2 id="recordTitle">參考／成果紀錄</h2><div class="muted">可保存參考款式、購買網址、完成照與實體照片</div></div><button class="btn" onclick="closeRecordModal()">✕ 關閉</button></div>
+<div style="padding:16px 18px"><div class="recordForm">
+<input id="recordName" placeholder="紀錄名稱，例如：預選戒指款式／婚約書購買頁">
+<input id="recordUrl" type="url" placeholder="網址（可留白）">
+<input id="recordNote" placeholder="備註（可留白）">
+<label class="btn">📷 選擇照片<input id="recordFile" type="file" accept="image/*" style="display:none"></label>
+<button class="btn primary" onclick="addScheduleRecord()">＋ 加入紀錄</button></div>
+<div class="muted" style="margin:8px 0 14px">照片會先自動縮小壓縮後再同步，建議以戒指、婚約書等紀錄照片為主。</div>
+<div id="recordList" class="recordGrid"></div></div></div></div>
 <style>
 :root{--rose:#b76e79;--pink:#fff3f5;--ink:#3d3335;--muted:#8c7c80;--line:#eadde0;--cream:#fffaf7;--green:#5f8b72;--shadow:0 10px 30px #6b3c4412}
 *{box-sizing:border-box}body{margin:0;background:linear-gradient(135deg,#fff9f7,#fff2f5);font-family:system-ui,-apple-system,"Noto Sans TC",sans-serif;color:var(--ink)}
