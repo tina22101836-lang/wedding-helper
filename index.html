@@ -643,7 +643,7 @@ function inferAction(before,after){
  if(JSON.stringify(before.giftNames)!==JSON.stringify(after.giftNames))return '修改禮盒名稱';
  return '修改資料'
 }
-function pushHistory(before,after){if(!before||JSON.stringify(before)===JSON.stringify(after))return;let h=loadHistory(HISTORY_KEY);h.push({label:inferAction(before,after),state:before,at:new Date().toISOString()});if(h.length>HISTORY_MAX)h=h.slice(-HISTORY_MAX);localStorage.setItem(HISTORY_KEY,JSON.stringify(h));localStorage.setItem(REDO_KEY,'[]');renderUndoMenu()}
+function pushHistory(before,after){try{if(!before||JSON.stringify(before)===JSON.stringify(after))return;let h=loadHistory(HISTORY_KEY);h.push({label:inferAction(before,after),state:before,at:new Date().toISOString()});if(h.length>HISTORY_MAX)h=h.slice(-HISTORY_MAX);try{localStorage.setItem(HISTORY_KEY,JSON.stringify(h))}catch(e){try{localStorage.setItem(HISTORY_KEY,JSON.stringify(h.slice(-3)))}catch(e2){}}try{localStorage.setItem(REDO_KEY,'[]')}catch(e){};renderUndoMenu()}catch(e){console.warn(e)}}
 function persistCurrent(){localStorage.setItem(KEY,JSON.stringify(data));lastSavedSnapshot=JSON.stringify(data);renderSchedule();renderGift();renderPrep();renderAfter();renderOverview();clearTimeout(cloudTimer);cloudTimer=setTimeout(syncCloud,500);renderUndoMenu()}
 function save(){if(READ_ONLY)return;let before;try{before=lastSavedSnapshot?JSON.parse(lastSavedSnapshot):JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){before=null}if(before)pushHistory(before,data);persistCurrent()}
 function openFeatureGuide(){document.getElementById('featureGuideModal')?.classList.add('show')}
