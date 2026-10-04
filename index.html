@@ -238,6 +238,13 @@ body.readonly .editOnly{display:none!important}body.readonly #gift>.cards{displa
  #prepEditModal .giftEditForm input,#prepEditModal .giftEditForm select{width:88%!important;max-width:360px!important}
  #prepEditModal #peDate,#prepEditModal #peTime{border:1.5px solid #c9949b!important;border-radius:14px!important;background:linear-gradient(180deg,#fff,#fff9fa)!important;box-shadow:0 0 0 3px rgba(185,117,126,.08)!important}
 }
+@media(max-width:800px){
+ #gift .giftNameSetting{grid-template-columns:88px minmax(0,1fr)!important;gap:4px!important}
+ #gift .giftNameFields{grid-template-columns:88px minmax(0,1fr)!important;gap:6px!important}
+ #gift .giftNameFields .giftShopInput{width:88px!important}
+ #gift .giftNameFields .giftStyleInput{width:100%!important}
+ #gift .giftNameFields input{font-size:14px!important;padding-left:10px!important;padding-right:10px!important}
+}
 </style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style id="responsive-v3">
 .mobileNav{display:none}
