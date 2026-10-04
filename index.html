@@ -593,7 +593,7 @@ const SUPABASE_URL='https://puwqswhsvqwwjjokuejx.supabase.co';
 const SUPABASE_KEY='sb_publishable_ZfC12nkj3klCQsS88iQQVQ_ZLAjgIQj';
 const SHARE_KEY='our-wedding-2026';
 const cloud=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
-let cloudTimer=null,cloudReady=false;
+let cloudTimer=null,cloudReady=false,pendingCloudWrite=false;
 let data=JSON.parse(localStorage.getItem(KEY)||'null')||structuredClone(ORIGINAL);
 if(!Array.isArray(data.prep))data.prep=structuredClone(DEFAULT_PREP);data.prep.forEach(x=>{if(!x.owner)x.owner='共同'});if(!Array.isArray(data.after))data.after=structuredClone(DEFAULT_AFTER);
 const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
@@ -602,12 +602,22 @@ async function loadCloud(){
  try{
   const {data:rows,error}=await cloud.from('wedding_data').select('id,payload').eq('share_key',SHARE_KEY).limit(1);
   if(error)throw error;
-  if(rows&&rows.length){data=rows[0].payload;if(!Array.isArray(data.prep))data.prep=structuredClone(DEFAULT_PREP);data.prep.forEach(x=>{if(!x.owner)x.owner='共同'});if(!Array.isArray(data.after))data.after=structuredClone(DEFAULT_AFTER);localStorage.setItem(KEY,JSON.stringify(data))}
-  else{
+  if(rows&&rows.length){
+   if(!pendingCloudWrite){
+    data=rows[0].payload;
+    if(!Array.isArray(data.prep))data.prep=structuredClone(DEFAULT_PREP);
+    data.prep.forEach(x=>{if(!x.owner)x.owner='共同'});
+    if(!Array.isArray(data.after))data.after=structuredClone(DEFAULT_AFTER);
+    localStorage.setItem(KEY,JSON.stringify(data));
+   }
+  }else{
    const {error:e}=await cloud.from('wedding_data').insert({share_key:SHARE_KEY,payload:data});
    if(e)throw e;
   }
-  cloudReady=true;setCloudState('☁️ 已同步');renderSchedule();renderGift();renderOverview();
+  cloudReady=true;
+  if(pendingCloudWrite&&!READ_ONLY){pendingCloudWrite=false;await syncCloud()}
+  else setCloudState('☁️ 已同步');
+  renderSchedule();renderGift();renderPrep();renderAfter();renderOverview();
  }catch(e){console.error(e);setCloudState('☁️ 離線模式')}
 }
 async function syncCloud(){
@@ -657,8 +667,16 @@ function scheduleTodoSummary(r,readonly=false){let a=normalizeScheduleTodos(r);i
 let activeScheduleEditIndex=-1,scheduleCreating=false;
 function openScheduleEdit(i){if(READ_ONLY)return;scheduleCreating=false;document.getElementById('seDeleteBtn').style.display='';document.getElementById('seSaveBtn').textContent='儲存修改';activeScheduleEditIndex=i;let r=data.schedule[i];document.getElementById('seDone').value=r.done?'1':'0';document.getElementById('seDate').value=r.date||'';document.getElementById('seEndDate').value=r.endDate||'';document.getElementById('seItem').value=r.item||'';document.getElementById('sePlace').value=r.place||'';document.getElementById('seTime').value=r.time||'';document.getElementById('seBudget').value=r.budget||'';document.getElementById('seNote').value=r.note||'';scheduleTodoDraft=normalizeScheduleTodos(r).map(x=>({...x}));renderScheduleTodoDraft();document.getElementById('seTodoNew').value='';document.getElementById('scheduleEditModal').classList.add('show')}
 function closeScheduleEdit(){document.getElementById('scheduleEditModal').classList.remove('show');activeScheduleEditIndex=-1;scheduleCreating=false;scheduleTodoDraft=[]}
-async function saveScheduleEdit(){let r,creating=scheduleCreating,before=cloneData(data);if(creating){r={done:false,item:'',date:'',endDate:'',place:'',time:'',note:'',budget:'',records:[]};data.schedule.push(r)}else{if(activeScheduleEditIndex<0)return;r=data.schedule[activeScheduleEditIndex];}r.done=document.getElementById('seDone').value==='1';r.date=document.getElementById('seDate').value;r.endDate=document.getElementById('seEndDate').value;r.item=document.getElementById('seItem').value.trim();r.place=document.getElementById('sePlace').value.trim();r.time=document.getElementById('seTime').value;r.budget=document.getElementById('seBudget').value.trim();r.note=document.getElementById('seNote').value.trim();r.todos=scheduleTodoDraft.map(x=>({text:(x.text||'').trim(),done:!!x.done})).filter(x=>x.text);if(!r.item){if(creating)data.schedule.pop();alert('請先填寫排程項目');return}pushHistory(before,data);closeScheduleEdit();localStorage.setItem(KEY,JSON.stringify(data));lastSavedSnapshot=JSON.stringify(data);renderSchedule();renderGift();renderPrep();renderAfter();renderOverview();renderUndoMenu();clearTimeout(cloudTimer);if(!cloudReady){setCloudState('☁️ 等待雲端載入');try{await loadCloud()}catch(e){}}if(cloudReady){await syncCloud()}else{setCloudState('☁️ 已存本機，待下次同步')}}
-async function deleteScheduleEdit(){if(activeScheduleEditIndex<0)return;let idx=activeScheduleEditIndex,item=data.schedule[idx]?.item||'這筆排程';if(!confirm('確定刪除「'+item+'」嗎？'))return;let before=cloneData(data);data.schedule.splice(idx,1);pushHistory(before,data);closeScheduleEdit();localStorage.setItem(KEY,JSON.stringify(data));lastSavedSnapshot=JSON.stringify(data);renderSchedule();renderGift();renderPrep();renderAfter();renderOverview();clearTimeout(cloudTimer);await syncCloud();renderUndoMenu()}
+async function saveScheduleEdit(){
+ let r,creating=scheduleCreating,before=cloneData(data);
+ if(creating){r={done:false,item:'',date:'',endDate:'',place:'',time:'',note:'',budget:'',records:[]};data.schedule.push(r)}
+ else{if(activeScheduleEditIndex<0)return;r=data.schedule[activeScheduleEditIndex]}
+ r.done=document.getElementById('seDone').value==='1';r.date=document.getElementById('seDate').value;r.endDate=document.getElementById('seEndDate').value;r.item=document.getElementById('seItem').value.trim();r.place=document.getElementById('sePlace').value.trim();r.time=document.getElementById('seTime').value;r.budget=document.getElementById('seBudget').value.trim();r.note=document.getElementById('seNote').value.trim();r.todos=scheduleTodoDraft.map(x=>({text:(x.text||'').trim(),done:!!x.done})).filter(x=>x.text);
+ if(!r.item){if(creating)data.schedule.pop();alert('請先填寫排程項目');return}
+ pushHistory(before,data);pendingCloudWrite=true;closeScheduleEdit();localStorage.setItem(KEY,JSON.stringify(data));lastSavedSnapshot=JSON.stringify(data);renderSchedule();renderGift();renderPrep();renderAfter();renderOverview();renderUndoMenu();clearTimeout(cloudTimer);
+ if(cloudReady){pendingCloudWrite=false;await syncCloud()}else setCloudState('☁️ 已儲存，等待同步')
+}
+async function deleteScheduleEdit(){if(activeScheduleEditIndex<0)return;let idx=activeScheduleEditIndex,item=data.schedule[idx]?.item||'這筆排程';if(!confirm('確定刪除「'+item+'」嗎？'))return;let before=cloneData(data);data.schedule.splice(idx,1);pushHistory(before,data);pendingCloudWrite=true;closeScheduleEdit();localStorage.setItem(KEY,JSON.stringify(data));lastSavedSnapshot=JSON.stringify(data);renderSchedule();renderGift();renderPrep();renderAfter();renderOverview();clearTimeout(cloudTimer);if(cloudReady){pendingCloudWrite=false;await syncCloud()}else setCloudState('☁️ 已儲存，等待同步');renderUndoMenu()}
 function dateWithWeekday(v){
  if(!v)return '—';
  let m=String(v).match(/^(\d{4})-(\d{2})-(\d{2})$/);if(!m)return String(v);
