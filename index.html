@@ -561,6 +561,17 @@ body.readonly td input,body.readonly td select{color:var(--ink);opacity:1;backgr
 body.readonly #recordModal .panelHead .muted,
 body.readonly #recordModal .familyScheduleDetail,
 body.readonly #recordModal .familyRecordHead{display:none!important}
+</style><style id="compactHeaderStyles">
+header.siteHeader{display:flex;flex-direction:column;align-items:stretch;gap:10px;padding:20px 5vw 14px}
+header.siteHeader .headerIntro{width:100%;min-width:0}
+header.siteHeader .headerIntro p{margin:5px 0 0;line-height:1.5}
+header.siteHeader .headerToolbar{display:flex;align-items:center;gap:8px;width:100%;min-width:0}
+header.siteHeader .headerStatus{display:flex;flex:1;flex-wrap:wrap;align-items:center;gap:6px;min-width:0}
+header.siteHeader .headerStatus .badge{margin:0;white-space:nowrap;font-size:12px}
+header.siteHeader .actions{display:flex;flex:0 0 auto;width:auto;margin:0;gap:0}
+header.siteHeader .headerShareBtn{margin:0;flex:0 0 auto;white-space:nowrap}
+header.siteHeader .headerToolbar>.actions .btn,header.siteHeader .headerShareBtn{padding:8px 10px;font-size:13px;min-height:36px}
+@media(max-width:800px){header.siteHeader{padding:16px 16px 12px;gap:9px}header.siteHeader h1{font-size:23px;line-height:1.35}header.siteHeader .headerIntro p{font-size:12px}header.siteHeader .headerStatus .badge{font-size:11px;padding:4px 6px}header.siteHeader .headerToolbar{gap:6px}}
 </style></head><body>
 <div id="claimPanel" class="claimPanel">
  <div class="claimCard"><div class="claimIcon">🎁</div><h1>禮盒領取確認</h1><div id="claimContent" class="claimContent">正在確認資料…</div></div>
@@ -570,12 +581,12 @@ body.readonly #recordModal .familyRecordHead{display:none!important}
  <div class="qrPrintHelp">A4 直式｜每格 8 × 5 cm｜每頁固定 10 格</div>
  <div id="qrPrintArea" class="qrPrintArea"></div>
 </div>
-<header><div><h1>♡ 🐟&如 結婚小幫手</h1><p>把 Excel 變成可以每天一起更新的婚禮工作台　<span id="cloudState" class="badge">☁️ 連線中</span> <span id="viewModeBadge" class="badge"></span></p></div><div class="actions editOnly"><div class="toolsWrap"><button class="btn" onclick="toggleToolsMenu(event)">⚙️ 工具 ▾</button><div id="toolsMenu" class="toolsMenu" onclick="event.stopPropagation()">
+<header class="siteHeader"><div class="headerIntro"><h1>♡ 🐟&如 結婚小幫手</h1><p>把 Excel 變成可以每天一起更新的婚禮工作台</p></div><div class="headerToolbar"><div class="headerStatus"><span id="viewModeBadge" class="badge"></span><span id="cloudState" class="badge">☁️ 連線中</span></div><div class="actions editOnly"><div class="toolsWrap"><button class="btn" onclick="toggleToolsMenu(event)">⚙️ 工具 ▾</button><div id="toolsMenu" class="toolsMenu" onclick="event.stopPropagation()">
 <div class="toolRow"><div class="undoWrap"><button class="btn" onclick="undoOne()">↶ 復原</button><button class="btn undoArrow" onclick="toggleUndoMenu(event)">▼</button><div id="undoMenu" class="undoMenu"></div></div><button class="btn" id="redoBtn" onclick="redoOne()">↷ 重做</button></div>
 <button class="toolMenuBtn" onclick="openFeatureGuide();closeToolsMenu()">📖 功能說明</button><button class="toolMenuBtn" onclick="exportData();closeToolsMenu()">💾 備份資料</button>
 <label class="toolMenuBtn">📂 從備份還原<input id="importFile" type="file" accept=".json" hidden onchange="importData(this);closeToolsMenu()"></label>
 <button class="toolMenuBtn dangerText" onclick="resetData();closeToolsMenu()">⚠️ 重設成 Excel 原始資料</button>
-</div></div></div><button class="btn headerShareBtn" onclick="openShareModal()">🔗 分享</button></header>
+</div></div></div><button class="btn headerShareBtn" onclick="openShareModal()">🔗 分享</button></div></header>
 <nav><button class="tab active" data-page="overview">♡ 婚禮總覽</button><button class="tab" data-page="schedule">① 結婚排程</button><button class="tab" data-page="gift">② 禮盒統計</button><button class="tab" data-page="prep">③ 準備清單</button><button class="tab" data-page="after">④ 婚後待辦</button></nav>
 <main>
 <section id="overview" class="page active">
