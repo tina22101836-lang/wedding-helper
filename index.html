@@ -572,6 +572,14 @@ header.siteHeader .actions{display:flex;flex:0 0 auto;width:auto;margin:0;gap:0}
 header.siteHeader .headerShareBtn{margin:0;flex:0 0 auto;white-space:nowrap}
 header.siteHeader .headerToolbar>.actions .btn,header.siteHeader .headerShareBtn{padding:8px 10px;font-size:13px;min-height:36px}
 @media(max-width:800px){header.siteHeader{padding:16px 16px 12px;gap:9px}header.siteHeader h1{font-size:23px;line-height:1.35}header.siteHeader .headerIntro p{font-size:12px}header.siteHeader .headerStatus .badge{font-size:11px;padding:4px 6px}header.siteHeader .headerToolbar{gap:6px}}
+</style><style id="mobileToolMenuBounds">
+@media(max-width:800px){
+ header.siteHeader .headerToolbar{position:relative}
+ header.siteHeader .headerToolbar .toolsWrap{position:static}
+ header.siteHeader #toolsMenu{left:auto!important;right:0!important;top:calc(100% + 7px);width:min(310px,100%)!important;max-width:100%!important;box-sizing:border-box}
+ header.siteHeader #toolsMenu .undoWrap{position:static}
+ header.siteHeader #undoMenu{left:auto!important;right:0!important;top:calc(100% + 6px);width:100%!important;max-width:100%!important;box-sizing:border-box}
+}
 </style></head><body>
 <div id="claimPanel" class="claimPanel">
  <div class="claimCard"><div class="claimIcon">🎁</div><h1>禮盒領取確認</h1><div id="claimContent" class="claimContent">正在確認資料…</div></div>
