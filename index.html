@@ -288,28 +288,22 @@ main{padding:0 5vw 50px}.page{display:none}.page.active{display:block}.cards{dis
 #gift .giftSummaryCards{grid-template-columns:repeat(2,minmax(0,1fr))}
 
 @media(max-width:800px){
- body:not(.readonly) #gift:not(.giftSimpleMode) .tableWrap{padding:12px;max-height:none;overflow:visible}
- body:not(.readonly) #gift:not(.giftSimpleMode) #giftTable{display:block;width:100%;min-width:0}
- body:not(.readonly) #gift:not(.giftSimpleMode) #giftTable thead{display:none}
- body:not(.readonly) #gift:not(.giftSimpleMode) #giftBody{display:grid;gap:12px}
- body:not(.readonly) #gift:not(.giftSimpleMode) #giftBody tr{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px 14px;padding:14px;margin:0;border:1px solid var(--line);border-radius:14px;background:#fff;box-shadow:0 3px 12px #6b3c4408}
- body:not(.readonly) #gift:not(.giftSimpleMode) #giftBody td{display:block!important;width:auto!important;max-width:none;padding:0;border:0;min-width:0;font-size:14px;line-height:1.5;overflow-wrap:anywhere}
- body:not(.readonly) #gift:not(.giftSimpleMode) #giftBody td:before{display:block!important;font-size:11px;color:var(--muted);margin-bottom:3px}
- body:not(.readonly) #gift:not(.giftSimpleMode) #giftBody td:nth-child(1){grid-column:1;grid-row:1}
- body:not(.readonly) #gift:not(.giftSimpleMode) #giftBody td:nth-child(2){grid-column:1;grid-row:2;font-size:18px}
- body:not(.readonly) #gift:not(.giftSimpleMode) #giftBody td:nth-child(8){grid-column:2;grid-row:1/3;align-self:center;justify-self:end}
- body:not(.readonly) #gift:not(.giftSimpleMode) #giftBody td:nth-child(9){grid-column:1/-1;padding-top:10px;border-top:1px solid var(--line)}
- body:not(.readonly) #gift:not(.giftSimpleMode) #giftBody td:nth-child(10){grid-column:1/-1;text-align:right}
- body:not(.readonly) #gift:not(.giftSimpleMode) #giftBody td:nth-child(1):before,
- body:not(.readonly) #gift:not(.giftSimpleMode) #giftBody td:nth-child(2):before,
- body:not(.readonly) #gift:not(.giftSimpleMode) #giftBody td:nth-child(8):before,
- body:not(.readonly) #gift:not(.giftSimpleMode) #giftBody td:nth-child(10):before{display:none!important}
- .giftDetailStatus{display:inline-block;padding:5px 10px;border-radius:999px;font-size:12px;font-weight:600}
+ body:not(.readonly) #gift:not(.giftSimpleMode) .tableWrap{padding:0;max-height:65vh;overflow:auto}
+ body:not(.readonly) #gift:not(.giftSimpleMode) #giftTable{display:table;min-width:1050px;width:100%;table-layout:fixed}
+ body:not(.readonly) #gift:not(.giftSimpleMode) #giftTable thead{display:table-header-group}
+ body:not(.readonly) #gift:not(.giftSimpleMode) #giftBody{display:table-row-group}
+ body:not(.readonly) #gift:not(.giftSimpleMode) #giftBody tr{display:table-row;background:#fff;border:0;margin:0;padding:0;box-shadow:none}
+ body:not(.readonly) #gift:not(.giftSimpleMode) #giftTable th,body:not(.readonly) #gift:not(.giftSimpleMode) #giftBody td{display:table-cell!important;width:auto!important;max-width:none;padding:9px 8px;border-bottom:1px solid var(--line);font-size:13px;line-height:1.4;vertical-align:middle;overflow-wrap:anywhere}
+ body:not(.readonly) #gift:not(.giftSimpleMode) #giftBody td:before{display:none!important}
+ body:not(.readonly) #gift:not(.giftSimpleMode) #giftTable th:nth-child(1){width:60px!important}
+ body:not(.readonly) #gift:not(.giftSimpleMode) #giftTable th:nth-child(2){width:95px!important}
+ body:not(.readonly) #gift:not(.giftSimpleMode) #giftTable th:nth-child(9){width:180px!important}
+ .giftDetailStatus{display:inline-block;padding:4px 7px;border-radius:999px;font-size:12px;white-space:nowrap}
  .giftDetailStatus.pending{background:#f6edef;color:#9a626b}
  .giftDetailStatus.shipping{background:#fff2dc;color:#95682d}
  .giftDetailStatus.sent{background:#eaf2e8;color:#54764c}
  .giftDetailEdit{font-size:12px;color:var(--rose)}
-}
+}.scheduleHiddenHint{display:block;margin-top:4px;font-size:10px;line-height:1.3;color:#9a626b;font-weight:400}
 </style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style>
 .mobileNav{display:none}
@@ -803,8 +797,9 @@ function dateWithWeekday(v){
 }
 function scheduleDateText(r){if(!r.date)return '—';if(r.endDate&&r.endDate!==r.date)return dateWithWeekday(r.date)+' ～ '+dateWithWeekday(r.endDate);return dateWithWeekday(r.date)}
 function scheduleMobileDateHtml(r){if(!r.date)return '—';if(r.endDate&&r.endDate!==r.date)return '<span class="dateStart">'+esc(dateWithWeekday(r.date))+'</span><span class="dateEnd">～ '+esc(dateWithWeekday(r.endDate))+'</span>';return '<span class="dateSingle">'+esc(dateWithWeekday(r.date))+'</span>'}
+function scheduleHiddenHint(r){return !READ_ONLY&&r.familyVisible===false?'<small class="scheduleHiddenHint">查看版已隱藏</small>':''}
 function renderSchedule(){let q=(document.getElementById('sSearch').value||'').toLowerCase();let rows=data.schedule.map((r,i)=>({...r,i})).filter(r=>!READ_ONLY||r.familyVisible!==false).filter(r=>[r.item,r.place,r.note,r.time,...normalizeScheduleTodos(r).map(t=>t.text)].join(' ').toLowerCase().includes(q)).sort((a,b)=>(a.date||'9999').localeCompare(b.date||'9999'));
-document.getElementById('scheduleBody').innerHTML=rows.length?rows.map(r=>{let rc=Array.isArray(r.records)?r.records.length:0;if(isMobileEdit())return `<tr class="${r.done?'done':''} ${r.endDate&&r.endDate!==r.date?'dateRangeRow':''}" onclick="${READ_ONLY?'openFamilyScheduleView':'openScheduleEdit'}(${r.i})"><td>${checkMark(r.done)}</td><td class="scheduleMobileDate">${scheduleMobileDateHtml(r)}</td><td><b>${esc(r.item||'—')}</b></td><td></td><td></td><td></td><td></td><td>${rc?'<button class="btn" onclick="event.stopPropagation();openRecordModal('+r.i+')">🖼️ '+rc+'</button>':'—'}</td><td></td></tr>`;return `<tr class="${r.done?'done':''}"><td><input class="check" type="checkbox" ${r.done?'checked':''} onchange="data.schedule[${r.i}].done=this.checked;save()"></td><td><div style="display:grid;gap:5px"><input type="date" value="${esc(r.date)}" title="開始日期" onchange="data.schedule[${r.i}].date=this.value;save()"><input type="date" value="${esc(r.endDate||'')}" title="結束日期（單日可留白）" onchange="data.schedule[${r.i}].endDate=this.value;save()"></div></td><td><input value="${esc(r.item)}" onchange="data.schedule[${r.i}].item=this.value;save()"></td><td><input value="${esc(r.place)}" placeholder="婚戒店面／戶政／餐廳…" onchange="data.schedule[${r.i}].place=this.value;save()"></td><td><input value="${esc(r.time)}" placeholder="例如 14:00" onchange="data.schedule[${r.i}].time=this.value;save()"></td><td><input value="${esc(r.note)}" placeholder="戒圍、預算、交期…" onchange="data.schedule[${r.i}].note=this.value;save()">${scheduleTodoSummary(r)}</td><td><input value="${esc(r.budget)}" placeholder="$" onchange="data.schedule[${r.i}].budget=this.value;save()"></td><td><button class="btn" onclick="openRecordModal(${r.i})">🖼️ 紀錄${rc?' ('+rc+')':''}</button></td><td><button class="btn danger editOnly" onclick="data.schedule.splice(${r.i},1);save()">刪除</button></td></tr>`}).join(''):`<tr><td colspan="9" class="empty">沒有符合的排程</td></tr>`;
+document.getElementById('scheduleBody').innerHTML=rows.length?rows.map(r=>{let rc=Array.isArray(r.records)?r.records.length:0;if(isMobileEdit())return `<tr class="${r.done?'done':''} ${r.endDate&&r.endDate!==r.date?'dateRangeRow':''}" onclick="${READ_ONLY?'openFamilyScheduleView':'openScheduleEdit'}(${r.i})"><td>${checkMark(r.done)}</td><td class="scheduleMobileDate">${scheduleMobileDateHtml(r)}</td><td><b>${esc(r.item||'—')}</b>${scheduleHiddenHint(r)}</td><td></td><td></td><td></td><td></td><td>${rc?'<button class="btn" onclick="event.stopPropagation();openRecordModal('+r.i+')">🖼️ '+rc+'</button>':'—'}</td><td></td></tr>`;return `<tr class="${r.done?'done':''}"><td><input class="check" type="checkbox" ${r.done?'checked':''} onchange="data.schedule[${r.i}].done=this.checked;save()"></td><td><div style="display:grid;gap:5px"><input type="date" value="${esc(r.date)}" title="開始日期" onchange="data.schedule[${r.i}].date=this.value;save()"><input type="date" value="${esc(r.endDate||'')}" title="結束日期（單日可留白）" onchange="data.schedule[${r.i}].endDate=this.value;save()"></div></td><td><input value="${esc(r.item)}" onchange="data.schedule[${r.i}].item=this.value;save()">${scheduleHiddenHint(r)}</td><td><input value="${esc(r.place)}" placeholder="婚戒店面／戶政／餐廳…" onchange="data.schedule[${r.i}].place=this.value;save()"></td><td><input value="${esc(r.time)}" placeholder="例如 14:00" onchange="data.schedule[${r.i}].time=this.value;save()"></td><td><input value="${esc(r.note)}" placeholder="戒圍、預算、交期…" onchange="data.schedule[${r.i}].note=this.value;save()">${scheduleTodoSummary(r)}</td><td><input value="${esc(r.budget)}" placeholder="$" onchange="data.schedule[${r.i}].budget=this.value;save()"></td><td><button class="btn" onclick="openRecordModal(${r.i})">🖼️ 紀錄${rc?' ('+rc+')':''}</button></td><td><button class="btn danger editOnly" onclick="data.schedule.splice(${r.i},1);save()">刪除</button></td></tr>`}).join(''):`<tr><td colspan="9" class="empty">沒有符合的排程</td></tr>`;
 document.getElementById('sTotal').textContent=data.schedule.length;document.getElementById('sDone').textContent=data.schedule.filter(x=>x.done).length;let n=data.schedule.filter(x=>!x.done&&x.date&&(!READ_ONLY||x.familyVisible!==false)).sort((a,b)=>a.date.localeCompare(b.date))[0];document.getElementById('sNext').textContent=n?scheduleDateText(n)+'｜'+(n.item||'未命名項目'):'目前沒有待辦行程'}
 function openFamilyScheduleView(i){if(READ_ONLY)openRecordModal(i)}
 let activeRecordIndex=-1;
