@@ -641,6 +641,7 @@ body:not(.readonly) input[type="checkbox"].check:disabled{opacity:1;cursor:defau
  body:not(.readonly) #gift:not(.giftSimpleMode) #giftBody td:nth-child(9){border:0;padding-top:0}
  body:not(.readonly) #gift:not(.giftSimpleMode) #giftBody td:nth-child(10){display:none!important}
 }
+#overview>.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.overviewDeliveryInline{margin-top:6px;font-size:12px;color:var(--muted);line-height:1.4}.overviewDeliveryInline span{font-weight:600;color:var(--rose)}
 </style></head><body>
 <div id="claimPanel" class="claimPanel">
  <div class="claimCard"><div class="claimIcon">🎁</div><h1>禮盒領取確認</h1><div id="claimContent" class="claimContent">正在確認資料…</div></div>
@@ -659,7 +660,7 @@ body:not(.readonly) input[type="checkbox"].check:disabled{opacity:1;cursor:defau
 <nav><button class="tab active" data-page="overview">♡ 婚禮總覽</button><button class="tab" data-page="schedule">① 結婚排程</button><button class="tab" data-page="gift">② 禮盒統計</button><button class="tab" data-page="prep">③ 準備清單</button><button class="tab" data-page="after">④ 婚後待辦</button></nav>
 <main>
 <section id="overview" class="page active">
-<div class="cards"><div class="card"><span class="label">禮盒總數</span><b id="oGiftTotal">0 盒</b></div><div class="card"><span class="label">已發出</span><b id="oGiftSent">0 盒</b></div><div class="card"><span class="label">配送進度</span><b id="oDelivery">0%</b></div></div>
+<div class="cards"><div class="card"><span class="label">禮盒總數</span><b id="oGiftTotal">0 盒</b></div><div class="card"><span class="label">已發出</span><b id="oGiftSent">0 盒</b><div class="overviewDeliveryInline">配送進度 <span id="oDelivery">0%</span></div></div></div>
 <div class="overviewGrid"><div class="panel"><div class="panelHead"><div><h2>📅 近期待辦</h2><div class="muted">依日期自動整理尚未完成的工作</div></div><button class="btn primary" onclick="goPage('schedule')">查看完整排程</button></div><div style="padding:10px 18px"><ul class="miniList" id="oTodoList"></ul></div></div>
 <div class="panel"><div class="panelHead"><div><h2>🎁 禮盒發送狀況</h2><div class="muted">依目前禮盒名單計算</div></div><button class="btn" onclick="goPage('gift')">管理禮盒</button></div><div style="padding:18px"><div class="overviewActions" id="oGiftSummary"></div><div style="margin-top:18px" class="progress"><i id="oDeliveryBar" style="width:0%"></i></div><div class="muted" style="margin-top:7px" id="oDeliveryText">尚未配送</div></div></div>
 <div class="panel"><div class="panelHead"><div><h2>🚚 配送進度</h2><div class="muted">待配送 → 配送中 → 已送達</div></div></div><div style="padding:18px"><div class="cards" style="margin:0;grid-template-columns:repeat(3,1fr)"><div class="card"><span class="label">待配送</span><b id="oWait">0</b></div><div class="card"><span class="label">配送中</span><b id="oShipping">0</b></div><div class="card"><span class="label">已送達</span><b id="oArrived">0</b></div></div></div></div>
