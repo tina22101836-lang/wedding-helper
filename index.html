@@ -656,6 +656,14 @@ body:not(.readonly) input[type="checkbox"].check:disabled{opacity:1;cursor:defau
  body:not(.readonly) #gift:not(.giftSimpleMode) #giftTable td:nth-child(3){white-space:nowrap}
  body:not(.readonly) #gift:not(.giftSimpleMode) .giftDetailStatus{padding:3px 5px;font-size:11px;white-space:nowrap}
 }
+
+@media(max-width:800px){
+ body:not(.readonly) #gift:not(.giftSimpleMode) #giftTable #giftBody>tr>td:nth-child(n){display:table-cell!important;grid-column:auto!important;grid-row:auto!important;width:25%!important;max-width:none!important;min-width:0!important;padding:8px 5px!important;text-align:left!important;vertical-align:middle!important;border:0!important;border-bottom:1px solid var(--line)!important;white-space:normal!important}
+ body:not(.readonly) #gift:not(.giftSimpleMode) #giftTable #giftBody>tr>td:nth-child(n):before{display:none!important;content:none!important}
+ body:not(.readonly) #gift:not(.giftSimpleMode) #giftTable #giftBody>tr>td:nth-child(3){white-space:nowrap!important}
+ body:not(.readonly) #gift:not(.giftSimpleMode) #giftTable #giftBody>tr>td:nth-child(4)>small{display:block!important;white-space:nowrap!important;margin-top:3px}
+ body:not(.readonly) #gift:not(.giftSimpleMode) #giftTable #giftBody>tr>td:nth-child(4) .giftDetailStatus{display:inline-block!important;white-space:nowrap!important}
+}
 </style></head><body>
 <div id="claimPanel" class="claimPanel">
  <div class="claimCard"><div class="claimIcon">🎁</div><h1>禮盒領取確認</h1><div id="claimContent" class="claimContent">正在確認資料…</div></div>
