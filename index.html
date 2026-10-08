@@ -1182,4 +1182,23 @@ renderOverview=function(){oldOverview();renderFamilyHome()};renderGift=function(
 goPage=function(page){page=page==='gift'?'gift':'overview';oldGo(page);document.querySelectorAll('[data-family-page]').forEach(b=>b.classList.toggle('active',b.dataset.familyPage===page))};
 renderFamilyHome();renderFamilyGifts();goPage('overview');
 }
+</script><style>
+.referenceImageZoom{position:fixed;inset:0;z-index:3000;display:none;background:rgba(20,16,18,.94);padding:70px 12px 24px;box-sizing:border-box;overflow:auto;overscroll-behavior:contain}
+.referenceImageZoom.show{display:flex;align-items:center;justify-content:center}
+.referenceImageZoom img{display:block;max-width:100%;max-height:calc(100dvh - 100px);object-fit:contain}
+.referenceImageZoom button{position:fixed;top:max(16px,env(safe-area-inset-top));right:16px;background:#fff;color:#292527;border:0;border-radius:999px;padding:10px 16px;min-height:44px;font-size:16px;cursor:pointer;z-index:1}
+#recordList .recordCard img{cursor:zoom-in}
+#recordList .recordCard img:focus-visible{outline:3px solid var(--rose)}
+</style>
+<div id="referenceImageZoom" class="referenceImageZoom" role="dialog" aria-modal="true" aria-label="放大參考圖片" tabindex="-1"><button type="button" onclick="closeReferenceImageZoom()" aria-label="關閉放大圖片">✕ 關閉</button><img id="referenceImageZoomPhoto" alt=""></div>
+<script>
+let referenceZoomFocus=null,referenceZoomOverflow='';
+function openReferenceImageZoom(img){const box=document.getElementById('referenceImageZoom'),photo=document.getElementById('referenceImageZoomPhoto');referenceZoomFocus=document.activeElement;referenceZoomOverflow=document.body.style.overflow;photo.src=img.currentSrc||img.src;photo.alt=img.alt||'參考圖片';box.classList.add('show');document.body.style.overflow='hidden';box.querySelector('button').focus()}
+function closeReferenceImageZoom(){const box=document.getElementById('referenceImageZoom');if(!box.classList.contains('show'))return;box.classList.remove('show');document.getElementById('referenceImageZoomPhoto').removeAttribute('src');document.body.style.overflow=referenceZoomOverflow;if(referenceZoomFocus&&referenceZoomFocus.isConnected)referenceZoomFocus.focus()}
+document.getElementById('recordList').addEventListener('click',e=>{if(e.target.matches('.recordCard img'))openReferenceImageZoom(e.target)});
+document.getElementById('recordList').addEventListener('keydown',e=>{if(e.target.matches('.recordCard img')&&(e.key==='Enter'||e.key===' ')){e.preventDefault();openReferenceImageZoom(e.target)}});
+document.getElementById('referenceImageZoom').addEventListener('click',e=>{if(e.target.id==='referenceImageZoom')closeReferenceImageZoom()});
+document.getElementById('referenceImageZoom').addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();closeReferenceImageZoom()}if(e.key==='Tab'){e.preventDefault();e.currentTarget.querySelector('button').focus()}});
+const originalReferenceRenderer=renderScheduleRecords;
+renderScheduleRecords=function(){originalReferenceRenderer();document.querySelectorAll('#recordList .recordCard img').forEach(img=>{img.tabIndex=0;img.setAttribute('role','button');img.setAttribute('aria-label',(img.alt||'參考圖片')+'，點選放大')})};
 </script></body></html>
