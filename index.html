@@ -980,12 +980,12 @@ function prepDocDisplay(d){
 }
 function prepDocDone(d){return d.owner==='雙方'?!!d.brideDone&&!!d.groomDone:!!d.done}
 function prepDone(r){let a=normalizeDualDocs(r);return a.length>0&&a.every(prepDocDone)}
-function togglePrepDoc(i,j,v,side){
+function togglePrepDoc(i,j,v,side){ const wasReady=allPrepReady();
  const d=normalizeDualDocs(data.prep[i])[j];
  if(d.owner==='雙方'&&side==='女方')d.brideDone=v;
  else if(d.owner==='雙方'&&side==='男方')d.groomDone=v;
  else d.done=v;
- data.prep[i].done=prepDone(data.prep[i]);save()
+ data.prep[i].done=prepDone(data.prep[i]);save();if(v&&!wasReady&&allPrepReady()&&!READ_ONLY)showPrepCelebration()
 }
 function addPrepDoc(i){
  let t=prompt('新增要準備的資料：');if(!t||!t.trim())return;
@@ -1212,4 +1212,23 @@ document.getElementById('referenceImageZoom').addEventListener('click',e=>{if(e.
 document.getElementById('referenceImageZoom').addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();closeReferenceImageZoom()}if(e.key==='Tab'){e.preventDefault();e.currentTarget.querySelector('button').focus()}});
 const originalReferenceRenderer=renderScheduleRecords;
 renderScheduleRecords=function(){originalReferenceRenderer();document.querySelectorAll('#recordList .recordCard img').forEach(img=>{img.tabIndex=0;img.setAttribute('role','button');img.setAttribute('aria-label',(img.alt||'參考圖片')+'，點選放大')})};
+</script><style>
+.prepCelebration{position:fixed;inset:0;z-index:2500;display:none;align-items:center;justify-content:center;background:#30222d66;padding:24px}.prepCelebration.show{display:flex}
+.prepCelebrationCard{position:relative;max-width:360px;width:100%;text-align:center;background:#fff9fb;border-radius:22px;padding:30px 22px;box-shadow:0 15px 50px #0003;overflow:hidden;animation:prepPop .45s ease-out}
+.prepCelebrationIcon{font-size:56px;animation:prepBounce 1s ease-in-out 2}.prepCelebrationCard h2{font-size:23px;line-height:1.5;color:#9e4e61;margin:14px 0}.prepCelebrationCard p{font-size:15px;color:#66555d}
+.prepCelebrationCard button{position:relative;z-index:2;margin-top:12px;border:0;border-radius:999px;background:#B76E79;color:white;padding:11px 24px;font-size:16px}
+.prepConfetti{position:absolute;top:-15px;left:var(--x);width:7px;height:12px;background:var(--color);border-radius:2px;pointer-events:none;animation:prepFall 2.5s ease-in var(--delay) forwards}
+@keyframes prepPop{from{transform:scale(.8);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes prepBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px) rotate(5deg)}}
+@keyframes prepFall{to{transform:translateY(400px) rotate(540deg);opacity:0}}
+@media(prefers-reduced-motion:reduce){.prepCelebrationCard,.prepCelebrationIcon,.prepConfetti{animation:none}.prepConfetti{display:none}}
+</style>
+<div id="prepCelebration" class="prepCelebration" role="dialog" aria-modal="true" aria-label="準備完成彩蛋"><div class="prepCelebrationCard"><div id="prepConfetti"></div><div class="prepCelebrationIcon" aria-hidden="true">💍🎉</div><h2>恭喜～<br>準備明天結婚啦～</h2><p>所有準備項目都完成了！</p><button type="button" onclick="closePrepCelebration()">開心收下 ♡</button></div></div>
+<script>
+function allPrepReady(){return Array.isArray(data.prep)&&data.prep.length>0&&data.prep.every(r=>prepDone(r))}
+let prepCelebrationFocus=null;
+function showPrepCelebration(){const box=document.getElementById('prepCelebration');prepCelebrationFocus=document.activeElement;document.getElementById('prepConfetti').innerHTML=Array.from({length:22},(_,i)=>'<i class="prepConfetti" style="--x:'+((i*37)%100)+'%;--color:'+['#B76E79','#e9bd66','#e4a9bb','#a7b99b'][i%4]+';--delay:'+(i%6*.12)+'s"></i>').join('');box.classList.add('show');box.querySelector('button').focus()}
+function closePrepCelebration(){document.getElementById('prepCelebration').classList.remove('show');document.getElementById('prepConfetti').innerHTML='';if(prepCelebrationFocus&&prepCelebrationFocus.isConnected)prepCelebrationFocus.focus()}
+document.getElementById('prepCelebration').addEventListener('click',e=>{if(e.target.id==='prepCelebration')closePrepCelebration()});
+document.getElementById('prepCelebration').addEventListener('keydown',e=>{if(e.key==='Escape')closePrepCelebration();if(e.key==='Tab'){e.preventDefault();e.currentTarget.querySelector('button').focus()}});
 </script></body></html>
