@@ -31,7 +31,7 @@
 <div class="panelHead"><div><h2>📋 編輯準備項目</h2><div class="muted">新增後可直接填寫完整資料</div></div><button class="btn" onclick="closePrepEdit()">✕ 關閉</button></div>
 <div class="giftEditForm">
 <label>完成狀態<select id="peDone"><option value="0">待辦</option><option value="1">已完成</option></select></label>
-<label>日期<input id="peDate" type="date"></label><label>實際到戶政事務所時間<input id="peTime" type="time"></label>
+<label>日期<input id="peDate" type="date"></label><label>實際到戶政事務所時間<input id="peTime" type="text" readonly placeholder="尚未設定時間" aria-haspopup="dialog" onclick="openPrepTimePicker(this)"></label>
 <label class="wide">辦理項目<input id="peItem"></label>
 <label class="wide">地點／機關<input id="pePlace"></label>
 <label class="wide">需要準備的資料<input id="peDocs" placeholder="多項可用、或 / 分隔"></label>
@@ -1018,7 +1018,7 @@ function renderPrep(){
  const body=document.getElementById('prepBody');if(!body)return;
  body.innerHTML=data.prep.length?data.prep.map((r,i)=>{
   const docs=normalizeDualDocs(r),checklist=docs.length?docs.map((d,j)=>READ_ONLY?prepDocReadHtml(d):prepDocEditHtml(d,i,j)).join(''):'<div class="muted">尚無資料</div>';
-  return `<tr class="${r.done?'done':''}"><td><b>${r.done?checkMark(true):prepPendingIcon()} ${r.done?'已完成':'準備中'}</b></td><td><input value="${esc(r.item)}" onchange="data.prep[${i}].item=this.value;save()"></td><td><input value="${esc(r.place)}" onchange="data.prep[${i}].place=this.value;save()"></td><td><div class="prepDateFields"><input type="date" value="${esc(r.date)}" onchange="data.prep[${i}].date=this.value;save()"><label class="prepTimeField"><span>實際到達時間</span><input class="prepTimeInput" type="time" value="${esc(r.time||'')}" aria-label="實際到戶政事務所時間" onblur="setPrepArrivalTime(${i},this.value)"></label></div></td><td class="prepDataCell"><div class="prepDataTitle">準備資料</div><div>${checklist}</div>${r.note?`<div class="prepInlineNote"><b>備註：</b>${esc(r.note)}</div>`:''}<button class="btn" style="margin-top:7px" onclick="addPrepDoc(${i})">＋ 新增資料</button></td><td class="prepLegacyNote"></td><td><button class="btn danger editOnly" onclick="data.prep.splice(${i},1);save()">刪除</button></td></tr>`
+  return `<tr class="${r.done?'done':''}"><td><b>${r.done?checkMark(true):prepPendingIcon()} ${r.done?'已完成':'準備中'}</b></td><td><input value="${esc(r.item)}" onchange="data.prep[${i}].item=this.value;save()"></td><td><input value="${esc(r.place)}" onchange="data.prep[${i}].place=this.value;save()"></td><td><div class="prepDateFields"><input type="date" value="${esc(r.date)}" onchange="data.prep[${i}].date=this.value;save()"><label class="prepTimeField"><span>實際到達時間</span><input class="prepTimeInput" type="text" readonly value="${esc(r.time||'')}" placeholder="尚未設定時間" aria-label="實際到戶政事務所時間" aria-haspopup="dialog" onclick="openPrepTimePicker(this,${i})"></label></div></td><td class="prepDataCell"><div class="prepDataTitle">準備資料</div><div>${checklist}</div>${r.note?`<div class="prepInlineNote"><b>備註：</b>${esc(r.note)}</div>`:''}<button class="btn" style="margin-top:7px" onclick="addPrepDoc(${i})">＋ 新增資料</button></td><td class="prepLegacyNote"></td><td><button class="btn danger editOnly" onclick="data.prep.splice(${i},1);save()">刪除</button></td></tr>`
  }).join(''):'<tr><td colspan="7" class="empty">尚未建立準備項目</td></tr>';
  const all=data.prep.flatMap(r=>normalizeDualDocs(r));document.getElementById('pBride').textContent=prepStats(all,'女方');document.getElementById('pGroom').textContent=prepStats(all,'男方');document.getElementById('pTogether').textContent=prepStats(all,'共同');
  let active=all,units=active.reduce((n,d)=>n+(d.owner==='雙方'?2:1),0),done=active.reduce((n,d)=>n+(d.owner==='雙方'?(d.brideDone?1:0)+(d.groomDone?1:0):(d.done?1:0)),0);document.getElementById('pPct').textContent=(units?Math.round(done/units*100):0)+'%';
@@ -1287,4 +1287,45 @@ document.addEventListener('visibilitychange',()=>{if(document.hidden)cancelAnima
 .prepCelebration.show .prepWeddingFrames{animation:none}
 .prepWeddingFrameBlend{position:absolute;inset:0;background-size:400% 300%;background-repeat:no-repeat;pointer-events:none;opacity:0}
 .prepWeddingHeart{z-index:2}
-</style></body></html>
+</style><style>
+.prepTimePicker{display:none;position:fixed;inset:0;z-index:2600;background:#30222d66;padding:20px;align-items:center;justify-content:center;box-sizing:border-box}
+.prepTimePicker.show{display:flex}.prepTimePickerCard{width:100%;max-width:330px;background:#fff9fb;border:1px solid #ead9de;border-radius:22px;padding:24px;box-sizing:border-box;box-shadow:0 12px 40px #0002}
+.prepTimePickerCard h2{font-size:20px;color:#9e4e61;margin:0 0 6px}.prepTimePickerCard p{font-size:14px;color:#8d7880;margin:0 0 18px}
+.prepTimePickerFields{display:flex;gap:12px}.prepTimePickerFields label{flex:1;font-size:14px;color:#8d7880}.prepTimePickerFields select{width:100%;margin-top:6px;padding:12px;background:white;border:1px solid #dcbcc7;border-radius:12px;font-size:20px;color:#54434b}
+.prepTimePickerActions{display:flex;gap:8px;justify-content:space-between;margin-top:22px}.prepTimePickerActions button{border:1px solid #dcbcc7;border-radius:12px;background:white;color:#9e4e61;padding:10px 14px;font-size:16px}.prepTimePickerActions .primary{background:#b76e79;color:white;border-color:#b76e79}
+</style>
+<div id="prepTimePicker" class="prepTimePicker" role="dialog" aria-modal="true" aria-labelledby="prepTimePickerTitle">
+<div class="prepTimePickerCard"><h2 id="prepTimePickerTitle">實際到達時間</h2><p>時間還不確定，可以按重置留白。</p>
+<div class="prepTimePickerFields"><label>時<select id="prepTimeHour" aria-label="小時"><option value="">未設定</option></select></label><label>分<select id="prepTimeMinute" aria-label="分鐘"><option value="">未設定</option></select></label></div>
+<div class="prepTimePickerActions"><button type="button" onclick="resetPrepTimePicker()">重置</button><button type="button" onclick="closePrepTimePicker()">取消</button><button type="button" class="primary" onclick="confirmPrepTimePicker()">確定</button></div></div></div>
+<script>
+let prepTimePickerTarget=null,prepTimePickerIndex=null;
+function openPrepTimePicker(input,index){
+ if(READ_ONLY)return;
+ prepTimePickerTarget=input;prepTimePickerIndex=Number.isInteger(index)?index:null;
+ const hour=document.getElementById('prepTimeHour'),minute=document.getElementById('prepTimeMinute');
+ if(hour.options.length===1){for(let i=0;i<24;i++){const o=document.createElement('option');o.value=String(i).padStart(2,'0');o.textContent=o.value;hour.appendChild(o)}for(let i=0;i<60;i++){const o=document.createElement('option');o.value=String(i).padStart(2,'0');o.textContent=o.value;minute.appendChild(o)}}
+ const parts=(input.value||'').split(':');hour.value=parts[0]||'';minute.value=parts[1]||'';
+ document.getElementById('prepTimePicker').classList.add('show');hour.focus();
+}
+function closePrepTimePicker(){document.getElementById('prepTimePicker').classList.remove('show');if(prepTimePickerTarget&&prepTimePickerTarget.isConnected)prepTimePickerTarget.focus()}
+function applyPrepTimePicker(value){
+ if(READ_ONLY||!prepTimePickerTarget)return;
+ const target=prepTimePickerTarget,index=prepTimePickerIndex;
+ target.value=value;closePrepTimePicker();
+ if(index!==null)setPrepArrivalTime(index,value);
+ prepTimePickerTarget=null;prepTimePickerIndex=null;
+}
+function resetPrepTimePicker(){applyPrepTimePicker('')}
+function confirmPrepTimePicker(){
+ const h=document.getElementById('prepTimeHour').value,m=document.getElementById('prepTimeMinute').value;
+ if(h===''&&m===''){applyPrepTimePicker('');return}
+ if(h===''||m===''){document.getElementById(h===''?'prepTimeHour':'prepTimeMinute').focus();return}
+ applyPrepTimePicker(h+':'+m);
+}
+document.getElementById('prepTimePicker').addEventListener('click',e=>{if(e.target.id==='prepTimePicker')closePrepTimePicker()});
+document.getElementById('prepTimePicker').addEventListener('keydown',e=>{
+ if(e.key==='Escape'){e.preventDefault();e.stopPropagation();closePrepTimePicker()}
+ if(e.key==='Tab'){const items=Array.from(e.currentTarget.querySelectorAll('select,button'));const first=items[0],last=items[items.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}}
+});
+</script></body></html>
