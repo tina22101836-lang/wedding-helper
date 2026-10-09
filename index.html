@@ -31,7 +31,7 @@
 <div class="panelHead"><div><h2>📋 編輯準備項目</h2><div class="muted">新增後可直接填寫完整資料</div></div><button class="btn" onclick="closePrepEdit()">✕ 關閉</button></div>
 <div class="giftEditForm">
 <label>完成狀態<select id="peDone"><option value="0">待辦</option><option value="1">已完成</option></select></label>
-<label>日期<input id="peDate" type="date"></label><label>實際到戶政事務所時間<input id="peTime" type="time"><button type="button" class="prepClearTime" onclick="document.getElementById(\'peTime\').value=\'\'">清除時間</button></label>
+<label>日期<input id="peDate" type="date"></label><label>實際到戶政事務所時間<input id="peTime" type="time"></label>
 <label class="wide">辦理項目<input id="peItem"></label>
 <label class="wide">地點／機關<input id="pePlace"></label>
 <label class="wide">需要準備的資料<input id="peDocs" placeholder="多項可用、或 / 分隔"></label>
@@ -1010,7 +1010,7 @@ function prepStats(all,o){
  all.forEach(d=>{if(prepDocDisplay(d).infoOnly)return;if(d.owner===o){total++;if(d.done)done++}else if(d.owner==='雙方'&&(o==='女方'||o==='男方')){total++;if(o==='女方'?d.brideDone:d.groomDone)done++}});
  return done+'/'+total
 }
-function setPrepArrivalTime(i,value){if(READ_ONLY||!data.prep[i])return;data.prep[i].time=value||'';save()}
+function setPrepArrivalTime(i,value){if(READ_ONLY||!data.prep[i])return;const next=value||'';if((data.prep[i].time||'')===next)return;data.prep[i].time=next;save()}
 function prepPendingIcon(){return '<svg class="prepPendingIcon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 3h12M6 21h12M7 3v4c0 2 2 3 5 5-3 2-5 3-5 5v4M17 3v4c0 2-2 3-5 5 3 2 5 3 5 5v4"/><path d="M9 18h6M10 7h4"/></svg>'}
 function renderPrep(){
  if(!Array.isArray(data.prep))data.prep=structuredClone(DEFAULT_PREP);
@@ -1018,7 +1018,7 @@ function renderPrep(){
  const body=document.getElementById('prepBody');if(!body)return;
  body.innerHTML=data.prep.length?data.prep.map((r,i)=>{
   const docs=normalizeDualDocs(r),checklist=docs.length?docs.map((d,j)=>READ_ONLY?prepDocReadHtml(d):prepDocEditHtml(d,i,j)).join(''):'<div class="muted">尚無資料</div>';
-  return `<tr class="${r.done?'done':''}"><td><b>${r.done?checkMark(true):prepPendingIcon()} ${r.done?'已完成':'準備中'}</b></td><td><input value="${esc(r.item)}" onchange="data.prep[${i}].item=this.value;save()"></td><td><input value="${esc(r.place)}" onchange="data.prep[${i}].place=this.value;save()"></td><td><div class="prepDateFields"><input type="date" value="${esc(r.date)}" onchange="data.prep[${i}].date=this.value;save()"><label class="prepTimeField"><span>實際到達時間</span><input class="prepTimeInput" type="time" value="${esc(r.time||'')}" aria-label="實際到戶政事務所時間" oninput="this.dataset.timeChanged=\'1\'" onchange="this.dataset.timeChanged=\'1\'" onblur="if(this.dataset.timeChanged){delete this.dataset.timeChanged;setPrepArrivalTime(${i},this.value)}"><button type="button" class="prepClearTime editOnly" onclick="setPrepArrivalTime(${i},\'\')">清除時間</button></label></div></td><td class="prepDataCell"><div class="prepDataTitle">準備資料</div><div>${checklist}</div>${r.note?`<div class="prepInlineNote"><b>備註：</b>${esc(r.note)}</div>`:''}<button class="btn" style="margin-top:7px" onclick="addPrepDoc(${i})">＋ 新增資料</button></td><td class="prepLegacyNote"></td><td><button class="btn danger editOnly" onclick="data.prep.splice(${i},1);save()">刪除</button></td></tr>`
+  return `<tr class="${r.done?'done':''}"><td><b>${r.done?checkMark(true):prepPendingIcon()} ${r.done?'已完成':'準備中'}</b></td><td><input value="${esc(r.item)}" onchange="data.prep[${i}].item=this.value;save()"></td><td><input value="${esc(r.place)}" onchange="data.prep[${i}].place=this.value;save()"></td><td><div class="prepDateFields"><input type="date" value="${esc(r.date)}" onchange="data.prep[${i}].date=this.value;save()"><label class="prepTimeField"><span>實際到達時間</span><input class="prepTimeInput" type="time" value="${esc(r.time||'')}" aria-label="實際到戶政事務所時間" onblur="setPrepArrivalTime(${i},this.value)"></label></div></td><td class="prepDataCell"><div class="prepDataTitle">準備資料</div><div>${checklist}</div>${r.note?`<div class="prepInlineNote"><b>備註：</b>${esc(r.note)}</div>`:''}<button class="btn" style="margin-top:7px" onclick="addPrepDoc(${i})">＋ 新增資料</button></td><td class="prepLegacyNote"></td><td><button class="btn danger editOnly" onclick="data.prep.splice(${i},1);save()">刪除</button></td></tr>`
  }).join(''):'<tr><td colspan="7" class="empty">尚未建立準備項目</td></tr>';
  const all=data.prep.flatMap(r=>normalizeDualDocs(r));document.getElementById('pBride').textContent=prepStats(all,'女方');document.getElementById('pGroom').textContent=prepStats(all,'男方');document.getElementById('pTogether').textContent=prepStats(all,'共同');
  let active=all,units=active.reduce((n,d)=>n+(d.owner==='雙方'?2:1),0),done=active.reduce((n,d)=>n+(d.owner==='雙方'?(d.brideDone?1:0)+(d.groomDone?1:0):(d.done?1:0)),0);document.getElementById('pPct').textContent=(units?Math.round(done/units*100):0)+'%';
