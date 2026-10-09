@@ -1254,4 +1254,37 @@ document.getElementById('prepCelebration').addEventListener('keydown',e=>{if(e.k
 @keyframes prepWeddingFrames{0%{background-position:0% 0%}9%{background-position:33.333333% 0%}18%{background-position:66.666667% 0%}27%{background-position:100% 0%}36%{background-position:0% 50%}45%{background-position:33.333333% 50%}54%{background-position:66.666667% 50%}63%{background-position:100% 50%}72%{background-position:0% 100%}81%{background-position:33.333333% 100%}90%{background-position:66.666667% 100%}100%{background-position:100% 100%}}
 @media(max-height:640px){.prepWeddingArt{width:220px}}
 @media(prefers-reduced-motion:reduce){.prepCelebration.show .prepWeddingFrames{animation:none;background-position:100% 100%}}
-</style><script>function replayPrepWedding(){const el=document.querySelector(".prepWeddingFrames");el.style.animation="none";void el.offsetWidth;el.style.animation=""}</script></body></html>
+</style><script>let prepWeddingRaf=0;
+function prepFramePosition(i){return ((i%4)*100/3)+'% '+(Math.floor(i/4)*50)+'%'}
+function replayPrepWedding(){
+ cancelAnimationFrame(prepWeddingRaf);
+ const base=document.querySelector('.prepWeddingFrames');
+ if(!base)return;
+ base.style.animation='none';
+ let blend=document.querySelector('.prepWeddingFrameBlend');
+ if(!blend){blend=document.createElement('div');blend.className='prepWeddingFrameBlend';blend.setAttribute('aria-hidden','true');base.parentNode.appendChild(blend)}
+ blend.style.backgroundImage=base.style.backgroundImage;blend.style.opacity='0';
+ if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){base.style.backgroundPosition=prepFramePosition(11);return}
+ const times=[0,110,220,330,470,640,840,1080,1320,1510,1670,1830];
+ let start=null;
+ function tick(now){
+  if(!document.getElementById('prepCelebration').classList.contains('show')){blend.style.opacity='0';return}
+  if(start===null)start=now;
+  const elapsed=now-start;
+  let i=0;while(i<11&&elapsed>=times[i+1])i++;
+  base.style.backgroundPosition=prepFramePosition(i);
+  if(i<11){blend.style.backgroundPosition=prepFramePosition(i+1);blend.style.opacity=String(Math.max(0,Math.min(1,(elapsed-(times[i+1]-45))/45)))}else{blend.style.opacity='0';return}
+  prepWeddingRaf=requestAnimationFrame(tick);
+ }
+ base.style.backgroundPosition=prepFramePosition(0);
+ prepWeddingRaf=requestAnimationFrame(tick);
+}
+const prepWeddingOriginalShow=showPrepCelebration;
+showPrepCelebration=function(){prepWeddingOriginalShow();replayPrepWedding()};
+const prepWeddingOriginalClose=closePrepCelebration;
+closePrepCelebration=function(){cancelAnimationFrame(prepWeddingRaf);prepWeddingOriginalClose()};
+document.addEventListener('visibilitychange',()=>{if(document.hidden)cancelAnimationFrame(prepWeddingRaf);else if(document.getElementById('prepCelebration').classList.contains('show'))replayPrepWedding()});</script><style>
+.prepCelebration.show .prepWeddingFrames{animation:none}
+.prepWeddingFrameBlend{position:absolute;inset:0;background-size:400% 300%;background-repeat:no-repeat;pointer-events:none;opacity:0}
+.prepWeddingHeart{z-index:2}
+</style></body></html>
