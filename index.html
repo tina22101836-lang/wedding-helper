@@ -805,7 +805,7 @@ let lastSavedSnapshot='';
 function cloneData(v){return JSON.parse(JSON.stringify(v))}
 function loadHistory(k){try{let a=JSON.parse(localStorage.getItem(k)||'[]');return Array.isArray(a)?a:[]}catch(e){return []}}
 function inferAction(before,after){
- const groups=[['schedule','排程'],['gifts','禮盒'],['prep','準備清單'],['after','婚後待辦']];
+ const groups=[['schedule','排程'],['gifts','禮盒'],['prep','準備清單'],['after','婚後待辦'],['expenses','花費']];
  for(const [key,label] of groups){let a=Array.isArray(before[key])?before[key]:[],b=Array.isArray(after[key])?after[key]:[];
   if(b.length>a.length){let x=b[b.length-1]||{};return '新增'+label+(x.item||x.name?'－'+(x.item||x.name):'')}
   if(b.length<a.length)return '刪除'+label;
@@ -1328,4 +1328,69 @@ document.getElementById('prepTimePicker').addEventListener('keydown',e=>{
  if(e.key==='Escape'){e.preventDefault();e.stopPropagation();closePrepTimePicker()}
  if(e.key==='Tab'){const items=Array.from(e.currentTarget.querySelectorAll('select,button'));const first=items[0],last=items[items.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}}
 });
-</script><style>#prepTimePickerTitle:focus{outline:none}</style></body></html>
+</script><style>#prepTimePickerTitle:focus{outline:none}</style><style>
+body:not(.readonly) #mobileNav{grid-template-columns:repeat(6,minmax(0,1fr))}body>nav{flex-wrap:wrap}
+#expenses .expenseSummary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:16px}#expenses .expenseSummary .card{min-width:0}#expenses .expenseSummary b{font-size:22px;overflow-wrap:anywhere}
+.expenseTable{width:100%;min-width:0;table-layout:fixed}.expenseTable th,.expenseTable td{padding:12px 10px;vertical-align:top}.expenseTable th:first-child{width:46%}.expenseTable th{position:static}.expenseTable .expenseName{overflow-wrap:anywhere;font-weight:600}.expenseTable .expenseChild .expenseName{padding-left:16px;font-weight:400}.expenseTable .expenseParent{background:#fff8f9}.expenseTable .expenseRowActions{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.expenseRowActions button{padding:5px 8px;font-size:12px}.expenseMoney{text-align:right;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}.expenseOver{color:#ad4d60}.expenseUnder{color:#5f8b72}.expenseHint{font-size:12px;color:var(--muted);margin-top:4px}.expenseError{color:#a64b59;min-height:20px}.expenseEmpty{padding:28px 18px;text-align:center;color:var(--muted)}
+@media(max-width:800px){#expenses .expenseSummary{gap:6px}#expenses .expenseSummary .card{padding:12px 8px}#expenses .expenseSummary b{font-size:18px}#expenses .expenseSummary .label{font-size:12px}.expenseTable th,.expenseTable td{padding:10px 6px;font-size:14px}.expenseTable .expenseRowActions{gap:4px}.expenseTable .expenseChild .expenseName{padding-left:10px}}
+body.readonly #expenses,body.readonly [data-page="expenses"]{display:none!important}
+</style>
+<div id="expenseEditModal" class="recordModal" onclick="if(event.target===this)closeExpenseEdit()"><div class="recordBox" style="max-width:500px"><div class="panelHead"><h2 id="expenseEditTitle">新增花費</h2><button type="button" class="btn" onclick="closeExpenseEdit()">✕ 關閉</button></div><div class="giftEditForm"><label class="wide">項目<input id="expenseName" maxlength="150" placeholder="例如：結婚戒指、喜餅"></label><label>預算（元）<input id="expenseBudget" type="number" inputmode="decimal" min="0" step="0.01" placeholder="尚未估算"></label><label>實際花費（元）<input id="expenseActual" type="number" inputmode="decimal" min="0" step="0.01" placeholder="尚未支出"></label><div id="expenseEditHint" class="muted wide"></div><div id="expenseEditError" class="expenseError wide" role="alert"></div><div class="wide giftEditActions"><button type="button" class="btn" onclick="closeExpenseEdit()">取消</button><button type="button" class="btn primary" onclick="saveExpenseEdit()">儲存</button></div></div></div></div>
+<script>
+function expenseCents(v){return v===null||v===undefined||v===''?null:Math.round(Number(v)*100)}
+function expenseMoney(v){return v===null?'—':'$'+(v/100).toLocaleString('zh-TW',{maximumFractionDigits:2})}
+function expenseRows(){return Array.isArray(data.expenses)?data.expenses:[]}
+function expenseTotals(r){const rows=Array.isArray(r.children)&&r.children.length?r.children:[r];return ['budget','actual'].map(k=>{let sum=0,known=false;rows.forEach(x=>{const c=expenseCents(x[k]);if(c!==null&&Number.isFinite(c)){sum+=c;known=true}});return known?sum:null})}
+let expenseEditState=null,expenseEditFocus=null;
+function openExpenseEdit(parent=-1,child=-1,addingChild=false){
+ if(READ_ONLY)return;const rows=expenseRows();if(parent>=rows.length)return;
+ const r=addingChild?{}:parent<0?{}:child<0?rows[parent]:rows[parent].children?.[child];if(!r)return;
+ expenseEditState={parent,child,addingChild};expenseEditFocus=document.activeElement;
+ document.getElementById('expenseEditTitle').textContent=addingChild?'新增子項目':parent<0?'新增花費項目':'編輯花費項目';
+ document.getElementById('expenseName').value=r.item||'';
+ const grouped=!addingChild&&child<0&&Array.isArray(r.children)&&r.children.length>0;
+ for(const [id,key] of [['expenseBudget','budget'],['expenseActual','actual']]){const el=document.getElementById(id);el.disabled=!!grouped;el.value=grouped?'':r[key]??''}
+ document.getElementById('expenseEditHint').textContent=grouped?'大項金額由子項目自動加總，請在子項目修改。':addingChild?'大項會改由子項目自動加總；原有金額將保留為一筆子項目。':'金額可以留白；填 0 表示確定沒有花費。';
+ document.getElementById('expenseEditError').textContent='';document.getElementById('expenseEditModal').classList.add('show');
+}
+function closeExpenseEdit(){document.getElementById('expenseEditModal').classList.remove('show');expenseEditState=null;if(expenseEditFocus?.isConnected)expenseEditFocus.focus()}
+function saveExpenseEdit(){
+ if(READ_ONLY||!expenseEditState)return;
+ const {parent,child,addingChild}=expenseEditState,item=document.getElementById('expenseName').value.trim();
+ const values=['expenseBudget','expenseActual'].map(id=>{const el=document.getElementById(id);return el.value.trim()===''?null:Number(el.value)});
+ if(!item||values.some(v=>v!==null&&(!Number.isFinite(v)||v<0))){document.getElementById('expenseEditError').textContent=!item?'請填寫項目名稱':'金額請填寫 0 或正數';return}
+ const before=cloneData(data);if(!Array.isArray(data.expenses))data.expenses=[];const rows=data.expenses;
+ const entry={item,budget:values[0]===null?null:Math.round(values[0]*100)/100,actual:values[1]===null?null:Math.round(values[1]*100)/100};
+ if(parent<0)rows.push({...entry,children:[]});
+ else{const r=rows[parent];if(!r)return;
+ if(addingChild){if(!Array.isArray(r.children))r.children=[];if(!r.children.length&&(expenseCents(r.budget)!==null||expenseCents(r.actual)!==null)){r.children.push({item:r.item+'（原金額）',budget:r.budget??null,actual:r.actual??null})}r.budget=null;r.actual=null;r.children.push(entry)}
+ else if(child>=0){if(!r.children?.[child])return;r.children[child]=entry}
+ else{r.item=item;if(!r.children?.length){r.budget=entry.budget;r.actual=entry.actual}}}
+ pushHistory(before,data);persistCurrent();closeExpenseEdit();
+}
+function deleteExpense(parent,child=-1){if(READ_ONLY)return;const r=expenseRows()[parent];if(!r)return;const target=child>=0?r.children?.[child]:r;if(!target)return;if(!confirm('確定刪除「'+target.item+'」'+(child<0&&r.children?.length?'與所有子項目':'')+'？'))return;const before=cloneData(data);if(child>=0)r.children.splice(child,1);else data.expenses.splice(parent,1);pushHistory(before,data);persistCurrent()}
+function renderExpenses(){
+ const box=document.getElementById('expenseBody');if(!box||READ_ONLY)return;
+ const rows=expenseRows();let budget=0,actual=0;rows.forEach(r=>{const t=expenseTotals(r);budget+=t[0]??0;actual+=t[1]??0});
+ document.getElementById('expenseTotalBudget').textContent=expenseMoney(budget);document.getElementById('expenseTotalActual').textContent=expenseMoney(actual);
+ const diff=budget-actual,d=document.getElementById('expenseTotalDiff');d.textContent=(diff<0?'超出 ':'剩餘 ')+expenseMoney(Math.abs(diff));d.className=diff<0?'expenseOver':'expenseUnder';
+ function row(r,p,c=-1){const grouped=c<0&&r.children?.length>0,t=expenseTotals(c>=0?{...r,children:[]}:r);return '<tr class="'+(c>=0?'expenseChild':grouped?'expenseParent':'')+'"><td><div class="expenseName">'+(c>=0?'↳ ':'')+esc(r.item||'未命名項目')+'</div>'+(grouped?'<div class="expenseHint">'+r.children.length+' 個子項目・自動加總</div>':'')+'<div class="expenseRowActions"><button type="button" class="btn" onclick="openExpenseEdit('+p+','+c+')">編輯</button>'+(c<0?'<button type="button" class="btn" onclick="openExpenseEdit('+p+',-1,true)">＋ 子項目</button>':'')+'<button type="button" class="btn danger" onclick="deleteExpense('+p+','+c+')">刪除</button></div></td><td class="expenseMoney">'+expenseMoney(t[0])+'</td><td class="expenseMoney '+(t[0]!==null&&t[1]!==null&&t[1]>t[0]?'expenseOver':'')+'">'+expenseMoney(t[1])+'</td></tr>'}
+ box.innerHTML=rows.length?'<table class="expenseTable"><thead><tr><th>項目</th><th class="expenseMoney">預算</th><th class="expenseMoney">實際花費</th></tr></thead><tbody>'+rows.map((r,p)=>row(r,p)+(r.children||[]).map((c,i)=>row(c,p,i)).join('')).join('')+'</tbody></table>':'<div class="expenseEmpty">還沒有花費項目，先新增一筆預算吧。</div>';
+}
+if(!READ_ONLY){
+ const page=document.createElement('section');page.id='expenses';page.className='page';page.innerHTML='<div class="expenseSummary"><div class="card"><span class="label">總預算</span><b id="expenseTotalBudget">$0</b></div><div class="card"><span class="label">實際花費</span><b id="expenseTotalActual">$0</b></div><div class="card"><span class="label">預算差額</span><b id="expenseTotalDiff">$0</b></div></div><div class="panel"><div class="panelHead"><div><h2>💰 婚禮花費表</h2><div class="muted">大項有子項目時，以子項目加總，避免重複計算。</div></div><button type="button" class="btn primary" onclick="openExpenseEdit()">＋ 新增項目</button></div><div id="expenseBody"></div></div>';document.querySelector('main').appendChild(page);
+ const desktop=document.createElement('button');desktop.className='tab';desktop.dataset.page='expenses';desktop.textContent='⑤ 花費表';desktop.onclick=()=>goPage('expenses');document.querySelector('body>nav').appendChild(desktop);
+ const mobile=document.createElement('button');mobile.dataset.page='expenses';mobile.innerHTML='<span>💰</span>花費';mobile.onclick=()=>goPage('expenses');document.getElementById('mobileNav').appendChild(mobile);
+ const expenseOldOverview=renderOverview;renderOverview=function(){expenseOldOverview();renderExpenses()};renderExpenses();
+}
+document.getElementById('expenseEditModal').addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();closeExpenseEdit()}if(e.key==='Tab'){const items=Array.from(e.currentTarget.querySelectorAll('button,input:not(:disabled)')),first=items[0],last=items[items.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}}});
+</script>
+<style>
+#expenses table.expenseTable{display:table;min-width:0;width:100%;table-layout:fixed}
+#expenses .expenseTable thead{display:table-header-group}
+#expenses .expenseTable tbody{display:table-row-group}
+#expenses .expenseTable tr{display:table-row;border:0;border-radius:0;box-shadow:none;margin:0;padding:0}
+#expenses .expenseTable th,#expenses .expenseTable td{display:table-cell!important;width:auto}
+#expenses .expenseTable th:first-child,#expenses .expenseTable td:first-child{width:46%}
+#expenses .expenseTable td:before{display:none!important;content:none!important}
+</style></body></html>
