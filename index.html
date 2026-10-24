@@ -88,7 +88,7 @@
 <label class="btn">📷 選擇照片<input id="recordFile" type="file" accept="image/*" style="display:none"></label>
 <button class="btn primary" onclick="addScheduleRecord()">＋ 加入紀錄</button></div>
 <div class="muted editOnly" style="margin:8px 0 14px">照片會先自動縮小壓縮後再同步，建議以戒指、婚約書等紀錄照片為主。</div>
-<div id="recordList" class="recordGrid"></div></div></div></div>
+<div class="editOnly" style="margin-bottom:10px"><span id="recordSaveStatus" role="status" class="muted"></span> <button id="recordSyncRetry" hidden type="button" class="btn" onclick="retryRecordSync()">重試儲存</button></div><div id="recordList" class="recordGrid"></div></div></div></div>
 <style>
 :root{--rose:#b76e79;--pink:#fff3f5;--ink:#3d3335;--muted:#8c7c80;--line:#eadde0;--cream:#fffaf7;--green:#5f8b72;--shadow:0 10px 30px #6b3c4412}
 *{box-sizing:border-box}body{margin:0;background:linear-gradient(135deg,#fff9f7,#fff2f5);font-family:system-ui,-apple-system,"Noto Sans TC",sans-serif;color:var(--ink)}
@@ -763,17 +763,18 @@ const SUPABASE_URL='https://puwqswhsvqwwjjokuejx.supabase.co';
 const SUPABASE_KEY='sb_publishable_ZfC12nkj3klCQsS88iQQVQ_ZLAjgIQj';
 const SHARE_KEY='our-wedding-2026';
 const cloud=window.supabase?.createClient(SUPABASE_URL,SUPABASE_KEY);
-let cloudTimer=null,cloudReady=false,pendingCloudWrite=false,cloudSyncRunning=false;
-let data;try{data=JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){}data=data||structuredClone(ORIGINAL);
+let cloudTimer=null,cloudReady=false,pendingCloudWrite=false,cloudSyncRunning=false,cloudSyncPromise=null,cloudWriteRevision=0;
+let data;try{data=JSON.parse(localStorage.getItem(KEY)||'null');pendingCloudWrite=!READ_ONLY&&!!data&&localStorage.getItem(KEY+'-pending-write')==='1'}catch(e){}data=data||structuredClone(ORIGINAL);
 if(!Array.isArray(data.prep))data.prep=structuredClone(DEFAULT_PREP);data.prep.forEach(x=>{if(!x.owner)x.owner='共同'});if(!Array.isArray(data.after))data.after=structuredClone(DEFAULT_AFTER);
 const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 function setCloudState(t){let e=document.getElementById('cloudState');if(e)e.textContent=t}
 async function loadCloud(){
+ const readRevision=cloudWriteRevision,readDuringWrite=pendingCloudWrite||cloudSyncRunning;
  try{
   const {data:rows,error}=await cloud.from('wedding_data').select('id,payload').eq('share_key',SHARE_KEY).limit(1);
   if(error)throw error;
   if(rows&&rows.length){
-   if(!pendingCloudWrite){
+   if(!readDuringWrite&&!pendingCloudWrite&&readRevision===cloudWriteRevision){
     data=rows[0].payload;
     if(!Array.isArray(data.prep))data.prep=structuredClone(DEFAULT_PREP);
     data.prep.forEach(x=>{if(!x.owner)x.owner='共同'});
@@ -790,16 +791,28 @@ async function loadCloud(){
   renderSchedule();renderGift();renderPrep();renderAfter();renderOverview();if(READ_ONLY&&document.getElementById('recordModal').classList.contains('show'))renderScheduleRecords();
  }catch(e){console.error(e);setCloudState('☁️ 離線模式')}
 }
-async function syncCloud(){
- if(READ_ONLY)return;
- if(!cloudReady||!cloud||cloudSyncRunning)return;cloudSyncRunning=true;
- const snapshot=JSON.stringify(data);
- setCloudState('☁️ 同步中');
- try{
-  const {error}=await cloud.from('wedding_data').update({payload:JSON.parse(snapshot),updated_at:new Date().toISOString()}).eq('share_key',SHARE_KEY);
-  if(error)throw error;pendingCloudWrite=JSON.stringify(data)!==snapshot;setCloudState(pendingCloudWrite?'☁️ 同步中':'☁️ 已同步');if(pendingCloudWrite){clearTimeout(cloudTimer);cloudTimer=setTimeout(syncCloud,500)}
- }catch(e){console.error(e);setCloudState('☁️ 同步失敗')}finally{cloudSyncRunning=false}
+function syncCloud(){
+ if(READ_ONLY||!cloudReady||!cloud)return Promise.resolve(false);
+ if(cloudSyncPromise)return cloudSyncPromise;
+ cloudSyncRunning=true;
+ cloudSyncPromise=(async()=>{
+  try{
+   do{
+    const snapshot=JSON.stringify(data);
+    setCloudState('☁️ 同步中');
+    const {data:written,error}=await cloud.from('wedding_data').update({payload:JSON.parse(snapshot),updated_at:new Date().toISOString()}).eq('share_key',SHARE_KEY).select('id');
+    if(error)throw error;
+    if(!Array.isArray(written)||written.length!==1)throw new Error('雲端未確認寫入，請重試');
+    pendingCloudWrite=JSON.stringify(data)!==snapshot;
+    try{if(!pendingCloudWrite)localStorage.removeItem(KEY+'-pending-write')}catch(e){console.warn(e)}
+   }while(pendingCloudWrite);
+   setCloudState('☁️ 已同步');return true;
+  }catch(e){console.error(e);pendingCloudWrite=true;try{localStorage.setItem(KEY+'-pending-write','1')}catch(ignore){}setCloudState('☁️ 同步失敗，變更待重試');return false}
+  finally{cloudSyncRunning=false;cloudSyncPromise=null}
+ })();
+ return cloudSyncPromise;
 }
+
 const HISTORY_KEY=KEY+'-history-v1',REDO_KEY=KEY+'-redo-v1',HISTORY_MAX=30;
 let lastSavedSnapshot='';
 function cloneData(v){return JSON.parse(JSON.stringify(v))}
@@ -815,7 +828,7 @@ function inferAction(before,after){
  return '修改資料'
 }
 function pushHistory(before,after){try{if(!before||JSON.stringify(before)===JSON.stringify(after))return;let h=loadHistory(HISTORY_KEY);h.push({label:inferAction(before,after),state:before,at:new Date().toISOString()});if(h.length>HISTORY_MAX)h=h.slice(-HISTORY_MAX);try{localStorage.setItem(HISTORY_KEY,JSON.stringify(h))}catch(e){try{localStorage.setItem(HISTORY_KEY,JSON.stringify(h.slice(-3)))}catch(e2){}}try{localStorage.setItem(REDO_KEY,'[]')}catch(e){};renderUndoMenu()}catch(e){console.warn(e)}}
-function persistCurrent(){pendingCloudWrite=true;localStorage.setItem(KEY,JSON.stringify(data));lastSavedSnapshot=JSON.stringify(data);renderSchedule();renderGift();renderPrep();renderAfter();renderOverview();clearTimeout(cloudTimer);cloudTimer=setTimeout(syncCloud,500);renderUndoMenu()}
+function persistCurrent(){pendingCloudWrite=true;cloudWriteRevision++;const snapshot=JSON.stringify(data);try{localStorage.setItem(KEY,snapshot);localStorage.setItem(KEY+'-pending-write','1')}catch(e){console.warn(e);setCloudState('☁️ 裝置儲存不足，等待雲端同步')}lastSavedSnapshot=snapshot;clearTimeout(cloudTimer);cloudTimer=setTimeout(syncCloud,500);for(const render of [renderSchedule,renderGift,renderPrep,renderAfter,renderOverview,renderUndoMenu]){try{render()}catch(e){console.error(e)}}}
 function save(){if(READ_ONLY)return;let before;try{before=lastSavedSnapshot?JSON.parse(lastSavedSnapshot):JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){before=null}if(before)pushHistory(before,data);persistCurrent()}
 function openFeatureGuide(){document.getElementById('featureGuideModal')?.classList.add('show')}
 function closeFeatureGuide(){document.getElementById('featureGuideModal')?.classList.remove('show')}
@@ -884,7 +897,7 @@ function openFamilyScheduleView(i){if(READ_ONLY)openRecordModal(i)}
 let activeRecordIndex=-1;
 function familyScheduleDetailHtml(r){let todos=normalizeScheduleTodos(r).filter(x=>x.text);let todoHtml=todos.length?'<div class="familyScheduleTodos"><b>待確認／待辦</b>'+todos.map(x=>'<div>'+(checkMark(x.done)+' ')+esc(x.text)+'</div>').join('')+'</div>':'';let info=[['日期／區間',scheduleDateText(r)],['地點／店面',r.place||'—'],['時間',r.time||'—'],['備註',r.note||'—'],['預算',r.budget||'—']].map(x=>'<div class="familyScheduleInfo"><span>'+x[0]+'</span><b>'+esc(x[1])+'</b></div>').join('');return '<div class="familyScheduleDetail">'+info+todoHtml+'</div><div class="familyRecordHead"><b>參考／成果紀錄</b></div>'}
 function clearRecordDraft(){['recordName','recordUrl','recordNote','recordFile'].forEach(id=>{let el=document.getElementById(id);if(el)el.value=''})}
-function openRecordModal(i){if(!data.schedule[i])return;activeRecordIndex=i;clearRecordDraft();document.getElementById('recordList').innerHTML='';document.getElementById('recordTitle').textContent=READ_ONLY?'參考／成果紀錄':'📌 '+data.schedule[i].item+'｜參考／成果紀錄';document.getElementById('recordModal').classList.add('show');renderScheduleRecords()}
+function openRecordModal(i){if(!data.schedule[i])return;document.getElementById('recordSaveStatus').textContent='';document.getElementById('recordSyncRetry').hidden=true;activeRecordIndex=i;clearRecordDraft();document.getElementById('recordList').innerHTML='';document.getElementById('recordTitle').textContent=READ_ONLY?'參考／成果紀錄':'📌 '+data.schedule[i].item+'｜參考／成果紀錄';document.getElementById('recordModal').classList.add('show');renderScheduleRecords()}
 function closeRecordModal(){document.getElementById('recordModal').classList.remove('show');activeRecordIndex=-1;document.getElementById('recordList').innerHTML='';clearRecordDraft()}
 function renderScheduleRecords(){if(activeRecordIndex<0||!data.schedule[activeRecordIndex])return;let a=data.schedule[activeRecordIndex].records||[],box=document.getElementById('recordList'),prefix='';box.innerHTML=prefix+(a.length?a.map((x,j)=>`<div class="recordCard"><div style="display:flex;justify-content:space-between;gap:8px"><b>${esc(x.name||'未命名紀錄')}</b><button class="btn danger editOnly" type="button" onclick="requestScheduleRecordDelete(${j},false,this)">刪除紀錄</button></div>${x.url?'<div style="margin-top:7px"><a href="'+esc(x.url)+'" target="_blank" rel="noopener">🔗 開啟紀錄網址</a></div>':''}${x.note?'<div class="muted" style="margin-top:7px">'+esc(x.note)+'</div>':''}${x.image?'<img src="'+x.image+'" alt="'+esc(x.name||'紀錄照片')+'"><button type="button" class="btn danger editOnly recordImageDelete" onclick="requestScheduleRecordDelete('+j+',true,this)">刪除圖片</button>':''}</div>`).join(''):'<div class="empty">目前還沒有參考／成果紀錄。</div>')}
 async function compressRecordImage(file){if(!file)return'';return new Promise((resolve,reject)=>{let rd=new FileReader();rd.onerror=reject;rd.onload=()=>{let img=new Image();img.onerror=reject;img.onload=()=>{let max=1200,scale=Math.min(1,max/Math.max(img.width,img.height)),cv=document.createElement('canvas');cv.width=Math.round(img.width*scale);cv.height=Math.round(img.height*scale);cv.getContext('2d').drawImage(img,0,0,cv.width,cv.height);resolve(cv.toDataURL('image/jpeg',.72))};img.src=rd.result};rd.readAsDataURL(file)})}
@@ -901,13 +914,21 @@ function requestScheduleRecordDelete(j,imageOnly,button){
  const no=document.createElement('button');no.type='button';no.className='btn';no.textContent='取消';no.onclick=()=>{box.remove();button.focus()};
  box.appendChild(yes);box.appendChild(no);card.appendChild(box);
 }
-function deleteScheduleRecord(j,imageOnly=false){
+async function deleteScheduleRecord(j,imageOnly=false){
  if(READ_ONLY||activeRecordIndex<0)return;
  const target=data.schedule[activeRecordIndex],record=target?.records?.[j];if(!record)return;
+ const status=document.getElementById('recordSaveStatus');
  if(imageOnly)record.image='';else target.records.splice(j,1);
+ if(status)status.textContent='正在儲存刪除，請稍候…';
  renderScheduleRecords();
- try{save()}catch(e){console.error(e);pendingCloudWrite=true;clearTimeout(cloudTimer);cloudTimer=setTimeout(syncCloud,0);setCloudState('☁️ 正在同步刪除');}
+ save();clearTimeout(cloudTimer);
+ if(!cloudReady)await loadCloud();
+ const synced=pendingCloudWrite?await syncCloud():cloudReady;
+ if(status)status.textContent=synced?'刪除已儲存並同步。':'刪除尚未同步完成，請按重試。';
+ const retry=document.getElementById('recordSyncRetry');if(retry)retry.hidden=!!synced;
 }
+async function retryRecordSync(){const status=document.getElementById('recordSaveStatus');if(status)status.textContent='正在重試儲存…';if(!cloudReady)await loadCloud();const ok=await syncCloud();if(status)status.textContent=ok?'刪除已儲存並同步。':'目前無法同步，請稍後重試。';document.getElementById('recordSyncRetry').hidden=!!ok}
+
 
 function giftVariant(r){return r.gift==='小禮盒'&&['B','C'].includes(r.smallVariant)?r.smallVariant:''}
 function giftRecordLabel(r){return giftLabel(r.gift)+(r.gift==='小禮盒'?' '+(giftVariant(r)?giftVariant(r)+'款':'款式待確認'):'')}
@@ -1453,3 +1474,4 @@ document.getElementById('expenseEditModal').addEventListener('keydown',e=>{if(e.
 function addChildFromExpenseEdit(){if(READ_ONLY||!expenseEditState)return;const p=expenseEditState.parent;if(p<0||expenseEditState.child>=0||expenseEditState.addingChild)return;saveExpenseEdit();if(expenseEditState===null)openExpenseEdit(p,-1,true)}
 function deleteFromExpenseEdit(){if(READ_ONLY||!expenseEditState)return;const {parent,child,addingChild}=expenseEditState;if(parent<0||addingChild)return;const r=expenseRows()[parent],target=child<0?r:r?.children?.[child];if(!target)return;deleteExpense(parent,child);const exists=child<0?expenseRows().includes(target):r.children.includes(target);if(!exists)closeExpenseEdit()}
 </script><style>.expenseInsideActions{display:flex;gap:8px;flex-wrap:wrap;padding-top:8px;border-top:1px solid var(--line)}.expenseInsideActions button[hidden]{display:none}</style><style>#expenses .expenseNameWithEdit{display:flex;align-items:flex-start;gap:6px}#expenses .expenseNameWithEdit>span{min-width:0;align-self:center;overflow-wrap:anywhere}#expenses .expenseNameWithEdit>.expenseIconButton{flex:0 0 30px;display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;padding:0;font-size:20px;line-height:1;border-radius:8px}#expenses .expenseParent .expenseHint{padding-left:36px}</style><style>.giftVariantPricingNote{padding:12px 14px;border-top:1px solid var(--line);font-size:14px;line-height:1.7}.giftVariantPricingNote .muted{margin:4px 0}.familyTag{overflow-wrap:anywhere}</style><style>#schedule .scheduleReferenceEmpty{border:0;background:transparent;box-shadow:none;min-width:40px;min-height:40px;padding:8px;color:var(--ink)}</style><style>.giftCouponBreakdown{margin-top:10px;display:grid;gap:7px}.giftCouponInput{display:flex;align-items:center;justify-content:space-between;gap:12px}.giftCouponInput input{width:105px;max-width:45%;padding:8px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);font-size:16px}.giftCouponFinal{border-top:1px solid var(--line);padding-top:8px;color:var(--rose);font-weight:700}</style><style>.giftListHeading{display:flex;align-items:baseline;flex-wrap:wrap;gap:6px 14px}.giftTitleTotal{font-size:14px;font-weight:500;color:var(--muted);white-space:nowrap}.familySimple .giftTitleTotal{font-size:15px}</style><style>#recordModal .recordImageDelete{display:block;margin-top:10px}#recordModal .recordDeleteConfirm{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:12px;padding:12px;background:#fff3f5;border:1px solid var(--line);border-radius:10px}#recordModal .recordDeleteConfirm>span{flex-basis:100%;font-size:14px;line-height:1.6}</style></body></html>
+
