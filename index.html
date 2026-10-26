@@ -700,7 +700,16 @@ body #gift.giftSimpleMode #giftTable>thead .sideSummary .giftCountLines>span{dis
 body #gift.giftSimpleMode #giftTable>thead .sideSummary .giftCountLines>span>i{width:auto!important;min-width:0!important;flex:0 0 auto!important;white-space:nowrap!important}
 body #gift.giftSimpleMode #giftTable>thead .sideSummary .giftCountLines>span>em{width:auto!important;min-width:0!important;flex:0 0 auto!important;margin:0 2px!important}
 body #gift.giftSimpleMode #giftTable>thead .sideSummary .giftCountLines>span>strong{width:auto!important;min-width:0!important;flex:0 0 auto!important;text-align:left!important;white-space:nowrap!important}
-</style></head><body>
+</style><style>
+/* Keep editable homepage agenda rows evenly spaced. */
+body:not(.readonly) #oTodoList{display:grid;grid-auto-rows:1fr}
+body:not(.readonly) #oTodoList>li{min-height:104px;align-items:center;padding:12px 0}
+body:not(.readonly) #oTodoList>li>span:first-child{min-width:0;line-height:1.5}
+body:not(.readonly) #oTodoList .scheduleCharacterTitle{min-height:32px}
+body:not(.readonly) #oTodoList .scheduleCharacterIcon{width:17px;height:32px}
+@media(max-width:800px){body:not(.readonly) #oTodoList>li{min-height:108px;padding:11px 0}}
+</style>
+</head><body>
 <div id="claimPanel" class="claimPanel">
  <div class="claimCard"><div class="claimIcon">🎁</div><h1>禮盒領取確認</h1><div id="claimContent" class="claimContent">正在確認資料…</div></div>
 </div>
