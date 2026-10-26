@@ -1485,7 +1485,7 @@ body.menuEnabled:not(.readonly) #mobileNav{grid-template-columns:repeat(4,minmax
  const frame=document.getElementById('diningMenuFrame');let frameReady=false,lastOrder='',initializedFrame=false;
  const cleanOrder=q=>{const clean={};if(q&&typeof q==='object')for(const [k,v] of Object.entries(q)){if(!/^m\d{1,3}$/.test(k))continue;const n=Math.max(0,Math.min(99,Math.floor(Number(v)||0)));if(n)clean[k]=n}return clean};
  function sendOrder(force=false){if(!frameReady)return;const q=cleanOrder(data.menuOrder),stamp=JSON.stringify(q);if(!force&&lastOrder===stamp)return;lastOrder=stamp;frame.contentWindow.postMessage({type:'wedding-menu-init',quantities:q},location.origin)}
- function startMenu(){if(initializedFrame)return;initializedFrame=true;frame.src='menu-20261229.html?embedded=1'+(READ_ONLY?'&view=family':'')+'&v=20261026';}
+ function startMenu(){if(initializedFrame)return;initializedFrame=true;frame.src='menu-20261229.html?embedded=1'+(READ_ONLY?'&view=family':'')+'&v=20261026-menu-order2';}
  window.addEventListener('message',e=>{if(e.origin!==location.origin||e.source!==frame.contentWindow||!e.data)return;const m=e.data;
   if(m.type==='wedding-menu-ready'){frameReady=true;document.getElementById('menuLoadNote').hidden=true;sendOrder(true)}
   if(m.type==='wedding-menu-height'&&Number.isFinite(m.height))frame.style.height=Math.max(500,Math.min(150000,m.height+8))+'px';
