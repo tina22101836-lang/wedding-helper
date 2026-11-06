@@ -791,8 +791,9 @@ const DEFAULT_AFTER=[
 {done:false,category:'緊急聯絡',item:'更新緊急聯絡人資料',who:'各自',need:'建議',date:'',note:'公司、醫療院所、會員或其他重要服務若有留緊急聯絡人，可視需要更新。'}
 ];
 const DEFAULT_PREP=[{owner:'共同',done:false,item:'結婚登記',place:'斗六戶政事務所',date:'2026-12-29',docs:'雙方國民身分證｜雙方戶口名簿｜結婚書約（2名成年證人簽名或蓋章）｜雙方最近2年符合身分證規格照片各1張或數位相片｜印章（或現場簽名）',note:'國內結婚可至任一戶政事務所辦理；若同時遷戶籍，需向遷入地戶政事務所確認。身分證換發規費每張50元。'}];
-const SHARED_APP_VERSION='20261106-sync1';
-let sharedHasCache=false,sharedRemoteVerified=false,sharedLastRemoteAt='',sharedRemoteGiftCount=null;
+const SHARED_APP_VERSION='20261106-sync2';
+let sharedHasCache=false,sharedRemoteVerified=false,sharedLastRemoteAt='',sharedRemoteGiftCount=null,sharedSyncError='';
+function sharedErrorText(e){return (e?.message||String(e||'未知錯誤'))+(e?.code?' ['+e.code+']':'')}
 const SUPABASE_URL='https://puwqswhsvqwwjjokuejx.supabase.co';
 const SUPABASE_KEY='sb_publishable_ZfC12nkj3klCQsS88iQQVQ_ZLAjgIQj';
 const SHARE_KEY='our-wedding-2026';
@@ -803,6 +804,7 @@ if(!Array.isArray(data.prep))data.prep=structuredClone(DEFAULT_PREP);data.prep.f
 const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 function setCloudState(t){let e=document.getElementById('cloudState');if(e)e.textContent=t;const familyStatus=document.getElementById('familyCloudState');if(familyStatus)familyStatus.textContent=t.replace(/^☁️\s*/,'');if(typeof updateSharedSyncNotice==='function')updateSharedSyncNotice(t)}
 async function loadCloud(){
+ if(!cloud){sharedSyncError='雲端程式未載入（網路或 CDN 無法使用）';setCloudState('☁️ 雲端連線失敗');return}
  const readRevision=cloudWriteRevision,readDuringWrite=pendingCloudWrite||cloudSyncRunning;
  try{
   const {data:rows,error}=await cloud.from('wedding_data').select('id,payload,updated_at').eq('share_key',SHARE_KEY).limit(1);
@@ -820,11 +822,11 @@ async function loadCloud(){
    const {error:e}=await cloud.from('wedding_data').insert({share_key:SHARE_KEY,payload:data});
    if(e)throw e;
   }
-  cloudReady=true;
+  cloudReady=true;sharedSyncError='';
   if(pendingCloudWrite&&!READ_ONLY){await syncCloud()}
   else setCloudState('☁️ 已同步｜禮盒 '+data.gifts.length+' 盒');
   for(const render of [renderSchedule,renderGift,renderPrep,renderAfter,renderOverview]){try{render()}catch(renderError){console.error(renderError)}}if(READ_ONLY&&document.getElementById('recordModal').classList.contains('show'))renderScheduleRecords();
- }catch(e){console.error(e);setCloudState(pendingCloudWrite?'☁️ 尚未同步：新增或修改只在此裝置':'☁️ 雲端連線失敗：目前不是最新共用資料')}
+ }catch(e){console.error(e);sharedSyncError=sharedErrorText(e);setCloudState(pendingCloudWrite?'☁️ 尚未同步：新增或修改只在此裝置':'☁️ 雲端連線失敗：目前不是最新共用資料')}
 }
 function syncCloud(){
  if(READ_ONLY||!cloudReady||!cloud)return Promise.resolve(false);
@@ -841,8 +843,8 @@ function syncCloud(){
     pendingCloudWrite=JSON.stringify(data)!==snapshot;
     try{if(!pendingCloudWrite)localStorage.removeItem(KEY+'-pending-write')}catch(e){console.warn(e)}
    }while(pendingCloudWrite);
-   sharedRemoteVerified=true;sharedLastRemoteAt=new Date().toISOString();sharedRemoteGiftCount=data.gifts.length;setCloudState('☁️ 已同步｜禮盒 '+data.gifts.length+' 盒');return true;
-  }catch(e){console.error(e);pendingCloudWrite=true;try{localStorage.setItem(KEY+'-pending-write','1')}catch(ignore){}setCloudState('☁️ 尚未同步：新增或修改只在此裝置');return false}
+   sharedRemoteVerified=true;sharedLastRemoteAt=new Date().toISOString();sharedRemoteGiftCount=data.gifts.length;sharedSyncError='';setCloudState('☁️ 已同步｜禮盒 '+data.gifts.length+' 盒');return true;
+  }catch(e){console.error(e);sharedSyncError=sharedErrorText(e);pendingCloudWrite=true;try{localStorage.setItem(KEY+'-pending-write','1')}catch(ignore){}setCloudState('☁️ 尚未同步：新增或修改只在此裝置');return false}
   finally{cloudSyncRunning=false;cloudSyncPromise=null}
  })();
  return cloudSyncPromise;
@@ -1592,14 +1594,37 @@ function updateSharedSyncNotice(state=document.getElementById('cloudState')?.tex
  document.body.classList.toggle('sharedAwaitingRemote',unverified);notice.hidden=!unverified&&!failed;
  const localCount=Array.isArray(data.gifts)?data.gifts.length:0;
  document.getElementById('sharedSyncTitle').textContent=unverified?(failed?'暫時無法取得共用名單':'正在讀取最新共用資料…'):(pendingCloudWrite?'這台裝置的修改尚未同步':'目前顯示此裝置的暫存資料');
- document.getElementById('sharedSyncDescription').textContent=unverified?'尚未讀到雲端資料，先不顯示內建的舊名單與數量。請按「重試同步」。':pendingCloudWrite?'此裝置目前有 '+localCount+' 盒；雲端尚未確認收到，另一位編輯者可能看不到新增名單。資料會保留在此裝置，請勿重設或清除瀏覽資料。':'此裝置暫存 '+localCount+' 盒，尚未確認是否為雲端最新資料。';
- document.getElementById('sharedLocalBackup').hidden=READ_ONLY||unverified;
+ document.getElementById('sharedSyncDescription').textContent=(unverified?'尚未讀到雲端資料，先不顯示內建的舊名單與數量。請按「重試同步」。':pendingCloudWrite?'此裝置目前有 '+localCount+' 盒；雲端尚未確認收到，另一位編輯者可能看不到新增名單。資料會保留在此裝置，請勿重設或清除瀏覽資料。':'此裝置暫存 '+localCount+' 盒，尚未確認是否為雲端最新資料。')+(sharedSyncError?'\n錯誤原因：'+sharedSyncError:'');
+ document.getElementById('sharedLocalBackup').hidden=READ_ONLY||unverified;document.getElementById('sharedImportLabel').hidden=READ_ONLY;
  document.getElementById('sharedSyncVersion').textContent='版本 '+SHARED_APP_VERSION+(sharedLastRemoteAt?' · 最近確認雲端 '+new Date(sharedLastRemoteAt).toLocaleString('zh-TW',{timeZone:'Asia/Taipei',hour12:false}):'');
  document.getElementById('sharedSyncRetry').disabled=busy;
 }
 async function retrySharedSync(){const button=document.getElementById('sharedSyncRetry');if(button?.disabled)return;if(sharedEditorBusy()){alert('請先儲存或取消目前正在編輯的項目，再重試同步。');return}if(button)button.disabled=true;setCloudState('☁️ 同步中');try{if(pendingCloudWrite&&cloudReady)await syncCloud();else await loadCloud()}finally{if(button)button.disabled=false}}
+function importLocalSharedBackup(file){
+ if(!file||READ_ONLY)return;
+ const reader=new FileReader();
+ reader.onerror=()=>alert('無法讀取備份檔，請確認檔案後重試。');
+ reader.onload=async()=>{
+  try{
+   const parsed=JSON.parse(reader.result),incoming=parsed.payload||parsed;
+   if(!incoming||!Array.isArray(incoming.gifts)||!Array.isArray(incoming.schedule)||!Array.isArray(incoming.prep))throw new Error('檔案缺少禮盒、排程或準備清單');
+   const count=incoming.gifts.length;
+   if(!confirm('備份含有 '+count+' 筆禮盒資料。還原會取代此瀏覽器目前顯示的婚禮資料，並在雲端恢復連線後嘗試上傳。\n\n請先確認已另外下載目前裝置的備份，而且其他編輯者暫停修改。確定要還原嗎？'))return;
+   exportLocalSharedBackup();
+   data=incoming;sharedHasCache=true;pendingCloudWrite=true;cloudWriteRevision++;
+   const snapshot=JSON.stringify(data);
+   localStorage.setItem(KEY,snapshot);localStorage.setItem(KEY+'-pending-write','1');lastSavedSnapshot=snapshot;
+   for(const render of [renderSchedule,renderGift,renderPrep,renderAfter,renderOverview,renderUndoMenu]){try{render()}catch(e){console.error(e)}}
+   setCloudState('☁️ 備份已還原至此裝置，等待雲端確認');
+   if(cloudReady)await syncCloud();else await loadCloud();
+   alert(pendingCloudWrite?'已還原 '+count+' 筆禮盒到本機，但雲端尚未同步成功；請保留備份並查看錯誤原因。':'已還原並確認雲端寫入 '+count+' 筆禮盒。');
+  }catch(e){alert('還原失敗：'+sharedErrorText(e))}
+  finally{document.getElementById('sharedImportFile').value=''}
+ };
+ reader.readAsText(file);
+}
 function exportLocalSharedBackup(){if(READ_ONLY)return;const backup={version:SHARED_APP_VERSION,exportedAt:new Date().toISOString(),pendingCloudWrite,payload:data};const blob=new Blob([JSON.stringify(backup,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='wedding-local-backup-'+new Date().toISOString().slice(0,10)+'.json';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),10000)}
-(()=>{const notice=document.createElement('aside');notice.id='sharedSyncNotice';notice.className='sharedSyncNotice';notice.setAttribute('role','status');notice.innerHTML='<b id="sharedSyncTitle"></b><p id="sharedSyncDescription"></p><div class="syncNoticeActions"><button type="button" id="sharedSyncRetry" onclick="retrySharedSync()">重試同步</button><button type="button" id="sharedLocalBackup" onclick="exportLocalSharedBackup()">備份此裝置資料</button></div><div id="sharedSyncVersion" class="syncVersionLine"></div>';const main=document.querySelector('body>main');main.before(notice);const tools=document.getElementById('toolsMenu');if(tools){const action=document.createElement('button');action.className='toolMenuBtn';action.type='button';action.textContent='☁️ 檢查並重試同步';action.onclick=()=>{closeToolsMenu();retrySharedSync()};tools.prepend(action);const version=document.createElement('div');version.className='syncVersionLine';version.style.cssText='font-size:11px;color:var(--muted);padding:8px 12px';version.textContent='版本 '+SHARED_APP_VERSION;tools.append(version)}const state=document.getElementById('cloudState');if(state){state.title='點一下檢查並重試同步';state.setAttribute('role','button');state.tabIndex=0;state.style.cursor='pointer';state.addEventListener('click',retrySharedSync);state.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();retrySharedSync()}})}updateSharedSyncNotice()})();
+(()=>{const notice=document.createElement('aside');notice.id='sharedSyncNotice';notice.className='sharedSyncNotice';notice.setAttribute('role','status');notice.innerHTML='<b id="sharedSyncTitle"></b><p id="sharedSyncDescription" style="white-space:pre-wrap;overflow-wrap:anywhere"></p><div class="syncNoticeActions"><button type="button" id="sharedSyncRetry" onclick="retrySharedSync()">重試同步</button><button type="button" id="sharedLocalBackup" onclick="exportLocalSharedBackup()">備份此裝置資料</button><label id="sharedImportLabel" style="display:inline-block;padding:7px 11px;border:1px solid #dcc6a7;border-radius:8px;background:#fff;cursor:pointer">匯入備份檔<input id="sharedImportFile" type="file" accept=".json,application/json" style="display:none" onchange="importLocalSharedBackup(this.files[0])"></label></div><div id="sharedSyncVersion" class="syncVersionLine"></div>';const main=document.querySelector('body>main');main.before(notice);const tools=document.getElementById('toolsMenu');if(tools){const action=document.createElement('button');action.className='toolMenuBtn';action.type='button';action.textContent='☁️ 檢查並重試同步';action.onclick=()=>{closeToolsMenu();retrySharedSync()};tools.prepend(action);const version=document.createElement('div');version.className='syncVersionLine';version.style.cssText='font-size:11px;color:var(--muted);padding:8px 12px';version.textContent='版本 '+SHARED_APP_VERSION;tools.append(version)}const state=document.getElementById('cloudState');if(state){state.title='點一下檢查並重試同步';state.setAttribute('role','button');state.tabIndex=0;state.style.cursor='pointer';state.addEventListener('click',retrySharedSync);state.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();retrySharedSync()}})}updateSharedSyncNotice()})();
 </script>
 <!-- SHARED_SYNC_DIAGNOSTICS_END -->
 </body></html>
