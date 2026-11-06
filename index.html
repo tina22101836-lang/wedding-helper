@@ -1252,7 +1252,7 @@ function lockViewControls(){
 const sharedRenderers=[renderSchedule,renderGift,renderPrep,renderAfter];
 [renderSchedule,renderGift,renderPrep,renderAfter]=sharedRenderers.map(fn=>function(){fn();lockViewControls()});
 let cloudRefreshRunning=false;
-function sharedEditorBusy(){const active=document.activeElement;return !READ_ONLY&&((active?.matches('input,textarea,select')&&!active.closest('.filters'))||!!document.querySelector('.recordModal.show:not(#shareModal):not(#featureGuideModal)'))}
+function sharedEditorBusy(){const active=document.activeElement;return !READ_ONLY&&((active?.matches('input,textarea,select')&&!active.closest('.filters,#shareModal,#featureGuideModal'))||!!document.querySelector('.recordModal.show:not(#shareModal):not(#featureGuideModal)'))}
 async function refreshSharedData(){if(cloudRefreshRunning||document.hidden||sharedEditorBusy())return;cloudRefreshRunning=true;try{if(pendingCloudWrite&&!READ_ONLY){if(cloudReady)await syncCloud();else await loadCloud()}else await loadCloud()}finally{cloudRefreshRunning=false}}
 setInterval(refreshSharedData,3000);
 window.addEventListener('focus',refreshSharedData);
